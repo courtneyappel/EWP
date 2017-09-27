@@ -40,19 +40,22 @@
             <task id="1" name="ATOM" color="#8cb6ce" meeting="false" start="2017-09-07" duration="15" complete="0" expand="true">
                 <notes><![CDATA[Courtney - 1 hour
 Jeff - 2 hours
-Josh - 1 hour]]></notes>
+Josh - 1 hour
+Wyatt - 2 hours]]></notes>
                 <customproperty taskproperty-id="tpc0" value="Group"/>
             </task>
             <task id="2" name="Gantt Chart" color="#8cb6ce" meeting="false" start="2017-09-21" duration="6" complete="0" expand="true">
                 <notes><![CDATA[Courtney - 1 hour
 Jeff - 1 hour
-Josh - 1 hour]]></notes>
+Josh - 1 hour
+Wyatt - 1 hour]]></notes>
                 <customproperty taskproperty-id="tpc0" value="Group"/>
             </task>
             <task id="0" name="GIT" color="#8cb6ce" meeting="false" start="2017-08-31" duration="22" complete="0" expand="true">
                 <notes><![CDATA[Courtney - 2 hours
 Jeff - 1 hour
-Josh - 1 hour]]></notes>
+Josh - 1 hour
+Wyatt - 2 hours]]></notes>
                 <customproperty taskproperty-id="tpc0" value="Group"/>
             </task>
         </task>

@@ -35,10 +35,14 @@ public class Panel extends JPanel{
 	JButton account;
 	JButton deposit;
 	JButton withdrawal;
+	JButton newAccount;
+	JButton viewAccount;
+	JButton deletAccount;
 
 	JPanel topPanel = new JPanel();
 	JPanel loginPanel = new JPanel();
 	JPanel homePanel = new JPanel();
+	JPanel accountPanel = new JPanel();
 
 	public Panel()
 	{
@@ -47,7 +51,6 @@ public class Panel extends JPanel{
 		setLayout(new BorderLayout());
 
 		//create header
-
 		topPanel.setBackground(Color.lightGray);
 		topPanel.setLayout(new BorderLayout());
 		top = new JLabel("Account Manager", JLabel.CENTER);
@@ -118,6 +121,48 @@ public class Panel extends JPanel{
 		homePanel.add(deposit);
 		homePanel.add(Box.createRigidArea(new Dimension (0,25)));
 		homePanel.add(withdrawal);
+
+		//Account Panel
+		accountPanel.setBackground(Color.lightGray);
+		accountPanel.setLayout(new BoxLayout(accountPanel, BoxLayout.Y_AXIS));
+
+		newAccount = new JButton("newAccount"){
+			{
+				setSize(200,100);
+				setMaximumSize(getSize());
+			}
+
+		};
+		newAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		newAccount.addActionListener(new accountListener());
+
+		viewAccount = new JButton("viewAccount"){
+			{
+				setSize(200,100);
+				setMaximumSize(getSize());
+			}
+
+		};
+		viewAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		viewAccount.addActionListener(new depositListener());
+
+		deletAccount = new JButton("deletAccount"){
+			{
+				setSize(200,100);
+				setMaximumSize(getSize());
+			}
+
+		};
+		deletAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		deletAccount.addActionListener(new withdrawalListener());
+
+		accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
+		accountPanel.add(newAccount);
+		accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
+		accountPanel.add(viewAccount);
+		accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
+		accountPanel.add(deletAccount);
+
 
 	}
 
@@ -203,9 +248,11 @@ public class Panel extends JPanel{
         {
 			System.out.println("Account");
 			removeAll();
+
 			add(bottom, BorderLayout.PAGE_END);
 			add(topPanel, BorderLayout.PAGE_START);
-			repaint();
+			add(accountPanel, BorderLayout.CENTER);
+			revalidate();
 
         }
 	}

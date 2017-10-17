@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 
 public class Panel extends JPanel{
-
+	//variable inits
 	String user = "csadmin";
 	String pw = "csci323";
 	boolean loggedIn = false;
@@ -44,8 +44,10 @@ public class Panel extends JPanel{
 	JPanel homePanel = new JPanel();
 	JPanel accountPanel = new JPanel();
 
+ //start of the main panel
 	public Panel()
 	{
+		//main panel looks
 		setBackground(Color.lightGray);
 		setPreferredSize(new Dimension(500, 500));
 		setLayout(new BorderLayout());
@@ -80,6 +82,12 @@ public class Panel extends JPanel{
 		loginPanel.add(login);
 		add(loginPanel, BorderLayout.CENTER);
 		//remove(loginPanel);
+
+
+
+
+
+
 
 		//create home screen
 		homePanel.setBackground(Color.lightGray);
@@ -121,6 +129,11 @@ public class Panel extends JPanel{
 		homePanel.add(deposit);
 		homePanel.add(Box.createRigidArea(new Dimension (0,25)));
 		homePanel.add(withdrawal);
+
+
+
+
+
 
 		//Account Panel
 		accountPanel.setBackground(Color.lightGray);
@@ -166,7 +179,19 @@ public class Panel extends JPanel{
 
 	}
 
-	private class homeListener implements ActionListener
+
+
+
+
+
+
+
+
+
+
+
+	//Button listeners
+	private class homeListener implements ActionListener // Goes to the home page
 	{
 		public void actionPerformed (ActionEvent event)
         {
@@ -182,7 +207,7 @@ public class Panel extends JPanel{
         }
 	}
 
-	private class logoutListener implements ActionListener
+	private class logoutListener implements ActionListener // Logs out
 	{
 		public void actionPerformed (ActionEvent event)
         {
@@ -208,7 +233,7 @@ public class Panel extends JPanel{
 	}
 
 
-	private class loginListener implements ActionListener
+	private class loginListener implements ActionListener // Logs in
 	{
 		public void actionPerformed (ActionEvent event)
         {
@@ -242,13 +267,12 @@ public class Panel extends JPanel{
 		}
 	}
 
-	private class accountListener implements ActionListener
+	private class accountListener implements ActionListener //Button for accessing accounts page
 	{
 		public void actionPerformed (ActionEvent event)
         {
 			System.out.println("Account");
 			removeAll();
-
 			add(bottom, BorderLayout.PAGE_END);
 			add(topPanel, BorderLayout.PAGE_START);
 			add(accountPanel, BorderLayout.CENTER);
@@ -257,7 +281,7 @@ public class Panel extends JPanel{
         }
 	}
 
-	private class depositListener implements ActionListener
+	private class depositListener implements ActionListener // Button for creating a deposit
 	{
 		public void actionPerformed (ActionEvent event)
         {
@@ -265,7 +289,7 @@ public class Panel extends JPanel{
         }
 	}
 
-	private class withdrawalListener implements ActionListener
+	private class withdrawalListener implements ActionListener // GButton for creating a withdrawl
 	{
 		public void actionPerformed (ActionEvent event)
         {

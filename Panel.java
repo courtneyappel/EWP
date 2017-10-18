@@ -13,11 +13,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Panel extends JPanel{
 	//variable inits
+	ArrayList<Account> accountArray = new ArrayList();
+
+	String newAccountname;
+	String newAccountemail;
+	String newAccountphoneNum;
+	String newAccountdescription;
+
 	String user = "csadmin";
 	String pw = "csci323";
 	boolean loggedIn = false;
@@ -35,14 +43,32 @@ public class Panel extends JPanel{
 	JButton account;
 	JButton deposit;
 	JButton withdrawal;
-	JButton newAccount;
-	JButton viewAccount;
-	JButton deletAccount;
+
 
 	JPanel topPanel = new JPanel();
 	JPanel loginPanel = new JPanel();
 	JPanel homePanel = new JPanel();
+
 	JPanel accountPanel = new JPanel();
+	JButton newAccount;
+	JButton viewAccount;
+	JButton deletAccount;
+
+	JPanel accountCreationPanel = new JPanel();
+	JLabel enterInCredentials;
+	JTextField name;
+	JTextField email;
+	JTextField phoneNum;
+	JTextField description;
+	JButton submitAccountInfo;
+
+	JPanel accountViewPanel = new JPanel();
+	JLabel listOfAccounts;
+	JLabel accountInfo;
+	JTextField enteredAccount;
+	JButton displayEnteredInfo;
+	JButton deleteSelectedAccount;
+	JButton confirmDeletion;
 
  //start of the main panel
 	public Panel()
@@ -147,7 +173,7 @@ public class Panel extends JPanel{
 
 		};
 		newAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
-		newAccount.addActionListener(new accountListener());
+		newAccount.addActionListener(new newAccountListener());
 
 		viewAccount = new JButton("viewAccount"){
 			{
@@ -157,7 +183,7 @@ public class Panel extends JPanel{
 
 		};
 		viewAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
-		viewAccount.addActionListener(new depositListener());
+		viewAccount.addActionListener(new viewAccountListener());
 
 		deletAccount = new JButton("deletAccount"){
 			{
@@ -167,7 +193,7 @@ public class Panel extends JPanel{
 
 		};
 		deletAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
-		deletAccount.addActionListener(new withdrawalListener());
+		deletAccount.addActionListener(new deleteAccountListener());
 
 		accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
 		accountPanel.add(newAccount);
@@ -175,6 +201,43 @@ public class Panel extends JPanel{
 		accountPanel.add(viewAccount);
 		accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
 		accountPanel.add(deletAccount);
+
+
+
+		//accountCreationPanel
+		accountCreationPanel.setBackground(Color.lightGray);
+		accountCreationPanel.setLayout(new BoxLayout(accountCreationPanel, BoxLayout.Y_AXIS));
+		name = new JTextField("Name");
+		email = new JTextField("Email");
+		phoneNum = new JTextField("Phone Number");
+		description = new JTextField("Description");
+		enterInCredentials = new JLabel("Please enter in the information.");
+		submitAccountInfo = new JButton("Submit");
+		submitAccountInfo.addActionListener(new submitAccountInfoListener());
+		accountCreationPanel.add(enterInCredentials);
+		accountCreationPanel.add(name);
+		accountCreationPanel.add(email);
+		accountCreationPanel.add(phoneNum);
+		accountCreationPanel.add(description);
+		accountCreationPanel.add(submitAccountInfo);
+
+
+		accountViewPanel.setBackground(Color.lightGray);
+		accountViewPanel.setLayout(new BoxLayout(accountViewPanel, BoxLayout.Y_AXIS));
+		listOfAccounts = new JLabel("<html>Type in the name of the account you would like.<br> Here is a list of current accounts.<br>");
+		accountInfo = new JLabel("");
+		enteredAccount = new JTextField("");
+		displayEnteredInfo = new JButton("View selected account");
+		deleteSelectedAccount = new JButton("Delete Account");
+		confirmDeletion = new JButton("Confirm Delete");
+		confirmDeletion.addActionListener(new confirmDeletionListener());
+		deleteSelectedAccount.addActionListener(new deleteSelectedAccountListener());
+		displayEnteredInfo.addActionListener(new displayEnteredInfoListener());
+		accountViewPanel.add(listOfAccounts);
+		accountViewPanel.add(accountInfo);
+		accountViewPanel.add(enteredAccount);
+		accountViewPanel.add(displayEnteredInfo);// If you guys think of a better way to do this let me know, it's just the best i could come up with.
+		//I have a list of accounts and then you type in the name of the account you want to view and click on the button.
 
 
 	}
@@ -191,6 +254,63 @@ public class Panel extends JPanel{
 
 
 	//Button listeners
+	private class confirmDeletionListener implements ActionListener{
+		public void actionPerformed (ActionEvent enver){
+			System.out.println("change later");
+		}
+	}
+
+
+	private class deleteSelectedAccountListener implements ActionListener{//button to delete selected account. I got lazy and added this to the view account instead of making a new panel.
+		public void actionPerformed (ActionEvent event){
+			String accountToView = enteredAccount.getText();
+			String accountToDisplay = "";
+			Boolean foundAccount = false;
+			for(Account name:accountArray){
+					if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
+						foundAccount = true;
+					}
+			}
+			if(foundAccount){
+				accountViewPanel.removeAll();
+				accountInfo.setText("Warning you are about to delete an account.");
+				accountViewPanel.add(accountInfo);
+				accountViewPanel.add(confirmDeletion);
+				revalidate();
+				repaint();
+			}
+			else{
+				listOfAccounts.setText(listOfAccounts.getText() + "<html><br>I'm sorry but the account you entered doesn't exist. Please try again. </html>");
+
+			}
+		}
+	}
+
+	private class displayEnteredInfoListener implements ActionListener { //button to display the enteredAccount
+				public void actionPerformed (ActionEvent event){
+					String accountToView = enteredAccount.getText();
+					String accountToDisplay = "";
+					Boolean foundAccount = false;
+					for(Account name:accountArray){
+							if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
+								foundAccount = true;
+								accountToDisplay = name.getAllInfo();
+
+							}
+					}
+					if(foundAccount){
+						accountViewPanel.removeAll();
+						accountInfo.setText(accountToDisplay);
+						accountViewPanel.add(accountInfo);
+						revalidate();
+						repaint();
+					}
+					else{
+						listOfAccounts.setText(listOfAccounts.getText() + "<html><br>I'm sorry but the account you entered doesn't exist. Please try again. </html>");
+
+					}
+				}
+	}
 	private class homeListener implements ActionListener // Goes to the home page
 	{
 		public void actionPerformed (ActionEvent event)
@@ -199,12 +319,103 @@ public class Panel extends JPanel{
 			{
 				System.out.println("HOME");
 				removeAll();
+				name.setText("Name"); //I have this on here and the log out button so that it will reset the text in the boxes after you leave the page.
+				email.setText("Email");
+				phoneNum.setText("Phone Number");
+				description.setText("Description");
+				accountCreationPanel.setBackground(Color.lightGray);
 				add(bottom, BorderLayout.PAGE_END);
 				add(homePanel, BorderLayout.CENTER);
 				add(topPanel, BorderLayout.PAGE_START);
+				accountViewPanel.removeAll();
+				listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
+				accountInfo.setText("");
+				enteredAccount.setText("");
+				accountViewPanel.add(listOfAccounts);
+				accountViewPanel.add(accountInfo);
+				accountViewPanel.add(enteredAccount);
+				accountViewPanel.add(displayEnteredInfo);
+
 				repaint();
 			}
         }
+	}
+
+	private class submitAccountInfoListener implements ActionListener{//when you submit the information to create an account
+			public void actionPerformed(ActionEvent event){
+				//if info is invalid
+				if(name.getText().equalsIgnoreCase("Name") || name.getText().equalsIgnoreCase("") //This is a messy way of doing it but, hey it works.
+				|| email.getText().equalsIgnoreCase("Email") || email.getText().equalsIgnoreCase("")
+				|| phoneNum.getText().equalsIgnoreCase("Phone Number") || phoneNum.getText().equalsIgnoreCase("")
+				|| description.getText().equalsIgnoreCase("Description") || description.getText().equalsIgnoreCase("")){
+					//TODO: make it loop through the array of already existing accounts so that you can't make an account with the same name as one already made.
+					accountCreationPanel.setBackground(Color.red);
+					enterInCredentials.setText("Please enter in all the information.");
+					System.out.println("Invalid information");
+				}
+				else{
+					accountCreationPanel.setBackground(Color.lightGray);
+					newAccountname = name.getText();
+					newAccountemail = email.getText();
+					newAccountphoneNum = phoneNum.getText();
+					newAccountdescription = description.getText();
+					Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
+					accountArray.add(myAccount);
+					System.out.println("Account created");
+				}
+			}
+	}
+
+	private class deleteAccountListener implements ActionListener{ // deletes accounts
+			public void actionPerformed (ActionEvent event){
+				System.out.println("Deleting account.");
+				removeAll();
+				add(bottom, BorderLayout.PAGE_END);
+				add(accountViewPanel, BorderLayout.CENTER);
+				add(topPanel, BorderLayout.PAGE_START);
+				Iterator it = accountArray.iterator();
+				while (it.hasNext()){
+
+					listOfAccounts.setText(listOfAccounts.getText() + "<br>" + it.next());
+				}
+				listOfAccounts.setText(listOfAccounts.getText() + "</html>");
+				revalidate();
+				repaint();
+				accountViewPanel.remove(displayEnteredInfo);
+				accountViewPanel.add(deleteSelectedAccount);
+			}
+
+	}
+
+	private class viewAccountListener implements ActionListener{ //views the accounts
+			public void actionPerformed (ActionEvent event){
+				System.out.println("viewing account.");
+				removeAll();
+				add(bottom, BorderLayout.PAGE_END);
+				add(accountViewPanel, BorderLayout.CENTER);
+				add(topPanel, BorderLayout.PAGE_START);
+				Iterator it = accountArray.iterator();
+				while (it.hasNext()){
+
+					listOfAccounts.setText(listOfAccounts.getText() + "<br>" + it.next());
+				}
+				listOfAccounts.setText(listOfAccounts.getText() + "</html>");
+				revalidate();
+				repaint();
+			}
+	}
+
+	private class newAccountListener implements ActionListener { //creates a new account
+			public void actionPerformed (ActionEvent event){
+				System.out.println("making a new account");
+				removeAll();
+				add(bottom, BorderLayout.PAGE_END);
+				add(accountCreationPanel, BorderLayout.CENTER);
+				add(topPanel, BorderLayout.PAGE_START);
+				revalidate();
+				repaint();
+
+			}
 	}
 
 	private class logoutListener implements ActionListener // Logs out
@@ -215,7 +426,20 @@ public class Panel extends JPanel{
 			{
 				loggedIn = false;
 				removeAll();
+				name.setText("Name"); //I have this on here and the home button so that it will reset the text in the boxes after you leave the page.
+				email.setText("Email");
+				phoneNum.setText("Phone Number");
+				description.setText("Description");
+				accountCreationPanel.setBackground(Color.lightGray);
 
+				accountViewPanel.removeAll();
+				listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
+				accountInfo.setText("");
+				enteredAccount.setText("");
+				accountViewPanel.add(listOfAccounts);
+				accountViewPanel.add(accountInfo);
+				accountViewPanel.add(enteredAccount);
+				accountViewPanel.add(displayEnteredInfo);
 
 				add(bottom, BorderLayout.PAGE_END);
 				add(loginPanel, BorderLayout.CENTER);
@@ -277,6 +501,7 @@ public class Panel extends JPanel{
 			add(topPanel, BorderLayout.PAGE_START);
 			add(accountPanel, BorderLayout.CENTER);
 			revalidate();
+			repaint();
 
         }
 	}

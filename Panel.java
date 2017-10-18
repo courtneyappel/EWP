@@ -69,10 +69,11 @@ public class Panel extends JPanel{
 	JButton displayEnteredInfo;
 	JButton deleteSelectedAccount;
 	JButton confirmDeletion;
-
+	String accountToView;
  //start of the main panel
 	public Panel()
 	{
+		accountToView ="";
 		//main panel looks
 		setBackground(Color.lightGray);
 		setPreferredSize(new Dimension(500, 500));
@@ -165,7 +166,7 @@ public class Panel extends JPanel{
 		accountPanel.setBackground(Color.lightGray);
 		accountPanel.setLayout(new BoxLayout(accountPanel, BoxLayout.Y_AXIS));
 
-		newAccount = new JButton("newAccount"){
+		newAccount = new JButton("New Account"){
 			{
 				setSize(200,100);
 				setMaximumSize(getSize());
@@ -175,7 +176,7 @@ public class Panel extends JPanel{
 		newAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		newAccount.addActionListener(new newAccountListener());
 
-		viewAccount = new JButton("viewAccount"){
+		viewAccount = new JButton("View Account"){
 			{
 				setSize(200,100);
 				setMaximumSize(getSize());
@@ -185,7 +186,7 @@ public class Panel extends JPanel{
 		viewAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		viewAccount.addActionListener(new viewAccountListener());
 
-		deletAccount = new JButton("deletAccount"){
+		deletAccount = new JButton("Delete Account"){
 			{
 				setSize(200,100);
 				setMaximumSize(getSize());
@@ -256,14 +257,26 @@ public class Panel extends JPanel{
 	//Button listeners
 	private class confirmDeletionListener implements ActionListener{
 		public void actionPerformed (ActionEvent enver){
-			System.out.println("change later");
+			Iterator<Account> it = accountArray.iterator();
+			while (it.hasNext()){
+				Account current = it.next();
+				if(accountToView.equalsIgnoreCase(current.toString())){
+					it.remove();
+					System.out.println(accountToView + " was removed.");
+					accountInfo.setText(accountToView + " was removed.");
+					accountViewPanel.remove(confirmDeletion);
+					repaint();
+					revalidate();
+				}
+			}
+
 		}
 	}
 
 
 	private class deleteSelectedAccountListener implements ActionListener{//button to delete selected account. I got lazy and added this to the view account instead of making a new panel.
 		public void actionPerformed (ActionEvent event){
-			String accountToView = enteredAccount.getText();
+			accountToView = enteredAccount.getText();
 			String accountToDisplay = "";
 			Boolean foundAccount = false;
 			for(Account name:accountArray){
@@ -288,7 +301,7 @@ public class Panel extends JPanel{
 
 	private class displayEnteredInfoListener implements ActionListener { //button to display the enteredAccount
 				public void actionPerformed (ActionEvent event){
-					String accountToView = enteredAccount.getText();
+					accountToView = enteredAccount.getText();
 					String accountToDisplay = "";
 					Boolean foundAccount = false;
 					for(Account name:accountArray){
@@ -335,7 +348,7 @@ public class Panel extends JPanel{
 				accountViewPanel.add(accountInfo);
 				accountViewPanel.add(enteredAccount);
 				accountViewPanel.add(displayEnteredInfo);
-
+				accountToView = "";
 				repaint();
 			}
         }

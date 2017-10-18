@@ -21,6 +21,6 @@ public class Account{
     return this.name;
   }
   public String getAllInfo(){
-    return "Enter in later";
+    return "<html>Name: " + this.name + "<br>Email: " + this.email + "<br>Phone Number: " + this.phoneNum + "<br>Description: " + this.description + "<br>Balance: " + this.balance + "</html>";
   }
 }

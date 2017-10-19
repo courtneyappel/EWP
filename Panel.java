@@ -332,6 +332,7 @@ public class Panel extends JPanel{
 					}
 				}
 	}
+
 	private class homeListener implements ActionListener // Goes to the home page
 	{
 		public void actionPerformed (ActionEvent event)

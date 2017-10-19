@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Frame {
 
@@ -13,6 +14,10 @@ public class Frame {
     		myFrame.getContentPane().add(new Panel());
 
     		myFrame.pack();
+
+				myFrame.setSize(new Dimension(500,500));
+
+				myFrame.setResizable(false);
 
     		myFrame.setVisible(true);
     }

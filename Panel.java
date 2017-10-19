@@ -1,78 +1,56 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 
 public class Panel extends JPanel{
 	//variable inits
 	ArrayList<Account> accountArray = new ArrayList();
 
-	String newAccountname;
-	String newAccountemail;
-	String newAccountphoneNum;
-	String newAccountdescription;
+	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
 
 	String user = "csadmin";
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top;
-	JLabel bottom;
+	JLabel top,bottom;
 
-	JButton home;
-	JButton logout;
+	JButton home,logout,login;
 
-	JTextField username;
-	JTextField password;
-	JButton login;
+	JTextField username,password;
 
-	JButton account;
-	JButton deposit;
-	JButton withdrawal;
+	JButton account,deposit,withdrawal;
 
-
-	JPanel topPanel = new JPanel();
+	JPanel topPanel = new JPanel();//(imageLabel now replaces topPanel)
 	JPanel loginPanel = new JPanel();
 	JPanel homePanel = new JPanel();
 
 	JPanel accountPanel = new JPanel();
-	JButton newAccount;
-	JButton viewAccount;
-	JButton deletAccount;
+	JButton newAccount,viewAccount,deletAccount;
 
 	JPanel accountCreationPanel = new JPanel();
 	JLabel enterInCredentials;
-	JTextField name;
-	JTextField email;
-	JTextField phoneNum;
-	JTextField description;
+	JTextField name,email,phoneNum,description;
 	JButton submitAccountInfo;
 
 	JPanel accountViewPanel = new JPanel();
-	JLabel listOfAccounts;
-	JLabel accountInfo;
+	JLabel listOfAccounts,accountInfo;
 	JTextField enteredAccount;
-	JButton displayEnteredInfo;
-	JButton deleteSelectedAccount;
+	JButton displayEnteredInfo,deleteSelectedAccount;
 	JButton confirmDeletion;
 	String accountToView;
+
+  //for header Image and Buttons (imageLabel now replaces topPanel)
+  ImageIcon backgroundPic = new ImageIcon("headerImage.png");
+	JLabel imageLabel = new JLabel();
+
  //start of the main panel
 	public Panel()
 	{
+
 		accountToView ="";
 		//main panel looks
 		setBackground(Color.lightGray);
@@ -80,20 +58,27 @@ public class Panel extends JPanel{
 		setLayout(new BorderLayout());
 
 		//create header
+		imageLabel.setIcon( backgroundPic );
+		imageLabel.setLayout(new BorderLayout());
+    topPanel.setOpaque(false); //
 		topPanel.setBackground(Color.lightGray);
-		topPanel.setLayout(new BorderLayout());
+		topPanel.setLayout(new FlowLayout());
 		top = new JLabel("Account Manager", JLabel.CENTER);
+		top.setFont(new Font("Tahoma", Font.BOLD, 24));
 		home = new JButton("HOME");
 		home.addActionListener(new homeListener());
 		logout = new JButton("Log Out");
 		logout.addActionListener(new logoutListener());
-		topPanel.add(top, BorderLayout.CENTER);
-		topPanel.add(home, BorderLayout.WEST);
-		topPanel.add(logout, BorderLayout.EAST);
-		add(topPanel, BorderLayout.PAGE_START);
+		topPanel.add(home);
+		topPanel.add(top);
+		topPanel.add(logout);
+		imageLabel.add(topPanel);
+		add(imageLabel, BorderLayout.PAGE_START);
+
 
 		//create footer
 		bottom = new JLabel("Developed with love by EWP 2017", JLabel.CENTER);
+		bottom.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(bottom, BorderLayout.PAGE_END);
 
 		//create login screen
@@ -109,9 +94,6 @@ public class Panel extends JPanel{
 		loginPanel.add(login);
 		add(loginPanel, BorderLayout.CENTER);
 		//remove(loginPanel);
-
-
-
 
 
 
@@ -241,13 +223,39 @@ public class Panel extends JPanel{
 		//I have a list of accounts and then you type in the name of the account you want to view and click on the button.
 
 
+		//Here are visual settings for things like buttons, textfields...etc
+		setButton(home); setButton(logout); setButton(login);
+		setButton(account); setButton(deposit); setButton(withdrawal);
+		setButton(newAccount); setButton(viewAccount); setButton(deletAccount);
+		setButton(submitAccountInfo); setButton(displayEnteredInfo);
+		setButton(deleteSelectedAccount); setButton(confirmDeletion);
+
+		setTextField(username); setTextField(password);
+		setTextField(name); setTextField(email);
+		setTextField(phoneNum); setTextField(description);
+		setTextField(enteredAccount);
+
+	}
+	//end of main "Panel()"
+
+
+
+
+	//methods for apply visual settings, I will focus on creating seperate classes for these so its not cluttered
+	public void setTextField(JTextField field){
+		field.setPreferredSize( new Dimension( 200, 42 ) );
+		field.setMaximumSize( new Dimension( 450, 42 ) );
+		field.setFont(new Font("Tahoma", Font.BOLD, 14));
 	}
 
+	public void setButton(JButton testButton){
 
+				testButton.setBackground(new Color(59, 89, 82));
+				testButton.setForeground(Color.WHITE);
+				testButton.setFocusPainted(false);
+				testButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 
-
-
-
+		}
 
 
 
@@ -324,6 +332,7 @@ public class Panel extends JPanel{
 					}
 				}
 	}
+
 	private class homeListener implements ActionListener // Goes to the home page
 	{
 		public void actionPerformed (ActionEvent event)
@@ -339,7 +348,8 @@ public class Panel extends JPanel{
 				accountCreationPanel.setBackground(Color.lightGray);
 				add(bottom, BorderLayout.PAGE_END);
 				add(homePanel, BorderLayout.CENTER);
-				add(topPanel, BorderLayout.PAGE_START);
+				//add(topPanel, BorderLayout.PAGE_START);
+				add(imageLabel, BorderLayout.PAGE_START);
 				accountViewPanel.removeAll();
 				listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
 				accountInfo.setText("");
@@ -367,7 +377,7 @@ public class Panel extends JPanel{
 					System.out.println("Invalid information");
 				}
 				else{
-					accountCreationPanel.setBackground(Color.lightGray);
+					accountCreationPanel.setBackground(Color.darkGray);
 					newAccountname = name.getText();
 					newAccountemail = email.getText();
 					newAccountphoneNum = phoneNum.getText();
@@ -375,6 +385,7 @@ public class Panel extends JPanel{
 					Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
 					accountArray.add(myAccount);
 					System.out.println("Account created");
+
 				}
 			}
 	}
@@ -385,7 +396,8 @@ public class Panel extends JPanel{
 				removeAll();
 				add(bottom, BorderLayout.PAGE_END);
 				add(accountViewPanel, BorderLayout.CENTER);
-				add(topPanel, BorderLayout.PAGE_START);
+				//add(topPanel, BorderLayout.PAGE_START);
+				add(imageLabel, BorderLayout.PAGE_START);
 				Iterator it = accountArray.iterator();
 				while (it.hasNext()){
 
@@ -406,7 +418,8 @@ public class Panel extends JPanel{
 				removeAll();
 				add(bottom, BorderLayout.PAGE_END);
 				add(accountViewPanel, BorderLayout.CENTER);
-				add(topPanel, BorderLayout.PAGE_START);
+				//add(topPanel, BorderLayout.PAGE_START);
+				add(imageLabel, BorderLayout.PAGE_START);
 				Iterator it = accountArray.iterator();
 				while (it.hasNext()){
 
@@ -424,7 +437,8 @@ public class Panel extends JPanel{
 				removeAll();
 				add(bottom, BorderLayout.PAGE_END);
 				add(accountCreationPanel, BorderLayout.CENTER);
-				add(topPanel, BorderLayout.PAGE_START);
+				//add(topPanel, BorderLayout.PAGE_START);
+				add(imageLabel, BorderLayout.PAGE_START);
 				revalidate();
 				repaint();
 
@@ -456,10 +470,11 @@ public class Panel extends JPanel{
 
 				add(bottom, BorderLayout.PAGE_END);
 				add(loginPanel, BorderLayout.CENTER);
-				add(topPanel, BorderLayout.PAGE_START);
+				//add(topPanel, BorderLayout.PAGE_START);
+				add(imageLabel, BorderLayout.PAGE_START);
 				repaint();
 
-				setBackground(Color.red);
+				//setBackground(Color.red);
 				username.setText("Username");
 				password.setText("Password");
 
@@ -486,7 +501,7 @@ public class Panel extends JPanel{
 				userEntry = null;
 				pwEntry = null;
 				setBackground(Color.lightGray);
-				topPanel.setBackground(Color.lightGray);
+				//topPanel.setBackground(Color.lightGray);
 				loginPanel.setBackground(Color.lightGray);
 
 				remove(loginPanel);
@@ -495,9 +510,9 @@ public class Panel extends JPanel{
 			}
 			else
 			{
-				setBackground(Color.red);
-				loginPanel.setBackground(Color.red);
-				topPanel.setBackground(Color.red);
+				setBackground(Color.darkGray);
+				loginPanel.setBackground(Color.darkGray);
+				//topPanel.setBackground(Color.red);
 			}
 
 
@@ -511,7 +526,8 @@ public class Panel extends JPanel{
 			System.out.println("Account");
 			removeAll();
 			add(bottom, BorderLayout.PAGE_END);
-			add(topPanel, BorderLayout.PAGE_START);
+			//add(topPanel, BorderLayout.PAGE_START);
+			add(imageLabel, BorderLayout.PAGE_START);
 			add(accountPanel, BorderLayout.CENTER);
 			revalidate();
 			repaint();
@@ -534,6 +550,5 @@ public class Panel extends JPanel{
 			System.out.println("Withdrawal");
         }
 	}
-
 
 }

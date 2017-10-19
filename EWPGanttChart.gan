@@ -60,7 +60,8 @@ Wyatt - 2 hours]]></notes>
             </task>
             <task id="4" name="sprint 1" color="#8cb6ce" meeting="false" start="2017-10-10" duration="10" complete="0" expand="true">
                 <notes><![CDATA[Jeff - 3 hours
-Josh - 5 hours]]></notes>
+Josh - 5 hours
+Wyatt - 3 hours]]></notes>
                 <customproperty taskproperty-id="tpc0" value="Group"/>
             </task>
         </task>

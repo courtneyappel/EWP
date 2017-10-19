@@ -377,8 +377,7 @@ public class Panel extends JPanel{
 					System.out.println("Invalid information");
 				}
 				else{
-					accountCreationPanel.setBackground(Color.lightGray);
-					setBackground(Color.darkGray);
+					accountCreationPanel.setBackground(Color.darkGray);
 					newAccountname = name.getText();
 					newAccountemail = email.getText();
 					newAccountphoneNum = phoneNum.getText();

@@ -250,7 +250,7 @@ public class Panel extends JPanel{
 
 	public void setButton(JButton testButton){
 
-				testButton.setBackground(new Color(59, 89, 82));
+				testButton.setBackground(Color.darkGray);
 				testButton.setForeground(Color.WHITE);
 				testButton.setFocusPainted(false);
 				testButton.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -377,7 +377,8 @@ public class Panel extends JPanel{
 					System.out.println("Invalid information");
 				}
 				else{
-					accountCreationPanel.setBackground(Color.darkGray);
+					accountCreationPanel.setBackground(Color.lightGray);
+					setBackground(Color.darkGray);
 					newAccountname = name.getText();
 					newAccountemail = email.getText();
 					newAccountphoneNum = phoneNum.getText();

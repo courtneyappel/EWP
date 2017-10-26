@@ -508,6 +508,7 @@ public class Panel extends JPanel{
 				remove(loginPanel);
 				add(homePanel, BorderLayout.CENTER);
 				revalidate();
+				repaint();
 			}
 			else
 			{

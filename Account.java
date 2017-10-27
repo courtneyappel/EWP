@@ -23,4 +23,7 @@ public class Account{
   public String getAllInfo(){
     return "<html>Name: " + this.name + "<br>Email: " + this.email + "<br>Phone Number: " + this.phoneNum + "<br>Description: " + this.description + "<br>Balance: " + this.balance + "</html>";
   }
+  public void setBalance(double balance){
+    this.balance = balance;
+  }
 }

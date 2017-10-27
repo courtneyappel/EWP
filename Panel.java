@@ -5,12 +5,16 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-public class Panel extends JPanel{
+public class Panel extends JPanel {
 	//variable inits
 	ArrayList<Account> accountArray = new ArrayList();
 
 	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
+	double newAccountBalance;
 
 	String user = "csadmin";
 	String pw = "csci323";
@@ -48,8 +52,27 @@ public class Panel extends JPanel{
 	JLabel imageLabel = new JLabel();
 
  //start of the main panel
-	public Panel()
+	public Panel() throws FileNotFoundException
 	{
+		//read in file
+		File myFile = new File("SaveFile.txt");
+		Scanner myScan = new Scanner(myFile);
+		while(myScan.hasNextLine()){
+			String line = myScan.nextLine();
+			Scanner lineScan = new Scanner(line);
+			lineScan.useDelimiter(",");
+		  //TODO: see if this works without a while loop because I don't think it needs one.
+			 newAccountname = lineScan.next();
+			 newAccountemail = lineScan.next();
+			 newAccountphoneNum = lineScan.next();
+			 newAccountdescription = lineScan.next();
+			 newAccountBalance = lineScan.nextDouble();
+
+			Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
+			myAccount.setBalance(newAccountBalance);
+			accountArray.add(myAccount);
+
+		}
 
 		accountToView ="";
 		//main panel looks
@@ -250,6 +273,8 @@ public class Panel extends JPanel{
 
 	public void setButton(JButton testButton){
 
+				testButton.setOpaque(true);
+				testButton.setBorderPainted(false);
 				testButton.setBackground(Color.darkGray);
 				testButton.setForeground(Color.WHITE);
 				testButton.setFocusPainted(false);

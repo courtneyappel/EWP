@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class Panel extends JPanel {
 	//variable inits
@@ -47,6 +49,9 @@ public class Panel extends JPanel {
 	JButton confirmDeletion;
 	String accountToView;
 
+
+	String fileName;
+
   //for header Image and Buttons (imageLabel now replaces topPanel)
   ImageIcon backgroundPic = new ImageIcon("headerImage.png");
 	JLabel imageLabel = new JLabel();
@@ -55,7 +60,8 @@ public class Panel extends JPanel {
 	public Panel() throws FileNotFoundException
 	{
 		//read in file
-		File myFile = new File("SaveFile.txt");
+		fileName = "SaveFile.txt";
+		File myFile = new File(fileName);
 		Scanner myScan = new Scanner(myFile);
 		while(myScan.hasNextLine()){
 			String line = myScan.nextLine();
@@ -411,6 +417,15 @@ public class Panel extends JPanel {
 					Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
 					accountArray.add(myAccount);
 					System.out.println("Account created");
+					try{
+						FileWriter myWriter = new FileWriter("SaveFile.txt",true);
+						myWriter.write(newAccountname+","+newAccountemail+","+newAccountphoneNum+","+newAccountdescription+",0.0");
+						myWriter.write("\n");
+						myWriter.close();
+					}
+					catch(IOException ioe){
+						System.err.println("You done fucked up.");
+					}
 
 				}
 			}

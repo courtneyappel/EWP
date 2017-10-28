@@ -297,6 +297,15 @@ public class Panel extends JPanel {
 	private class confirmDeletionListener implements ActionListener{
 		public void actionPerformed (ActionEvent enver){
 			Iterator<Account> it = accountArray.iterator();
+			try{
+				FileWriter myWriter = new FileWriter("SaveFile.txt",false); // Delete file to be overwritten later.
+				myWriter.write("");
+				myWriter.close();
+			}
+			catch(IOException ioe){
+				System.err.println("You done goofed");
+			}
+
 			while (it.hasNext()){
 				Account current = it.next();
 				if(accountToView.equalsIgnoreCase(current.toString())){
@@ -306,6 +315,17 @@ public class Panel extends JPanel {
 					accountViewPanel.remove(confirmDeletion);
 					repaint();
 					revalidate();
+				}
+				else{
+					try{ //Rewrite file.
+						FileWriter Writer = new FileWriter("SaveFile.txt",true);
+						Writer.write(current.getName()+","+current.getEmail()+","+current.getPhoneNum()+","+current.getDescription()+","+current.getBalance());
+						Writer.write("\n");
+						Writer.close();
+					}
+					catch(IOException ioe){
+						System.err.println("You done goofed");
+					}
 				}
 			}
 
@@ -424,7 +444,7 @@ public class Panel extends JPanel {
 						myWriter.close();
 					}
 					catch(IOException ioe){
-						System.err.println("You done fucked up.");
+						System.err.println("You done goofed");
 					}
 
 				}

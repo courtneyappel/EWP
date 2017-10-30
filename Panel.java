@@ -5,12 +5,18 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.util.Scanner;
+import java.io.IOException;
 
-public class Panel extends JPanel{
+public class Panel extends JPanel {
 	//variable inits
 	ArrayList<Account> accountArray = new ArrayList();
 
 	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
+	double newAccountBalance;
 
 	String user = "csadmin";
 	String pw = "csci323";
@@ -43,13 +49,36 @@ public class Panel extends JPanel{
 	JButton confirmDeletion;
 	String accountToView;
 
+
+	String fileName;
+
   //for header Image and Buttons (imageLabel now replaces topPanel)
   ImageIcon backgroundPic = new ImageIcon("headerImage.png");
 	JLabel imageLabel = new JLabel();
 
  //start of the main panel
-	public Panel()
+	public Panel() throws FileNotFoundException
 	{
+		//read in file
+		fileName = "SaveFile.txt";
+		File myFile = new File(fileName);
+		Scanner myScan = new Scanner(myFile);
+		while(myScan.hasNextLine()){
+			String line = myScan.nextLine();
+			Scanner lineScan = new Scanner(line);
+			lineScan.useDelimiter(",");
+		  //TODO: see if this works without a while loop because I don't think it needs one.
+			 newAccountname = lineScan.next();
+			 newAccountemail = lineScan.next();
+			 newAccountphoneNum = lineScan.next();
+			 newAccountdescription = lineScan.next();
+			 newAccountBalance = lineScan.nextDouble();
+
+			Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
+			myAccount.setBalance(newAccountBalance);
+			accountArray.add(myAccount);
+
+		}
 
 		accountToView ="";
 		//main panel looks
@@ -250,6 +279,8 @@ public class Panel extends JPanel{
 
 	public void setButton(JButton testButton){
 
+				testButton.setOpaque(true);
+				testButton.setBorderPainted(false);
 				testButton.setBackground(Color.darkGray);
 				testButton.setForeground(Color.WHITE);
 				testButton.setFocusPainted(false);
@@ -266,6 +297,15 @@ public class Panel extends JPanel{
 	private class confirmDeletionListener implements ActionListener{
 		public void actionPerformed (ActionEvent enver){
 			Iterator<Account> it = accountArray.iterator();
+			try{
+				FileWriter myWriter = new FileWriter("SaveFile.txt",false); // Delete file to be overwritten later.
+				myWriter.write("");
+				myWriter.close();
+			}
+			catch(IOException ioe){
+				System.err.println("You done goofed");
+			}
+
 			while (it.hasNext()){
 				Account current = it.next();
 				if(accountToView.equalsIgnoreCase(current.toString())){
@@ -275,6 +315,17 @@ public class Panel extends JPanel{
 					accountViewPanel.remove(confirmDeletion);
 					repaint();
 					revalidate();
+				}
+				else{
+					try{ //Rewrite file.
+						FileWriter Writer = new FileWriter("SaveFile.txt",true);
+						Writer.write(current.getName()+","+current.getEmail()+","+current.getPhoneNum()+","+current.getDescription()+","+current.getBalance());
+						Writer.write("\n");
+						Writer.close();
+					}
+					catch(IOException ioe){
+						System.err.println("You done goofed");
+					}
 				}
 			}
 
@@ -386,6 +437,15 @@ public class Panel extends JPanel{
 					Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
 					accountArray.add(myAccount);
 					System.out.println("Account created");
+					try{
+						FileWriter myWriter = new FileWriter("SaveFile.txt",true);
+						myWriter.write(newAccountname+","+newAccountemail+","+newAccountphoneNum+","+newAccountdescription+",0.0");
+						myWriter.write("\n");
+						myWriter.close();
+					}
+					catch(IOException ioe){
+						System.err.println("You done goofed");
+					}
 
 				}
 			}

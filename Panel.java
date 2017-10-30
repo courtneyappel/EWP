@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -275,6 +277,17 @@ public class Panel extends JPanel {
 		field.setPreferredSize( new Dimension( 200, 42 ) );
 		field.setMaximumSize( new Dimension( 450, 42 ) );
 		field.setFont(new Font("Tahoma", Font.BOLD, 14));
+		field.addFocusListener(new FocusListener(){ //Sets the text to null on click
+        @Override
+        public void focusGained(FocusEvent e){
+            field.setText("");
+        }
+
+				@Override
+				public void focusLost(FocusEvent e) {
+
+				}
+    });
 	}
 
 	public void setButton(JButton testButton){
@@ -572,8 +585,8 @@ public class Panel extends JPanel {
 			}
 			else
 			{
-				setBackground(Color.darkGray);
-				loginPanel.setBackground(Color.darkGray);
+				setBackground(Color.red);
+				loginPanel.setBackground(Color.red);
 				//topPanel.setBackground(Color.red);
 			}
 

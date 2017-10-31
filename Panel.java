@@ -39,6 +39,15 @@ public class Panel extends JPanel {
 	JPanel accountPanel = new JPanel();
 	JButton newAccount,viewAccount,deletAccount;
 
+	JPanel depositPanel = new JPanel();
+	JTextField dAmount, dDate, dAccount, dName;
+	JButton depositButton;
+	JLabel dMessage;
+	JPanel withdrawalPanel = new JPanel();
+	JTextField wAmount, wDate, wAccount, wName;
+	JButton withdrawalButton;
+	JLabel wMessage;
+
 	JPanel accountCreationPanel = new JPanel();
 	JLabel enterInCredentials;
 	JTextField name,email,phoneNum,description;
@@ -170,10 +179,41 @@ public class Panel extends JPanel {
 		homePanel.add(Box.createRigidArea(new Dimension (0,25)));
 		homePanel.add(withdrawal);
 
+		//withdrawal Panel
+		withdrawalPanel.setBackground(Color.lightGray);
+		withdrawalPanel.setLayout(new BoxLayout(withdrawalPanel, BoxLayout.Y_AXIS));
+		wName = new JTextField("Name");
+		wAccount = new JTextField("Account Name");
+		wAmount = new JTextField("Deposit Amount");
+		wDate = new JTextField("Date (yy/mm/yyy)");
+		withdrawalButton = new JButton("Submit Deposit");
+		wMessage = new JLabel("");
 
+		withdrawalButton.addActionListener(new withdrawalButtonListener());
+		withdrawalPanel.add(wName);
+		withdrawalPanel.add(wAccount);
+		withdrawalPanel.add(wAmount);
+		withdrawalPanel.add(wDate);
+		withdrawalPanel.add(withdrawalButton);
+		withdrawalPanel.add(wMessage);
 
+		//deposit Panel
+		depositPanel.setBackground(Color.lightGray);
+		depositPanel.setLayout(new BoxLayout(depositPanel, BoxLayout.Y_AXIS));
+		dName = new JTextField("Name");
+		dAccount = new JTextField("Account Name");
+		dAmount = new JTextField("Deposit Amount");
+		dDate = new JTextField("Date (yy/mm/yyy)");
+		depositButton = new JButton("Submit Deposit");
+		dMessage = new JLabel("");
 
-
+		depositButton.addActionListener(new depositButtonListener());
+		depositPanel.add(dName);
+		depositPanel.add(dAccount);
+		depositPanel.add(dAmount);
+		depositPanel.add(dDate);
+		depositPanel.add(depositButton);
+		depositPanel.add(dMessage);
 
 		//Account Panel
 		accountPanel.setBackground(Color.lightGray);
@@ -266,6 +306,17 @@ public class Panel extends JPanel {
 		setTextField(phoneNum); setTextField(description);
 		setTextField(enteredAccount);
 
+		setTextField(dName);
+		setTextField(dAccount);
+		setTextField(dAmount);
+		setTextField(dDate);
+		setButton(depositButton);
+
+		setTextField(wName);
+		setTextField(wAccount);
+		setTextField(wAmount);
+		setTextField(wDate);
+		setButton(withdrawalButton);
 	}
 	//end of main "Panel()"
 
@@ -615,7 +666,22 @@ public class Panel extends JPanel {
 		public void actionPerformed (ActionEvent event)
         {
 			System.out.println("Deposit");
+			removeAll();
+			add(bottom, BorderLayout.PAGE_END);
+			//add(topPanel, BorderLayout.PAGE_START);
+			add(imageLabel, BorderLayout.PAGE_START);
+			add(depositPanel, BorderLayout.CENTER);
+			revalidate();
+			repaint();
         }
+	}
+
+//submit deposit button listener
+	private class depositButtonListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+			System.out.println("Deposit has been Made");
+			dMessage.setText("Congrats! You have made a deposit!");
+		}
 	}
 
 	private class withdrawalListener implements ActionListener // GButton for creating a withdrawl
@@ -623,7 +689,21 @@ public class Panel extends JPanel {
 		public void actionPerformed (ActionEvent event)
         {
 			System.out.println("Withdrawal");
+			removeAll();
+			add(bottom, BorderLayout.PAGE_END);
+			//add(topPanel, BorderLayout.PAGE_START);
+			add(imageLabel, BorderLayout.PAGE_START);
+			add(withdrawalPanel, BorderLayout.CENTER);
+			revalidate();
+			repaint();
         }
+	}
+//submit withdrawal button listener
+	private class withdrawalButtonListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+			System.out.println("Withdrawal has been Made");
+			wMessage.setText("Congrats! You have made a withdrawal!");
+		}
 	}
 
 }

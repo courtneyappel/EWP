@@ -1,0 +1,5 @@
+Bob,Trish,100.0,11/01/17,Transaction Type:Deposit Payment Type:Check
+Billy,Michael,15.0,11/01/17,Transaction Type:Withdrawal Payment Type:N/A
+Vince,Trish,55.0,11/01/17,Transaction Type:Deposit Payment Type:Check
+Vince,Trish,5.5,11/01/17,Transaction Type:Withdrawal Payment Type:N/A
+Guy,Michael,40.0,11/01/17,Transaction Type:Deposit Payment Type:Check

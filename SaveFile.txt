@@ -1,2 +1,2 @@
-Trish,patricia.duce@umontana.edu,406-243-2866,Trish's Camp Account,0.0
-Michael,michael.cassens@umontana.edu,415-787-0577,Michael's Camp Account,0.0
+Trish,patricia.duce@umontana.edu,406-243-2866,Trish's Camp Account,843.5
+Michael,michael.cassens@umontana.edu,415-787-0577,Michael's Camp Account,921.0

@@ -16,7 +16,8 @@ import java.io.IOException;
 public class Panel extends JPanel {
 	//variable inits
 	ArrayList<Account> accountArray = new ArrayList();
-
+	ArrayList<Transaction> transactionArray = new ArrayList();
+	
 	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
 	String newWithdrawalName, newWithdrawalDate, newWithdrawalAmount, newWithdrawalAccount;
 	String newDepositName, newDepositDate, newDepositAmount, newDepositAccount;
@@ -185,11 +186,11 @@ public class Panel extends JPanel {
 		//withdrawal Panel
 		withdrawalPanel.setBackground(Color.lightGray);
 		withdrawalPanel.setLayout(new BoxLayout(withdrawalPanel, BoxLayout.Y_AXIS));
-		wName = new JTextField("Name");
+		wName = new JTextField("Your Name");
 		wAccount = new JTextField("Account Name");
-		wAmount = new JTextField("Deposit Amount");
+		wAmount = new JTextField("Withdrawal Amount");
 		wDate = new JTextField("Date (mm/dd/yyyy)");
-		withdrawalButton = new JButton("Submit Deposit");
+		withdrawalButton = new JButton("Withdraw");
 		wMessage = new JLabel("");
 
 		withdrawalButton.addActionListener(new withdrawalButtonListener());
@@ -203,7 +204,7 @@ public class Panel extends JPanel {
 		//deposit Panel
 		depositPanel.setBackground(Color.lightGray);
 		depositPanel.setLayout(new BoxLayout(depositPanel, BoxLayout.Y_AXIS));
-		dName = new JTextField("Name");
+		dName = new JTextField("Your Name");
 		dAccount = new JTextField("Account Name");
 		dAmount = new JTextField("Deposit Amount");
 		dDate = new JTextField("Date (mm/dd/yyyy)");
@@ -366,9 +367,43 @@ public class Panel extends JPanel {
 
 		}
 
+	public void updateAccountArray() throws FileNotFoundException {
+	    
+	    accountArray.clear();
+	    
+        File myFile = new File("SaveFile.txt");
+        Scanner myScan = new Scanner(myFile);
+        while(myScan.hasNextLine()){
+            String line = myScan.nextLine();
+            Scanner lineScan = new Scanner(line);
+            lineScan.useDelimiter(",");
+          //TODO: see if this works without a while loop because I don't think it needs one.
+             newAccountname = lineScan.next();
+             newAccountemail = lineScan.next();
+             newAccountphoneNum = lineScan.next();
+             newAccountdescription = lineScan.next();
+             newAccountBalance = lineScan.nextDouble();
 
+            Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
+            myAccount.setBalance(newAccountBalance);
+            accountArray.add(myAccount);
+        }
+	}
+	
+	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
+        try{
+            FileWriter Writer = new FileWriter("TransactionFile.txt",true);
+            Writer.write(transac.getName()+","+transac.getAccount()+","+transac.getAmount()+","+transac.getDate()+","+transac.getType());
+            Writer.write("\n");
+            Writer.close();
+        }
+        catch(IOException ioe){
+            System.err.println("You done goofed");
+        }
+	}
 
-
+	
+	
 
 
 	//Button listeners
@@ -488,6 +523,10 @@ public class Panel extends JPanel {
 				accountViewPanel.add(enteredAccount);
 				accountViewPanel.add(displayEnteredInfo);
 				accountToView = "";
+				dMessage.setText("");
+				depositButton.setEnabled(true);
+				wMessage.setText("");
+				withdrawalButton.setEnabled(true);
 				repaint();
 			}
         }
@@ -685,6 +724,11 @@ public class Panel extends JPanel {
 			//add(topPanel, BorderLayout.PAGE_START);
 			add(imageLabel, BorderLayout.PAGE_START);
 			add(depositPanel, BorderLayout.CENTER);
+		    dName.setText("Your Name");
+	        dAccount.setText("Account Name");
+	        dAmount.setText("Deposit Amount");
+	        dDate.setText("Date (mm/dd/yyyy)");
+	        depositButton.setText("Submit Deposit");
 			revalidate();
 			repaint();
         }
@@ -703,13 +747,28 @@ public class Panel extends JPanel {
 				depositPanel.setBackground(Color.red);
 			}
 			else{
+			    accountToView = dAccount.getText();
 				depositPanel.setBackground(Color.lightGray);
 				newDepositName = dName.getText();
 				newDepositAccount = dAccount.getText();
 				newDepositAmount = dAmount.getText();
+				double tempDA = Double.parseDouble(newDepositAmount);
 				newDepositDate = dDate.getText();
+                Transaction myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);
+                //Different transactions based on either Credit or Check/ note the 2 booleans at the end.
+                //Transaction myTrasnac = new Transaction(newWithdrawalName, newWithdrawalAccount, tempDA, newWithdrawalDate, false, accountArray, accountToView,false, true);
+                transactionArray.add(myTransaction);
+                saveTransactionArray(transactionArray,myTransaction);
+                System.out.println("Transaction created");
 				System.out.println("Thank you, "+newDepositName+". The amount of $"+newDepositAmount+" has been added to account "+newDepositAccount+" on "+newDepositDate);
 				dMessage.setText("<html>Thank you, "+newDepositName+".<br> The amount of $"+newDepositAmount+" has been added to account "+newDepositAccount+" on "+newDepositDate);
+				depositButton.setEnabled(false);
+				try {
+                    updateAccountArray();
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 			}
 		}
 	}
@@ -724,6 +783,11 @@ public class Panel extends JPanel {
 			//add(topPanel, BorderLayout.PAGE_START);
 			add(imageLabel, BorderLayout.PAGE_START);
 			add(withdrawalPanel, BorderLayout.CENTER);
+		    wName.setText("Your Name");
+	        wAccount.setText("Account Name");
+	        wAmount.setText("Withdrawal Amount");
+	        wDate.setText("Date (mm/dd/yyyy)");
+	        withdrawalButton.setText("Withdraw");
 			revalidate();
 			repaint();
         }
@@ -741,13 +805,26 @@ public class Panel extends JPanel {
 				withdrawalPanel.setBackground(Color.red);
 			}
 			else{
+			    accountToView = wAccount.getText();
 				withdrawalPanel.setBackground(Color.lightGray);
 				newWithdrawalName = wName.getText();
 				newWithdrawalAccount = wAccount.getText();
 				newWithdrawalAmount = wAmount.getText();
+				double tempWA = Double.parseDouble(newWithdrawalAmount);
 				newWithdrawalDate = wDate.getText();
-				System.out.println("Thank you, "+newWithdrawalName+". The amount of $"+newWithdrawalAmount+" has been added to account "+newWithdrawalAccount+" on "+newWithdrawalDate);
-				wMessage.setText("<html>Thank you, "+newWithdrawalName+".<br> The amount of $"+newWithdrawalAmount+" has been added to account "+newWithdrawalAccount+" on "+newWithdrawalDate);
+                Transaction myTransaction = new Transaction(newWithdrawalName, newWithdrawalAccount, tempWA, newWithdrawalDate, true, accountArray, accountToView, false, false);
+                transactionArray.add(myTransaction);
+                saveTransactionArray(transactionArray,myTransaction);
+                System.out.println("Transaction created");
+				System.out.println("Thank you, "+newWithdrawalName+". The amount of $"+newWithdrawalAmount+" has been withdrawn from the account "+newWithdrawalAccount+" on "+newWithdrawalDate);
+				wMessage.setText("<html>Thank you, "+newWithdrawalName+".<br> The amount of $"+newWithdrawalAmount+" has been withdrawn from the account "+newWithdrawalAccount+" on "+newWithdrawalDate);
+                withdrawalButton.setEnabled(false);
+				try {
+                    updateAccountArray();
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 			}
 
 		}

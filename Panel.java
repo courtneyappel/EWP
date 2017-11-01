@@ -18,6 +18,8 @@ public class Panel extends JPanel {
 	ArrayList<Account> accountArray = new ArrayList();
 
 	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
+	String newWithdrawalName, newWithdrawalDate, newWithdrawalAmount, newWithdrawalAccount;
+	String newDepositName, newDepositDate, newDepositAmount, newDepositAccount;
 	double newAccountBalance;
 
 	String user = "csadmin";
@@ -185,7 +187,7 @@ public class Panel extends JPanel {
 		wName = new JTextField("Name");
 		wAccount = new JTextField("Account Name");
 		wAmount = new JTextField("Deposit Amount");
-		wDate = new JTextField("Date (yy/mm/yyy)");
+		wDate = new JTextField("Date (mm/dd/yyyy)");
 		withdrawalButton = new JButton("Submit Deposit");
 		wMessage = new JLabel("");
 
@@ -203,7 +205,7 @@ public class Panel extends JPanel {
 		dName = new JTextField("Name");
 		dAccount = new JTextField("Account Name");
 		dAmount = new JTextField("Deposit Amount");
-		dDate = new JTextField("Date (yy/mm/yyy)");
+		dDate = new JTextField("Date (mm/dd/yyyy)");
 		depositButton = new JButton("Submit Deposit");
 		dMessage = new JLabel("");
 
@@ -681,6 +683,22 @@ public class Panel extends JPanel {
 		public void actionPerformed (ActionEvent event){
 			System.out.println("Deposit has been Made");
 			dMessage.setText("Congrats! You have made a deposit!");
+			if (dName.getText().equalsIgnoreCase("") || dAccount.getText().equalsIgnoreCase("") ||
+			dAmount.getText().equalsIgnoreCase("") || dDate.getText().equalsIgnoreCase("") ||
+			dName.getText().equalsIgnoreCase("Name") || dAccount.getText().equalsIgnoreCase("Account Name") ||
+			dAmount.getText().equalsIgnoreCase("Deposit Amount") || dDate.getText().equalsIgnoreCase("Date (mm/dd/yyyy)")){
+				dMessage.setText("Please Fill All Fields");
+				depositPanel.setBackground(Color.red);
+			}
+			else{
+				depositPanel.setBackground(Color.lightGray);
+				newDepositName = dName.getText();
+				newDepositAccount = dAccount.getText();
+				newDepositAmount = dAmount.getText();
+				newDepositDate = dDate.getText();
+				System.out.println("Thank you, "+newDepositName+". The amount of $"+newDepositAmount+" has been added to account "+newDepositAccount+" on "+newDepositDate);
+				dMessage.setText("<html>Thank you, "+newDepositName+".<br> The amount of $"+newDepositAmount+" has been added to account "+newDepositAccount+" on "+newDepositDate);
+			}
 		}
 	}
 
@@ -703,6 +721,23 @@ public class Panel extends JPanel {
 		public void actionPerformed (ActionEvent event){
 			System.out.println("Withdrawal has been Made");
 			wMessage.setText("Congrats! You have made a withdrawal!");
+			if (wName.getText().equalsIgnoreCase("") || wAccount.getText().equalsIgnoreCase("") ||
+			wAmount.getText().equalsIgnoreCase("") || wDate.getText().equalsIgnoreCase("") ||
+			wName.getText().equalsIgnoreCase("Name") || wAccount.getText().equalsIgnoreCase("Account Name") ||
+			wAmount.getText().equalsIgnoreCase("Deposit Amount") || wDate.getText().equalsIgnoreCase("Date (mm/dd/yyyy)")){
+				wMessage.setText("Please Fill All Fields");
+				withdrawalPanel.setBackground(Color.red);
+			}
+			else{
+				withdrawalPanel.setBackground(Color.lightGray);
+				newWithdrawalName = wName.getText();
+				newWithdrawalAccount = wAccount.getText();
+				newWithdrawalAmount = wAmount.getText();
+				newWithdrawalDate = wDate.getText();
+				System.out.println("Thank you, "+newWithdrawalName+". The amount of $"+newWithdrawalAmount+" has been added to account "+newWithdrawalAccount+" on "+newWithdrawalDate);
+				wMessage.setText("<html>Thank you, "+newWithdrawalName+".<br> The amount of $"+newWithdrawalAmount+" has been added to account "+newWithdrawalAccount+" on "+newWithdrawalDate);
+			}
+
 		}
 	}
 

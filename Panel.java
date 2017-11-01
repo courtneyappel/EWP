@@ -43,6 +43,7 @@ public class Panel extends JPanel {
 
 	JPanel depositPanel = new JPanel();
 	JTextField dAmount, dDate, dAccount, dName;
+	JCheckBox cc, check;
 	JButton depositButton;
 	JLabel dMessage;
 	JPanel withdrawalPanel = new JPanel();
@@ -209,11 +210,22 @@ public class Panel extends JPanel {
 		depositButton = new JButton("Submit Deposit");
 		dMessage = new JLabel("");
 
+		cc = new JCheckBox("Credit Card");
+    //cc.setMnemonic(KeyEvent.VK_C);
+    cc.setSelected(true);
+		check = new JCheckBox("Check");
+		//check.setMnemonic(KeyEvent.VK_C);
+		check.setSelected(false);
+
 		depositButton.addActionListener(new depositButtonListener());
 		depositPanel.add(dName);
 		depositPanel.add(dAccount);
 		depositPanel.add(dAmount);
 		depositPanel.add(dDate);
+
+		depositPanel.add(cc);
+		depositPanel.add(check);
+
 		depositPanel.add(depositButton);
 		depositPanel.add(dMessage);
 

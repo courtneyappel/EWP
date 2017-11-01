@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,8 +16,11 @@ import java.io.IOException;
 public class Panel extends JPanel {
 	//variable inits
 	ArrayList<Account> accountArray = new ArrayList();
-
+	ArrayList<Transaction> transactionArray = new ArrayList();
+	
 	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
+	String newWithdrawalName, newWithdrawalDate, newWithdrawalAmount, newWithdrawalAccount;
+	String newDepositName, newDepositDate, newDepositAmount, newDepositAccount;
 	double newAccountBalance;
 
 	String user = "csadmin";
@@ -36,6 +41,16 @@ public class Panel extends JPanel {
 
 	JPanel accountPanel = new JPanel();
 	JButton newAccount,viewAccount,deletAccount;
+
+	JPanel depositPanel = new JPanel();
+	JTextField dAmount, dDate, dAccount, dName;
+	JCheckBox cc, check;
+	JButton depositButton;
+	JLabel dMessage;
+	JPanel withdrawalPanel = new JPanel();
+	JTextField wAmount, wDate, wAccount, wName;
+	JButton withdrawalButton;
+	JLabel wMessage;
 
 	JPanel accountCreationPanel = new JPanel();
 	JLabel enterInCredentials;
@@ -168,10 +183,52 @@ public class Panel extends JPanel {
 		homePanel.add(Box.createRigidArea(new Dimension (0,25)));
 		homePanel.add(withdrawal);
 
+		//withdrawal Panel
+		withdrawalPanel.setBackground(Color.lightGray);
+		withdrawalPanel.setLayout(new BoxLayout(withdrawalPanel, BoxLayout.Y_AXIS));
+		wName = new JTextField("Your Name");
+		wAccount = new JTextField("Account Name");
+		wAmount = new JTextField("Withdrawal Amount");
+		wDate = new JTextField("Date (mm/dd/yyyy)");
+		withdrawalButton = new JButton("Withdraw");
+		wMessage = new JLabel("");
 
+		withdrawalButton.addActionListener(new withdrawalButtonListener());
+		withdrawalPanel.add(wName);
+		withdrawalPanel.add(wAccount);
+		withdrawalPanel.add(wAmount);
+		withdrawalPanel.add(wDate);
+		withdrawalPanel.add(withdrawalButton);
+		withdrawalPanel.add(wMessage);
 
+		//deposit Panel
+		depositPanel.setBackground(Color.lightGray);
+		depositPanel.setLayout(new BoxLayout(depositPanel, BoxLayout.Y_AXIS));
+		dName = new JTextField("Your Name");
+		dAccount = new JTextField("Account Name");
+		dAmount = new JTextField("Deposit Amount");
+		dDate = new JTextField("Date (mm/dd/yyyy)");
+		depositButton = new JButton("Submit Deposit");
+		dMessage = new JLabel("");
 
+		cc = new JCheckBox("Credit Card");
+    //cc.setMnemonic(KeyEvent.VK_C);
+    cc.setSelected(true);
+		check = new JCheckBox("Check");
+		//check.setMnemonic(KeyEvent.VK_C);
+		check.setSelected(false);
 
+		depositButton.addActionListener(new depositButtonListener());
+		depositPanel.add(dName);
+		depositPanel.add(dAccount);
+		depositPanel.add(dAmount);
+		depositPanel.add(dDate);
+
+		depositPanel.add(cc);
+		depositPanel.add(check);
+
+		depositPanel.add(depositButton);
+		depositPanel.add(dMessage);
 
 		//Account Panel
 		accountPanel.setBackground(Color.lightGray);
@@ -264,6 +321,17 @@ public class Panel extends JPanel {
 		setTextField(phoneNum); setTextField(description);
 		setTextField(enteredAccount);
 
+		setTextField(dName);
+		setTextField(dAccount);
+		setTextField(dAmount);
+		setTextField(dDate);
+		setButton(depositButton);
+
+		setTextField(wName);
+		setTextField(wAccount);
+		setTextField(wAmount);
+		setTextField(wDate);
+		setButton(withdrawalButton);
 	}
 	//end of main "Panel()"
 
@@ -275,6 +343,17 @@ public class Panel extends JPanel {
 		field.setPreferredSize( new Dimension( 200, 42 ) );
 		field.setMaximumSize( new Dimension( 450, 42 ) );
 		field.setFont(new Font("Tahoma", Font.BOLD, 14));
+		field.addFocusListener(new FocusListener(){ //Sets the text to null on click
+        @Override
+        public void focusGained(FocusEvent e){
+            field.setText("");
+        }
+
+				@Override
+				public void focusLost(FocusEvent e) {
+
+				}
+    });
 	}
 
 	public void setButton(JButton testButton){
@@ -288,9 +367,43 @@ public class Panel extends JPanel {
 
 		}
 
+	public void updateAccountArray() throws FileNotFoundException {
+	    
+	    accountArray.clear();
+	    
+        File myFile = new File("SaveFile.txt");
+        Scanner myScan = new Scanner(myFile);
+        while(myScan.hasNextLine()){
+            String line = myScan.nextLine();
+            Scanner lineScan = new Scanner(line);
+            lineScan.useDelimiter(",");
+          //TODO: see if this works without a while loop because I don't think it needs one.
+             newAccountname = lineScan.next();
+             newAccountemail = lineScan.next();
+             newAccountphoneNum = lineScan.next();
+             newAccountdescription = lineScan.next();
+             newAccountBalance = lineScan.nextDouble();
 
+            Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
+            myAccount.setBalance(newAccountBalance);
+            accountArray.add(myAccount);
+        }
+	}
+	
+	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
+        try{
+            FileWriter Writer = new FileWriter("TransactionFile.txt",true);
+            Writer.write(transac.getName()+","+transac.getAccount()+","+transac.getAmount()+","+transac.getDate()+","+transac.getType());
+            Writer.write("\n");
+            Writer.close();
+        }
+        catch(IOException ioe){
+            System.err.println("You done goofed");
+        }
+	}
 
-
+	
+	
 
 
 	//Button listeners
@@ -410,6 +523,10 @@ public class Panel extends JPanel {
 				accountViewPanel.add(enteredAccount);
 				accountViewPanel.add(displayEnteredInfo);
 				accountToView = "";
+				dMessage.setText("");
+				depositButton.setEnabled(true);
+				wMessage.setText("");
+				withdrawalButton.setEnabled(true);
 				repaint();
 			}
         }
@@ -572,8 +689,8 @@ public class Panel extends JPanel {
 			}
 			else
 			{
-				setBackground(Color.darkGray);
-				loginPanel.setBackground(Color.darkGray);
+				setBackground(Color.red);
+				loginPanel.setBackground(Color.red);
 				//topPanel.setBackground(Color.red);
 			}
 
@@ -602,7 +719,58 @@ public class Panel extends JPanel {
 		public void actionPerformed (ActionEvent event)
         {
 			System.out.println("Deposit");
+			removeAll();
+			add(bottom, BorderLayout.PAGE_END);
+			//add(topPanel, BorderLayout.PAGE_START);
+			add(imageLabel, BorderLayout.PAGE_START);
+			add(depositPanel, BorderLayout.CENTER);
+		    dName.setText("Your Name");
+	        dAccount.setText("Account Name");
+	        dAmount.setText("Deposit Amount");
+	        dDate.setText("Date (mm/dd/yyyy)");
+	        depositButton.setText("Submit Deposit");
+			revalidate();
+			repaint();
         }
+	}
+
+//submit deposit button listener
+	private class depositButtonListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+			System.out.println("Deposit has been Made");
+			dMessage.setText("Congrats! You have made a deposit!");
+			if (dName.getText().equalsIgnoreCase("") || dAccount.getText().equalsIgnoreCase("") ||
+			dAmount.getText().equalsIgnoreCase("") || dDate.getText().equalsIgnoreCase("") ||
+			dName.getText().equalsIgnoreCase("Name") || dAccount.getText().equalsIgnoreCase("Account Name") ||
+			dAmount.getText().equalsIgnoreCase("Deposit Amount") || dDate.getText().equalsIgnoreCase("Date (mm/dd/yyyy)")){
+				dMessage.setText("Please Fill All Fields");
+				depositPanel.setBackground(Color.red);
+			}
+			else{
+			    accountToView = dAccount.getText();
+				depositPanel.setBackground(Color.lightGray);
+				newDepositName = dName.getText();
+				newDepositAccount = dAccount.getText();
+				newDepositAmount = dAmount.getText();
+				double tempDA = Double.parseDouble(newDepositAmount);
+				newDepositDate = dDate.getText();
+                Transaction myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);
+                //Different transactions based on either Credit or Check/ note the 2 booleans at the end.
+                //Transaction myTrasnac = new Transaction(newWithdrawalName, newWithdrawalAccount, tempDA, newWithdrawalDate, false, accountArray, accountToView,false, true);
+                transactionArray.add(myTransaction);
+                saveTransactionArray(transactionArray,myTransaction);
+                System.out.println("Transaction created");
+				System.out.println("Thank you, "+newDepositName+". The amount of $"+newDepositAmount+" has been added to account "+newDepositAccount+" on "+newDepositDate);
+				dMessage.setText("<html>Thank you, "+newDepositName+".<br> The amount of $"+newDepositAmount+" has been added to account "+newDepositAccount+" on "+newDepositDate);
+				depositButton.setEnabled(false);
+				try {
+                    updateAccountArray();
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+			}
+		}
 	}
 
 	private class withdrawalListener implements ActionListener // GButton for creating a withdrawl
@@ -610,7 +778,56 @@ public class Panel extends JPanel {
 		public void actionPerformed (ActionEvent event)
         {
 			System.out.println("Withdrawal");
+			removeAll();
+			add(bottom, BorderLayout.PAGE_END);
+			//add(topPanel, BorderLayout.PAGE_START);
+			add(imageLabel, BorderLayout.PAGE_START);
+			add(withdrawalPanel, BorderLayout.CENTER);
+		    wName.setText("Your Name");
+	        wAccount.setText("Account Name");
+	        wAmount.setText("Withdrawal Amount");
+	        wDate.setText("Date (mm/dd/yyyy)");
+	        withdrawalButton.setText("Withdraw");
+			revalidate();
+			repaint();
         }
+	}
+//submit withdrawal button listener
+	private class withdrawalButtonListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+			System.out.println("Withdrawal has been Made");
+			wMessage.setText("Congrats! You have made a withdrawal!");
+			if (wName.getText().equalsIgnoreCase("") || wAccount.getText().equalsIgnoreCase("") ||
+			wAmount.getText().equalsIgnoreCase("") || wDate.getText().equalsIgnoreCase("") ||
+			wName.getText().equalsIgnoreCase("Name") || wAccount.getText().equalsIgnoreCase("Account Name") ||
+			wAmount.getText().equalsIgnoreCase("Deposit Amount") || wDate.getText().equalsIgnoreCase("Date (mm/dd/yyyy)")){
+				wMessage.setText("Please Fill All Fields");
+				withdrawalPanel.setBackground(Color.red);
+			}
+			else{
+			    accountToView = wAccount.getText();
+				withdrawalPanel.setBackground(Color.lightGray);
+				newWithdrawalName = wName.getText();
+				newWithdrawalAccount = wAccount.getText();
+				newWithdrawalAmount = wAmount.getText();
+				double tempWA = Double.parseDouble(newWithdrawalAmount);
+				newWithdrawalDate = wDate.getText();
+                Transaction myTransaction = new Transaction(newWithdrawalName, newWithdrawalAccount, tempWA, newWithdrawalDate, true, accountArray, accountToView, false, false);
+                transactionArray.add(myTransaction);
+                saveTransactionArray(transactionArray,myTransaction);
+                System.out.println("Transaction created");
+				System.out.println("Thank you, "+newWithdrawalName+". The amount of $"+newWithdrawalAmount+" has been withdrawn from the account "+newWithdrawalAccount+" on "+newWithdrawalDate);
+				wMessage.setText("<html>Thank you, "+newWithdrawalName+".<br> The amount of $"+newWithdrawalAmount+" has been withdrawn from the account "+newWithdrawalAccount+" on "+newWithdrawalDate);
+                withdrawalButton.setEnabled(false);
+				try {
+                    updateAccountArray();
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+			}
+
+		}
 	}
 
 }

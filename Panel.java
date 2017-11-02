@@ -755,6 +755,7 @@ public class Panel extends JPanel {
 				double tempDA = Double.parseDouble(newDepositAmount);
 				newDepositDate = dDate.getText();
                 Transaction myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);
+                //System.out.println(myTransaction.getAllInfo());
                 //Different transactions based on either Credit or Check/ note the 2 booleans at the end.
                 //Transaction myTrasnac = new Transaction(newWithdrawalName, newWithdrawalAccount, tempDA, newWithdrawalDate, false, accountArray, accountToView,false, true);
                 transactionArray.add(myTransaction);

@@ -17,7 +17,7 @@ public class Panel extends JPanel {
 	//variable inits
 	ArrayList<Account> accountArray = new ArrayList();
 	ArrayList<Transaction> transactionArray = new ArrayList();
-	
+
 	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
 	String newWithdrawalName, newWithdrawalDate, newWithdrawalAmount, newWithdrawalAccount;
 	String newDepositName, newDepositDate, newDepositAmount, newDepositAccount;
@@ -368,16 +368,15 @@ public class Panel extends JPanel {
 		}
 
 	public void updateAccountArray() throws FileNotFoundException {
-	    
+
 	    accountArray.clear();
-	    
+
         File myFile = new File("SaveFile.txt");
         Scanner myScan = new Scanner(myFile);
         while(myScan.hasNextLine()){
             String line = myScan.nextLine();
             Scanner lineScan = new Scanner(line);
             lineScan.useDelimiter(",");
-          //TODO: see if this works without a while loop because I don't think it needs one.
              newAccountname = lineScan.next();
              newAccountemail = lineScan.next();
              newAccountphoneNum = lineScan.next();
@@ -389,7 +388,7 @@ public class Panel extends JPanel {
             accountArray.add(myAccount);
         }
 	}
-	
+
 	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
         try{
             FileWriter Writer = new FileWriter("TransactionFile.txt",true);
@@ -402,8 +401,8 @@ public class Panel extends JPanel {
         }
 	}
 
-	
-	
+
+
 
 
 	//Button listeners

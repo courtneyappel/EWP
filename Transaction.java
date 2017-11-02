@@ -14,7 +14,7 @@ public class Transaction {
     //Withdrawals are noted as TRUE
     //Deposits are noted as FALSE
     //when creating a new transaction be mindful if your giving or taking away money.
-    
+
     public Transaction(String name, String accountName, double amount, String date, boolean type, ArrayList<Account> accountArray, String accountToView,boolean check, boolean credit){
         this.name = name;
         this.accountName = accountName;
@@ -23,14 +23,14 @@ public class Transaction {
         this.type = type;
         this.check = check;
         this.credit = credit;
-        
+
         if (type == true) {
             stringType = "Withdrawal";
             //remove/update from balance of accountName
             updateW(accountArray,accountToView);
             stringPayment = "N/A";
         }
-        
+
         else if(type == false) {
             stringType = "Deposit";
             //add/update to balance of accountName
@@ -38,18 +38,18 @@ public class Transaction {
             if (check == true) stringPayment = "Check";
             else if(credit == true) stringPayment = "Credit";
         }
- 
+
     }
     public String toString(){ //for whatever reason when i have the accounts as Iterators I can't seem to access any functions but having it to
     //Default as the tostring method. So I use that there.
       return this.name;
     }
-       
+
       public String getType() {
           String ret = "Transaction Type:"+this.stringType +" Payment Type:"+ this.stringPayment;
           return ret;
       }
-    
+
       public String getName(){
         return this.name;
       }
@@ -65,8 +65,8 @@ public class Transaction {
       public String getAllInfo(){
         return "Name: " + this.name + " Account Name: " + this.accountName + " Amount: " + this.amount + " Date: " + this.date + " "+getType();
       }
-      
-      
+
+
       //These can be moved to the main Panel with only 1 line edit but I like to save space, so whatever works for ya'll - Wyatt
       public void updateW(ArrayList<Account> accountArray, String accountToView) {
           Iterator<Account> it = accountArray.iterator();
@@ -110,7 +110,7 @@ public class Transaction {
               }
           }
       }
-      
+
       public void updateD(ArrayList<Account> accountArray, String accountToView) {
           Iterator<Account> it = accountArray.iterator();
           try{
@@ -126,7 +126,7 @@ public class Transaction {
               Account current = it.next();
               if(accountToView.equalsIgnoreCase(current.toString())){
                   Account tempAccount = new Account(current.getName(),current.getEmail(),current.getPhoneNum(),current.getDescription());
-                  double tempBalance = current.getBalance() - this.amount;
+                  double tempBalance = current.getBalance() + this.amount;
                   tempAccount.setBalance(tempBalance);
                   it.equals(tempAccount);
                   try{ //Rewrite file.
@@ -153,6 +153,6 @@ public class Transaction {
               }
           }
       }
-      
-    
+
+
 }

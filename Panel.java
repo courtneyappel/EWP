@@ -32,7 +32,10 @@ public class Panel extends JPanel {
 
 	JButton home,logout,login;
 
-	JTextField username,password;
+	JTextField username;
+	JPasswordField password;
+	JLabel userLabel;
+	JLabel pwLabel;
 
 	JButton account,deposit,withdrawal;
 
@@ -131,16 +134,25 @@ public class Panel extends JPanel {
 
 		loginPanel.setBackground(Color.lightGray);
 
-		username = new JTextField("Username");
-		password = new JTextField("Password");
+		Font myFont = new Font("Tahoma", Font.BOLD, 24);
+		loginPanel.setBackground(Color.lightGray);
+		userLabel = new JLabel("Username:");
+		userLabel.setFont(myFont);
+		username = new JTextField();
+		//password = new JTextField("Password");
+		pwLabel = new JLabel("Password: ");
+		pwLabel.setFont(myFont);
+		password = new JPasswordField();
 		login = new JButton("Log In");
+
 		login.addActionListener(new loginListener());
+		loginPanel.add(userLabel);
 		loginPanel.add(username);
+		loginPanel.add(pwLabel);
 		loginPanel.add(password);
 		loginPanel.add(login);
-		add(loginPanel, BorderLayout.CENTER);
-		//remove(loginPanel);
 
+		add(loginPanel, BorderLayout.CENTER);
 
 
 
@@ -342,7 +354,7 @@ public class Panel extends JPanel {
 
 	//methods for apply visual settings, I will focus on creating seperate classes for these so its not cluttered
 	public void setTextField(JTextField field){
-		field.setPreferredSize( new Dimension( 200, 42 ) );
+		field.setPreferredSize( new Dimension( 300, 42 ) );
 		field.setMaximumSize( new Dimension( 450, 42 ) );
 		field.setFont(new Font("Tahoma", Font.BOLD, 14));
 		field.addFocusListener(new FocusListener(){ //Sets the text to null on click
@@ -357,6 +369,23 @@ public class Panel extends JPanel {
 				}
     });
 	}
+
+	public void setPasswordField(JPasswordField field){
+			field.setPreferredSize( new Dimension( 300, 42 ) );
+			field.setMaximumSize( new Dimension( 450, 42 ) );
+			field.setFont(new Font("Tahoma", Font.BOLD, 14));
+			field.addFocusListener(new FocusListener(){ //Sets the text to null on click
+	        @Override
+	        public void focusGained(FocusEvent e){
+	            field.setText("");
+	        }
+
+					@Override
+					public void focusLost(FocusEvent e) {
+
+					}
+	    });
+		}
 
 	public void setButton(JButton testButton){
 

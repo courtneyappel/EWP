@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><project name="Engorged Wicket Pandoras" company="EWP" webLink="http://" view-date="2017-09-01" view-index="0" gantt-divider-location="632" resource-divider-location="300" version="2.8.5" locale="en_US">
     <description/>
     <view zooming-state="default:8" id="gantt-chart">
-        <field id="tpd3" name="Name" width="249" order="0"/>
+        <field id="tpd3" name="Name" width="248" order="0"/>
         <field id="tpd4" name="Begin date" width="111" order="1"/>
         <field id="tpd5" name="End date" width="112" order="2"/>
-        <field id="tpc0" name="Group Member" width="156" order="3"/>
+        <field id="tpc0" name="Group Member" width="155" order="3"/>
         <option id="color.recent"><![CDATA[#ffcc33 #ffcc00 #ffcc66 #ffff33 #666666 #999999 #9999ff #ccccff #6666ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Name" width="210" order="0"/>
-        <field id="1" name="Default role" width="86" order="1"/>
+        <field id="0" name="Name" width="209" order="0"/>
+        <field id="1" name="Default role" width="85" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -36,7 +36,7 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
             <taskproperty id="tpc0" name="Group Member" type="custom" valuetype="text"/>
         </taskproperties>
-        <task id="3" name="Software Engineering Tools" color="#666666" meeting="false" start="2017-08-31" duration="64" complete="0" expand="true">
+        <task id="3" name="Software Engineering Tools" color="#666666" meeting="false" start="2017-08-31" duration="71" complete="0" expand="true">
             <customproperty taskproperty-id="tpc0" value="Group"/>
             <task id="0" name="GIT" color="#999999" meeting="false" start="2017-08-31" duration="22" complete="0" expand="true">
                 <notes><![CDATA[Courtney - 2 hours
@@ -109,6 +109,12 @@ Courtney 3 hours]]></notes>
                 <task id="53" name="Save file stuff" color="#8cb6ce" meeting="false" start="2017-10-28" duration="1" complete="0" expand="true">
                     <notes><![CDATA[Josh 4 hours]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Josh"/>
+                </task>
+            </task>
+            <task id="54" name="Sprint 3" meeting="false" start="2017-11-07" duration="3" complete="0" expand="true">
+                <task id="55" name="Fixed password -&gt; dots" color="#8cb6ce" meeting="false" start="2017-11-07" duration="3" complete="0" expand="true">
+                    <notes><![CDATA[Jeff - 1.5 hours]]></notes>
+                    <customproperty taskproperty-id="tpc0" value="Jeff"/>
                 </task>
             </task>
         </task>

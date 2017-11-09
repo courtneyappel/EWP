@@ -2,14 +2,14 @@
     <description/>
     <view zooming-state="default:8" id="gantt-chart">
         <field id="tpd3" name="Name" width="248" order="0"/>
-        <field id="tpd4" name="Begin date" width="111" order="1"/>
-        <field id="tpd5" name="End date" width="112" order="2"/>
+        <field id="tpd4" name="Begin date" width="112" order="1"/>
+        <field id="tpd5" name="End date" width="113" order="2"/>
         <field id="tpc0" name="Group Member" width="155" order="3"/>
         <option id="color.recent"><![CDATA[#ffcc33 #ffcc00 #ffcc66 #ffff33 #666666 #999999 #9999ff #ccccff #6666ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Name" width="209" order="0"/>
-        <field id="1" name="Default role" width="85" order="1"/>
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -115,6 +115,10 @@ Courtney 3 hours]]></notes>
                 <task id="55" name="Fixed password -&gt; dots" color="#8cb6ce" meeting="false" start="2017-11-07" duration="3" complete="0" expand="true">
                     <notes><![CDATA[Jeff - 1.5 hours]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Jeff"/>
+                </task>
+                <task id="56" name="Added a main account" color="#8cb6ce" meeting="false" start="2017-11-07" duration="3" complete="0" expand="true">
+                    <notes><![CDATA[Josh - 1 hour]]></notes>
+                    <customproperty taskproperty-id="tpc0" value="Josh"/>
                 </task>
             </task>
         </task>

@@ -18,6 +18,7 @@ public class Panel extends JPanel {
 	ArrayList<Account> accountArray = new ArrayList();
 	ArrayList<Transaction> transactionArray = new ArrayList();
 
+
 	String newAccountname,newAccountemail,newAccountphoneNum,newAccountdescription;
 	String newWithdrawalName, newWithdrawalDate, newWithdrawalAmount, newWithdrawalAccount;
 	String newDepositName, newDepositDate, newDepositAmount, newDepositAccount;
@@ -88,12 +89,13 @@ public class Panel extends JPanel {
 			 newAccountphoneNum = lineScan.next();
 			 newAccountdescription = lineScan.next();
 			 newAccountBalance = lineScan.nextDouble();
-
-			Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
-			myAccount.setBalance(newAccountBalance);
-			accountArray.add(myAccount);
+			 Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
+			 myAccount.setBalance(newAccountBalance);
+			 accountArray.add(myAccount);
 
 		}
+
+
 
 		accountToView ="";
 		//main panel looks
@@ -387,6 +389,7 @@ public class Panel extends JPanel {
             myAccount.setBalance(newAccountBalance);
             accountArray.add(myAccount);
         }
+
 	}
 
 	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {

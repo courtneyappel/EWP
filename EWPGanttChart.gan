@@ -36,7 +36,7 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
             <taskproperty id="tpc0" name="Group Member" type="custom" valuetype="text"/>
         </taskproperties>
-        <task id="3" name="Software Engineering Tools" color="#666666" meeting="false" start="2017-08-31" duration="71" complete="0" expand="true">
+        <task id="3" name="Software Engineering Tools" color="#666666" meeting="false" start="2017-08-31" duration="75" complete="0" expand="true">
             <customproperty taskproperty-id="tpc0" value="Group"/>
             <task id="0" name="GIT" color="#999999" meeting="false" start="2017-08-31" duration="22" complete="0" expand="true">
                 <notes><![CDATA[Courtney - 2 hours
@@ -111,13 +111,13 @@ Courtney 3 hours]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Josh"/>
                 </task>
             </task>
-            <task id="54" name="Sprint 3" meeting="false" start="2017-11-07" duration="3" complete="0" expand="true">
+            <task id="54" name="Sprint 3" meeting="false" start="2017-11-07" duration="7" complete="0" expand="true">
                 <task id="55" name="Fixed password -&gt; dots" color="#8cb6ce" meeting="false" start="2017-11-07" duration="3" complete="0" expand="true">
                     <notes><![CDATA[Jeff - 1.5 hours]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Jeff"/>
                 </task>
-                <task id="56" name="Added a main account" color="#8cb6ce" meeting="false" start="2017-11-07" duration="3" complete="0" expand="true">
-                    <notes><![CDATA[Josh - 1 hour]]></notes>
+                <task id="56" name="Added a main account" color="#8cb6ce" meeting="false" start="2017-11-07" duration="7" complete="0" expand="true">
+                    <notes><![CDATA[Josh - 2.5 hours]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Josh"/>
                 </task>
             </task>

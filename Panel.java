@@ -83,10 +83,9 @@ public class Panel extends JPanel {
 		File myFile = new File(fileName);
 		Scanner myScan = new Scanner(myFile);
 		while(myScan.hasNextLine()){
-			String line = myScan.nextLine();
-			Scanner lineScan = new Scanner(line);
-			lineScan.useDelimiter(",");
-		  //TODO: see if this works without a while loop because I don't think it needs one.
+			 String line = myScan.nextLine();
+			 Scanner lineScan = new Scanner(line);
+			 lineScan.useDelimiter(",");
 			 newAccountname = lineScan.next();
 			 newAccountemail = lineScan.next();
 			 newAccountphoneNum = lineScan.next();
@@ -482,8 +481,8 @@ public class Panel extends JPanel {
 			accountToView = enteredAccount.getText();
 			String accountToDisplay = "";
 			Boolean foundAccount = false;
-			for(Account name:accountArray){
-					if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
+			for(Account name:accountArray){                                                           //So master account cannot be deleted.
+					if(name.toString().equalsIgnoreCase(accountToView) && !name.toString().equalsIgnoreCase("Master Account")){ // When it gets the account selected it displays it.
 						foundAccount = true;
 					}
 			}
@@ -607,10 +606,10 @@ public class Panel extends JPanel {
 				add(accountViewPanel, BorderLayout.CENTER);
 				//add(topPanel, BorderLayout.PAGE_START);
 				add(imageLabel, BorderLayout.PAGE_START);
-				Iterator it = accountArray.iterator();
-				while (it.hasNext()){
-
-					listOfAccounts.setText(listOfAccounts.getText() + "<br>" + it.next());
+				for(Account name:accountArray){
+						if(!name.toString().equalsIgnoreCase("Master Account")){ // When it gets the account selected it displays it. but will not display master account because that can't be deleted.
+							listOfAccounts.setText(listOfAccounts.getText() + "<br>" + name.toString());
+						}
 				}
 				listOfAccounts.setText(listOfAccounts.getText() + "</html>");
 				revalidate();

@@ -16,9 +16,9 @@ public class Frame {
 
     		myFrame.pack();
 
-				myFrame.setSize(new Dimension(500,500));
+			myFrame.setSize(new Dimension(500,500));
 
-				myFrame.setResizable(false);
+			myFrame.setResizable(false);
 
     		myFrame.setVisible(true);
     }

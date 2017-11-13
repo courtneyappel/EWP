@@ -20,10 +20,13 @@ public class Panel extends JPanel {
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo;
+	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton,submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion;
-	JTextField username,password,dAmount, dDate, dAccount, dName,wAmount, wDate, wAccount, wName,name,email,phoneNum,description,enteredAccount;
-	JCheckBox cc, check;
+	JTextField username,dAmount, dDate, dAccount, dName,wAmount, wDate, wAccount, wName,name,email,phoneNum,description,enteredAccount;
+	JCheckBox check;
+	JComboBox<Account> accountList;
+	//JCheckBox cc;
+	JPasswordField password;
 	JPanel topPanel = new JPanel();//(imageLabel now replaces topPanel)
 	JPanel loginPanel = new JPanel();
 	JPanel homePanel = new JPanel();
@@ -36,7 +39,7 @@ public class Panel extends JPanel {
     //for header Image and Buttons (imageLabel now replaces topPanel)
     ImageIcon backgroundPic = new ImageIcon("headerImage.png");
 	JLabel imageLabel = new JLabel();
-	
+
 
     //start of the main panel
 	public Panel()
@@ -81,7 +84,8 @@ public class Panel extends JPanel {
         setButton(submitAccountInfo); setButton(displayEnteredInfo);
         setButton(deleteSelectedAccount); setButton(confirmDeletion);
 
-        setTextField(username); setTextField(password);
+        setTextField(username);
+        //setTextField(password);
         setTextField(name); setTextField(email);
         setTextField(phoneNum); setTextField(description);
         setTextField(enteredAccount);
@@ -97,10 +101,13 @@ public class Panel extends JPanel {
         setTextField(wAmount);
         setTextField(wDate);
         setButton(withdrawalButton);
+        
+        setPasswordField(password);
+        setComboBox(accountList);
 	}
 
 	public void setTextField(JTextField field){
-		field.setPreferredSize( new Dimension( 200, 42 ) );
+		field.setPreferredSize( new Dimension( 300, 42 ) );
 		field.setMaximumSize( new Dimension( 450, 42 ) );
 		field.setFont(new Font("Tahoma", Font.BOLD, 14));
 		field.addFocusListener(new FocusListener(){ //Sets the text to null on click
@@ -116,6 +123,29 @@ public class Panel extends JPanel {
     });
 	}
 
+	public void setPasswordField(JPasswordField field){
+			field.setPreferredSize( new Dimension( 300, 42 ) );
+			field.setMaximumSize( new Dimension( 450, 42 ) );
+			field.setFont(new Font("Tahoma", Font.BOLD, 14));
+			field.addFocusListener(new FocusListener(){ //Sets the text to null on click
+	        @Override
+	        public void focusGained(FocusEvent e){
+	            field.setText("");
+	        }
+
+					@Override
+					public void focusLost(FocusEvent e) {
+
+					}
+	    });
+		}
+
+	public void setComboBox(JComboBox<Account> field) {
+	     field.setPreferredSize( new Dimension( 300, 42 ) );
+	        field.setMaximumSize( new Dimension( 450, 42 ) );
+	        field.setFont(new Font("Tahoma", Font.BOLD, 14));
+	}
+	
 	public void setButton(JButton testButton){
 
 				testButton.setOpaque(true);
@@ -130,6 +160,7 @@ public class Panel extends JPanel {
 	public void updateAccountArray() {
 	    try {
 	    accountArray.clear();
+	    accountList.removeAllItems();
         File myFile = new File("SaveFile.txt");
         Scanner myScan = new Scanner(myFile);
         while(myScan.hasNextLine()){
@@ -145,12 +176,16 @@ public class Panel extends JPanel {
             Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
             myAccount.setBalance(newAccountBalance);
             accountArray.add(myAccount);
+            //accountList.addItem(myAccount);
             lineScan.close();
         }
+        accountList = new JComboBox(accountArray.toArray());
+        setComboBox(accountList);
         myScan.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
 	}
 
 	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
@@ -181,13 +216,14 @@ public class Panel extends JPanel {
                     Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
                     myAccount.setBalance(newAccountBalance);
                     accountArray.add(myAccount);
+                    //accountList.addItem(myAccount);
                     lineScan.close();
                 }
+                accountList = new JComboBox(accountArray.toArray());
                 myScan.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
 	}
 
 	public void createHeaderFooter(){
@@ -214,15 +250,27 @@ public class Panel extends JPanel {
 	}
 
 	public void createLogin() {
-        loginPanel.setBackground(Color.lightGray);
-        username = new JTextField("Username");
-        password = new JTextField("Password");
-        login = new JButton("Log In");
-        login.addActionListener(new loginListener());
-        loginPanel.add(username);
-        loginPanel.add(password);
-        loginPanel.add(login);
-        add(loginPanel, BorderLayout.CENTER);
+		loginPanel.setBackground(Color.lightGray);
+
+		Font myFont = new Font("Tahoma", Font.BOLD, 24);
+		loginPanel.setBackground(Color.lightGray);
+		userLabel = new JLabel("Username:");
+		userLabel.setFont(myFont);
+		username = new JTextField();
+		//password = new JTextField("Password");
+		pwLabel = new JLabel("Password: ");
+		pwLabel.setFont(myFont);
+		password = new JPasswordField();
+		login = new JButton("Log In");
+
+		login.addActionListener(new loginListener());
+		loginPanel.add(userLabel);
+		loginPanel.add(username);
+		loginPanel.add(pwLabel);
+		loginPanel.add(password);
+		loginPanel.add(login);
+
+		add(loginPanel, BorderLayout.CENTER);
 	}
 
 	public void createHomeScreen(){
@@ -296,10 +344,10 @@ public class Panel extends JPanel {
 	        depositButton = new JButton("Submit Deposit");
 	        dMessage = new JLabel("");
 
-	        cc = new JCheckBox("Credit Card");
+	        //cc = new JCheckBox("Credit Card");
 	        //cc.setMnemonic(KeyEvent.VK_C);
-	        cc.setSelected(true);
-	        check = new JCheckBox("Check");
+	        //cc.setSelected(true);
+	        check = new JCheckBox("Check? If Credit; deselect");
 	        //check.setMnemonic(KeyEvent.VK_C);
 	        check.setSelected(false);
 
@@ -309,7 +357,7 @@ public class Panel extends JPanel {
 	        depositPanel.add(dAmount);
 	        depositPanel.add(dDate);
 
-	        depositPanel.add(cc);
+	        //depositPanel.add(cc);
 	        depositPanel.add(check);
 
 	        depositPanel.add(depositButton);
@@ -377,7 +425,7 @@ public class Panel extends JPanel {
 	}
 
 	public void createViewPanel() {
-	       accountViewPanel.setBackground(Color.lightGray);
+	        accountViewPanel.setBackground(Color.lightGray);
 	        accountViewPanel.setLayout(new BoxLayout(accountViewPanel, BoxLayout.Y_AXIS));
 	        listOfAccounts = new JLabel("<html>Type in the name of the account you would like.<br> Here is a list of current accounts.<br>");
 	        accountInfo = new JLabel("");
@@ -388,9 +436,10 @@ public class Panel extends JPanel {
 	        confirmDeletion.addActionListener(new confirmDeletionListener());
 	        deleteSelectedAccount.addActionListener(new deleteSelectedAccountListener());
 	        displayEnteredInfo.addActionListener(new displayEnteredInfoListener());
-	        accountViewPanel.add(listOfAccounts);
+	        //accountViewPanel.add(listOfAccounts);
+	        accountViewPanel.add(accountList);
 	        accountViewPanel.add(accountInfo);
-	        accountViewPanel.add(enteredAccount);
+	        //accountViewPanel.add(enteredAccount);
 	        accountViewPanel.add(displayEnteredInfo);
 	}
 
@@ -432,7 +481,11 @@ public class Panel extends JPanel {
   }
 
   public void deleteAccountSelect() {
-      accountToView = enteredAccount.getText();
+      //accountToView = enteredAccount.getText();
+      Account myAccount = (Account) accountList.getSelectedItem();
+      //accountToView = String.valueOf(accountList.getSelectedItem());
+      accountToView = String.valueOf(myAccount);
+      accountList.removeItem(myAccount);
       //String accountToDisplay = "";
       Boolean foundAccount = false;
       for(Account name:accountArray){
@@ -455,7 +508,8 @@ public class Panel extends JPanel {
   }
 
   public void viewAccountAction() {
-      accountToView = enteredAccount.getText();
+      //accountToView = enteredAccount.getText();
+      accountToView = String.valueOf(accountList.getSelectedItem());
       String accountToDisplay = "";
       Boolean foundAccount = false;
       for(Account name:accountArray){
@@ -496,15 +550,17 @@ public class Panel extends JPanel {
           listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
           accountInfo.setText("");
           enteredAccount.setText("");
-          accountViewPanel.add(listOfAccounts);
+          //accountViewPanel.add(listOfAccounts);
+          accountViewPanel.add(accountList);
           accountViewPanel.add(accountInfo);
-          accountViewPanel.add(enteredAccount);
+          //accountViewPanel.add(enteredAccount);
           accountViewPanel.add(displayEnteredInfo);
           accountToView = "";
           dMessage.setText("");
           depositButton.setEnabled(true);
           wMessage.setText("");
           withdrawalButton.setEnabled(true);
+          submitAccountInfo.setEnabled(true);
           repaint();
       }
   }
@@ -522,14 +578,16 @@ public class Panel extends JPanel {
       }
       else{
           accountCreationPanel.setBackground(Color.lightGray);
-          setBackground(Color.darkGray);
+          //setBackground(Color.darkGray);
           newAccountname = name.getText();
           newAccountemail = email.getText();
           newAccountphoneNum = phoneNum.getText();
           newAccountdescription = description.getText();
           Account myAccount = new Account(newAccountname, newAccountemail,newAccountphoneNum,newAccountdescription);
           accountArray.add(myAccount);
+          accountList.addItem(myAccount);
           System.out.println("Account created");
+          submitAccountInfo.setEnabled(false);
           try{
               FileWriter myWriter = new FileWriter("SaveFile.txt",true);
               myWriter.write(newAccountname+","+newAccountemail+","+newAccountphoneNum+","+newAccountdescription+",0.0");
@@ -696,10 +754,17 @@ public class Panel extends JPanel {
           newDepositAmount = dAmount.getText();
           double tempDA = Double.parseDouble(newDepositAmount);
           newDepositDate = dDate.getText();
-          Transaction myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);
+          Transaction myTransaction;
+          if(check.isSelected()) {
+              System.out.println("awd");
+              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);     
+          }
+          else {
+              System.out.println("dwa");
+              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true);     
+          }
           //System.out.println(myTransaction.getAllInfo());
           //Different transactions based on either Credit or Check/ note the 2 booleans at the end.
-          //Transaction myTrasnac = new Transaction(newWithdrawalName, newWithdrawalAccount, tempDA, newWithdrawalDate, false, accountArray, accountToView,false, true);
           transactionArray.add(myTransaction);
           saveTransactionArray(transactionArray,myTransaction);
           System.out.println("Transaction created");

@@ -335,12 +335,19 @@ public class Panel extends JPanel {
 	        withdrawalButton = new JButton("Withdraw");
 	        wMessage = new JLabel("");
 
+					codeLabel = new JLabel("<html> Select your desired code:");
+					codeList = new JComboBox<String>(codez);
+
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
 	        withdrawalPanel.add(wName);
 	        withdrawalPanel.add(wAccount);
 					withdrawalPanel.add(accountList);
 	        withdrawalPanel.add(wAmount);
 	        withdrawalPanel.add(wDate);
+
+					withdrawalPanel.add(codeLabel);
+					withdrawalPanel.add(codeList);
+
 	        withdrawalPanel.add(withdrawalButton);
 	        withdrawalPanel.add(wMessage);
 	}
@@ -354,8 +361,8 @@ public class Panel extends JPanel {
 	        dDate = new JTextField("Date (mm/dd/yyyy)");
 	        depositButton = new JButton("Submit Deposit");
 	        dMessage = new JLabel("");
-					codeLabel = new JLabel("<html> Select your desired code:");
-					codeList = new JComboBox<String>(codez);
+					//codeLabel = new JLabel("<html> Select your desired code:");
+					//codeList = new JComboBox<String>(codez);
 	        //cc = new JCheckBox("Credit Card");
 	        //cc.setMnemonic(KeyEvent.VK_C);
 	        //cc.setSelected(true);
@@ -369,8 +376,8 @@ public class Panel extends JPanel {
 	        depositPanel.add(dAccount);
 	        depositPanel.add(dAmount);
 	        depositPanel.add(dDate);
-					depositPanel.add(codeLabel);
-					depositPanel.add(codeList);
+					//depositPanel.add(codeLabel);
+					//depositPanel.add(codeList);
 
 	        //depositPanel.add(cc);
 	        depositPanel.add(check);

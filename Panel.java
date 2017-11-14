@@ -14,17 +14,19 @@ public class Panel extends JPanel {
 	String newWithdrawalName, newWithdrawalDate, newWithdrawalAmount, newWithdrawalAccount;
 	String newDepositName, newDepositDate, newDepositAmount, newDepositAccount;
 	String accountToView;
+	String codeChoice;
 	double newAccountBalance;
 
 	String user = "csadmin";
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel;
+	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton,submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion;
 	JTextField username,dAmount, dDate, dAccount, dName,wAmount, wDate, wAccount, wName,name,email,phoneNum,description,enteredAccount;
 	JCheckBox check;
 	JComboBox<Account> accountList;
+	JComboBox<String> codeList;
 	//JCheckBox cc;
 	JPasswordField password;
 	JPanel topPanel = new JPanel();//(imageLabel now replaces topPanel)
@@ -35,16 +37,21 @@ public class Panel extends JPanel {
 	JPanel withdrawalPanel = new JPanel();
 	JPanel accountCreationPanel = new JPanel();
 	JPanel accountViewPanel = new JPanel();
+
+	String[] codez = new String[] {"61123 Contract Faculty","61225 Student","62210 Minor Equipment","62241 Office Supplies",
+"62245 Computer Equipment (<$5000)", "62249 Minor Software (<$100,00)", "62255 Promotional Aids","62280 Program Expense","62282 Ink",
+"62315 Advertising-Newspaper Non Re","62817 Meetings & Conference Costs","62852 Bank Service Charges"};
 	//String fileName;
     //for header Image and Buttons (imageLabel now replaces topPanel)
     ImageIcon backgroundPic = new ImageIcon("headerImage.png");
 	JLabel imageLabel = new JLabel();
-
-
+	ImageIcon ewpLogo =new ImageIcon("ewpLogo.png");
+	JLabel logoLabel = new JLabel();
     //start of the main panel
 	public Panel()
 	{
 	     accountToView ="";
+			 codeChoice="";
         //main panel looks
         setBackground(Color.lightGray);
         setPreferredSize(new Dimension(500, 500));
@@ -101,7 +108,7 @@ public class Panel extends JPanel {
         setTextField(wAmount);
         setTextField(wDate);
         setButton(withdrawalButton);
-        
+
         setPasswordField(password);
         setComboBox(accountList);
 	}
@@ -141,11 +148,10 @@ public class Panel extends JPanel {
 		}
 
 	public void setComboBox(JComboBox<Account> field) {
-	     field.setPreferredSize( new Dimension( 300, 42 ) );
+	     field.setPreferredSize( new Dimension( 200, 42 ) );
 	        field.setMaximumSize( new Dimension( 450, 42 ) );
 	        field.setFont(new Font("Tahoma", Font.BOLD, 14));
 	}
-	
 	public void setButton(JButton testButton){
 
 				testButton.setOpaque(true);
@@ -244,9 +250,13 @@ public class Panel extends JPanel {
 	        imageLabel.add(topPanel);
 	        add(imageLabel, BorderLayout.PAGE_START);
 
+					logoLabel.setIcon(ewpLogo);
+					logoLabel.setHorizontalAlignment(JLabel.CENTER);
+					//logoLabel.setLayout(new BoarderLayout());
 	        bottom = new JLabel("Developed with love by EWP 2017", JLabel.CENTER);
 	        bottom.setFont(new Font("Tahoma", Font.BOLD, 12));
 	        add(bottom, BorderLayout.PAGE_END);
+					add(logoLabel, BorderLayout.PAGE_END);
 	}
 
 	public void createLogin() {
@@ -328,6 +338,7 @@ public class Panel extends JPanel {
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
 	        withdrawalPanel.add(wName);
 	        withdrawalPanel.add(wAccount);
+					withdrawalPanel.add(accountList);
 	        withdrawalPanel.add(wAmount);
 	        withdrawalPanel.add(wDate);
 	        withdrawalPanel.add(withdrawalButton);
@@ -343,7 +354,8 @@ public class Panel extends JPanel {
 	        dDate = new JTextField("Date (mm/dd/yyyy)");
 	        depositButton = new JButton("Submit Deposit");
 	        dMessage = new JLabel("");
-
+					codeLabel = new JLabel("<html> Select your desired code:");
+					codeList = new JComboBox<String>(codez);
 	        //cc = new JCheckBox("Credit Card");
 	        //cc.setMnemonic(KeyEvent.VK_C);
 	        //cc.setSelected(true);
@@ -352,15 +364,19 @@ public class Panel extends JPanel {
 	        check.setSelected(false);
 
 	        depositButton.addActionListener(new depositButtonListener());
+					codeList.addActionListener(new codeListener());
 	        depositPanel.add(dName);
 	        depositPanel.add(dAccount);
 	        depositPanel.add(dAmount);
 	        depositPanel.add(dDate);
+					depositPanel.add(codeLabel);
+					depositPanel.add(codeList);
 
 	        //depositPanel.add(cc);
 	        depositPanel.add(check);
 
 	        depositPanel.add(depositButton);
+
 	        depositPanel.add(dMessage);
 	}
 
@@ -479,7 +495,11 @@ public class Panel extends JPanel {
           }
       }
   }
-
+	public void codeSelection(){
+		codeChoice = String.valueOf(codeList.getSelectedItem());
+		System.out.println(codeChoice);
+		codeLabel.setText(codeChoice+"?");
+	}
   public void deleteAccountSelect() {
       //accountToView = enteredAccount.getText();
       Account myAccount = (Account) accountList.getSelectedItem();
@@ -516,6 +536,7 @@ public class Panel extends JPanel {
               if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
                   foundAccount = true;
                   accountToDisplay = name.getAllInfo();
+									System.out.println("Transaction History");
 
               }
       }
@@ -543,6 +564,7 @@ public class Panel extends JPanel {
           description.setText("Description");
           accountCreationPanel.setBackground(Color.lightGray);
           add(bottom, BorderLayout.PAGE_END);
+					add(logoLabel, BorderLayout.PAGE_END);
           add(homePanel, BorderLayout.CENTER);
           //add(topPanel, BorderLayout.PAGE_START);
           add(imageLabel, BorderLayout.PAGE_START);
@@ -605,6 +627,7 @@ public class Panel extends JPanel {
       System.out.println("Deleting account.");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
+			add(logoLabel, BorderLayout.PAGE_END);
       add(accountViewPanel, BorderLayout.CENTER);
       //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
@@ -624,6 +647,7 @@ public class Panel extends JPanel {
       System.out.println("viewing account.");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
+			add(logoLabel, BorderLayout.PAGE_END);
       add(accountViewPanel, BorderLayout.CENTER);
       //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
@@ -641,6 +665,7 @@ public class Panel extends JPanel {
       System.out.println("making a new account");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
+			add(logoLabel, BorderLayout.PAGE_END);
       add(accountCreationPanel, BorderLayout.CENTER);
       //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
@@ -669,6 +694,7 @@ public class Panel extends JPanel {
           accountViewPanel.add(displayEnteredInfo);
 
           add(bottom, BorderLayout.PAGE_END);
+					add(logoLabel, BorderLayout.PAGE_END);
           add(loginPanel, BorderLayout.CENTER);
           //add(topPanel, BorderLayout.PAGE_START);
           add(imageLabel, BorderLayout.PAGE_START);
@@ -713,6 +739,7 @@ public class Panel extends JPanel {
       System.out.println("Account");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
+			add(logoLabel, BorderLayout.PAGE_END);
       //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
       add(accountPanel, BorderLayout.CENTER);
@@ -724,6 +751,7 @@ public class Panel extends JPanel {
       System.out.println("Deposit");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
+			add(logoLabel, BorderLayout.PAGE_END);
       //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
       add(depositPanel, BorderLayout.CENTER);
@@ -747,6 +775,7 @@ public class Panel extends JPanel {
           depositPanel.setBackground(Color.red);
       }
       else{
+					codeLabel.setText("");
           accountToView = dAccount.getText();
           depositPanel.setBackground(Color.lightGray);
           newDepositName = dName.getText();
@@ -757,11 +786,11 @@ public class Panel extends JPanel {
           Transaction myTransaction;
           if(check.isSelected()) {
               System.out.println("awd");
-              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);     
+              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);
           }
           else {
               System.out.println("dwa");
-              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true);     
+              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true);
           }
           //System.out.println(myTransaction.getAllInfo());
           //Different transactions based on either Credit or Check/ note the 2 booleans at the end.
@@ -779,6 +808,7 @@ public class Panel extends JPanel {
       System.out.println("Withdrawal");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
+			add(logoLabel, BorderLayout.PAGE_END);
       //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
       add(withdrawalPanel, BorderLayout.CENTER);
@@ -827,7 +857,11 @@ public class Panel extends JPanel {
 		    deleteAccountFinal();
 		}
 	}
-
+	private class codeListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+			codeSelection();
+		}
+	}
 	private class deleteSelectedAccountListener implements ActionListener{//button to delete selected account. I got lazy and added this to the view account instead of making a new panel.
 		public void actionPerformed (ActionEvent event){
 		    deleteAccountSelect();

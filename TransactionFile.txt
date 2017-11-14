@@ -1,9 +1,8 @@
-Bob,Trish,100.0,11/01/17,Transaction Type:Deposit Payment Type:Check
-Billy,Michael,15.0,11/01/17,Transaction Type:Withdrawal Payment Type:N/A
-Vince,Trish,55.0,11/01/17,Transaction Type:Deposit Payment Type:Check
-Vince,Trish,5.5,11/01/17,Transaction Type:Withdrawal Payment Type:N/A
-Guy,Michael,40.0,11/01/17,Transaction Type:Deposit Payment Type:Check
-Josh,Trish,64.0,asdf,Transaction Type:Withdrawal Payment Type:N/A
-Johs,Trish,50.5,asd,Transaction Type:Withdrawal Payment Type:N/A
-josh,Michael,79.0,asdf,Transaction Type:Deposit Payment Type:Check
-asdf,Trish,10.0,asdf,Transaction Type:Deposit Payment Type:Check
+Court,Trish,13.22,11/13/2017,Transaction Type:Deposit Payment Type:Credit
+Court,Michael,21.43,11/13/2017,Transaction Type:Deposit Payment Type:Credit
+Court,Trish,0.23,11/13/2017,Transaction Type:Deposit Payment Type:Credit
+Jeff,Trish,100.0,a;sldkfja,Transaction Type:Withdrawal Payment Type:N/A
+Jeff,Trish,100.0,as;lkfj,Transaction Type:Deposit Payment Type:Credit
+Jeff,Trish,2.0,a;ksfj,Transaction Type:Deposit Payment Type:Credit
+a;lsdkfj,Master Account,100.0,as;dlkfjas;,Transaction Type:Withdrawal Payment Type:N/A
+Jeff,Master Account,100.0,as;ldfj,Transaction Type:Deposit Payment Type:Credit

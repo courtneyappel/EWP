@@ -35,8 +35,8 @@ public class Transaction {
             stringType = "Deposit";
             //add/update to balance of accountName
             updateD(accountArray,accountToView);
-            if (check == true) stringPayment = "Check";
-            else if(credit == true) stringPayment = "Credit";
+            if (check == true && credit == false) stringPayment = "Check";
+            if(credit == true && check == false) stringPayment = "Credit";
         }
 
     }

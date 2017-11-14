@@ -3,3 +3,6 @@ Court,Michael,21.43,11/13/2017,Transaction Type:Deposit Payment Type:Credit
 Court,Trish,0.23,11/13/2017,Transaction Type:Deposit Payment Type:Credit
 Jeff,Trish,100.0,a;sldkfja,Transaction Type:Withdrawal Payment Type:N/A
 Jeff,Trish,100.0,as;lkfj,Transaction Type:Deposit Payment Type:Credit
+Jeff,Trish,2.0,a;ksfj,Transaction Type:Deposit Payment Type:Credit
+a;lsdkfj,Master Account,100.0,as;dlkfjas;,Transaction Type:Withdrawal Payment Type:N/A
+Jeff,Master Account,100.0,as;ldfj,Transaction Type:Deposit Payment Type:Credit

@@ -692,12 +692,13 @@ public class Panel extends JPanel {
           accountCreationPanel.setBackground(Color.lightGray);
 
           accountViewPanel.removeAll();
-          listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
+          //listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
           accountInfo.setText("");
           enteredAccount.setText("");
-          accountViewPanel.add(listOfAccounts);
+          //accountViewPanel.add(listOfAccounts);
+					accountViewPanel.add(accountList);
           accountViewPanel.add(accountInfo);
-          accountViewPanel.add(enteredAccount);
+          //accountViewPanel.add(enteredAccount);
           accountViewPanel.add(displayEnteredInfo);
 
           add(bottom, BorderLayout.PAGE_END);

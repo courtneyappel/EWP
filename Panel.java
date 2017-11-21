@@ -3,7 +3,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.io.*;
-
 @SuppressWarnings("serial")
 public class Panel extends JPanel {
 	//variable inits
@@ -37,6 +36,8 @@ public class Panel extends JPanel {
 	JPanel withdrawalPanel = new JPanel();
 	JPanel accountCreationPanel = new JPanel();
 	JPanel accountViewPanel = new JPanel();
+	Date myDate = new Date();
+
 
 	String[] codez = new String[] {"61123 Contract Faculty","61225 Student","62210 Minor Equipment","62241 Office Supplies",
 "62245 Computer Equipment (<$5000)", "62249 Minor Software (<$100,00)", "62255 Promotional Aids","62280 Program Expense","62282 Ink",
@@ -331,7 +332,7 @@ public class Panel extends JPanel {
 	        wName = new JTextField("Your Name");
 	        wAccount = new JTextField("Account Name");
 	        wAmount = new JTextField("Withdrawal Amount");
-	        wDate = new JTextField("Date (mm/dd/yyyy)");
+	        wDate = new JTextField(myDate.toString());
 	        withdrawalButton = new JButton("Withdraw");
 	        wMessage = new JLabel("");
 
@@ -358,7 +359,7 @@ public class Panel extends JPanel {
 	        dName = new JTextField("Your Name");
 	        dAccount = new JTextField("Account Name");
 	        dAmount = new JTextField("Deposit Amount");
-	        dDate = new JTextField("Date (mm/dd/yyyy)");
+	        dDate = new JTextField(myDate.toString());
 	        depositButton = new JButton("Submit Deposit");
 	        dMessage = new JLabel("");
 					//codeLabel = new JLabel("<html> Select your desired code:");
@@ -766,7 +767,7 @@ public class Panel extends JPanel {
       dName.setText("Your Name");
       dAccount.setText("Account Name");
       dAmount.setText("Deposit Amount");
-      dDate.setText("Date (mm/dd/yyyy)");
+      dDate.setText(myDate.toString());
       depositButton.setText("Submit Deposit");
       revalidate();
       repaint();
@@ -778,7 +779,7 @@ public class Panel extends JPanel {
       if (dName.getText().equalsIgnoreCase("") || dAccount.getText().equalsIgnoreCase("") ||
       dAmount.getText().equalsIgnoreCase("") || dDate.getText().equalsIgnoreCase("") ||
       dName.getText().equalsIgnoreCase("Name") || dAccount.getText().equalsIgnoreCase("Account Name") ||
-      dAmount.getText().equalsIgnoreCase("Deposit Amount") || dDate.getText().equalsIgnoreCase("Date (mm/dd/yyyy)")){
+      dAmount.getText().equalsIgnoreCase("Deposit Amount")){
           dMessage.setText("Please Fill All Fields");
           depositPanel.setBackground(Color.red);
       }
@@ -823,7 +824,7 @@ public class Panel extends JPanel {
       wName.setText("Your Name");
       wAccount.setText("Account Name");
       wAmount.setText("Withdrawal Amount");
-      wDate.setText("Date (mm/dd/yyyy)");
+      wDate.setText(myDate.toString());
       withdrawalButton.setText("Withdraw");
       revalidate();
       repaint();
@@ -835,7 +836,7 @@ public class Panel extends JPanel {
       if (wName.getText().equalsIgnoreCase("") || wAccount.getText().equalsIgnoreCase("") ||
       wAmount.getText().equalsIgnoreCase("") || wDate.getText().equalsIgnoreCase("") ||
       wName.getText().equalsIgnoreCase("Name") || wAccount.getText().equalsIgnoreCase("Account Name") ||
-      wAmount.getText().equalsIgnoreCase("Deposit Amount") || wDate.getText().equalsIgnoreCase("Date (mm/dd/yyyy)")){
+      wAmount.getText().equalsIgnoreCase("Deposit Amount")){
           wMessage.setText("Please Fill All Fields");
           withdrawalPanel.setBackground(Color.red);
       }

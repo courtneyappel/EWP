@@ -25,6 +25,7 @@ public class Panel extends JPanel {
 	JTextField username,dAmount, dDate, dAccount, dName,wAmount, wDate, wAccount, wName,name,email,phoneNum,description,enteredAccount;
 	JCheckBox check;
 	JComboBox<Account> accountList;
+
 	JComboBox<String> codeList;
 	//JCheckBox cc;
 	JPasswordField password;
@@ -512,27 +513,34 @@ public class Panel extends JPanel {
       //accountToView = enteredAccount.getText();
       Account myAccount = (Account) accountList.getSelectedItem();
       //accountToView = String.valueOf(accountList.getSelectedItem());
-      accountToView = String.valueOf(myAccount);
-      accountList.removeItem(myAccount);
-      //String accountToDisplay = "";
-      Boolean foundAccount = false;
-      for(Account name:accountArray){
-              if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
-                  foundAccount = true;
-              }
-      }
-      if(foundAccount){
-          accountViewPanel.removeAll();
-          accountInfo.setText("Warning you are about to delete an account.");
-          accountViewPanel.add(accountInfo);
-          accountViewPanel.add(confirmDeletion);
-          revalidate();
-          repaint();
-      }
-      else{
-          listOfAccounts.setText(listOfAccounts.getText() + "<html><br>I'm sorry but the account you entered doesn't exist. Please try again. </html>");
 
-      }
+      accountToView = String.valueOf(myAccount);
+			if(!accountToView.equalsIgnoreCase("Master Account")){
+				//accountList.removeItem(myAccount);
+	      //String accountToDisplay = "";
+	      Boolean foundAccount = false;
+	      for(Account name:accountArray){
+	              if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
+	                  foundAccount = true;
+	              }
+	      }
+	      if(foundAccount){
+	          accountViewPanel.removeAll();
+	          accountInfo.setText("Warning you are about to delete an account.");
+	          accountViewPanel.add(accountInfo);
+	          accountViewPanel.add(confirmDeletion);
+	          revalidate();
+	          repaint();
+	      }
+	      else{
+	          listOfAccounts.setText(listOfAccounts.getText() + "<html><br>I'm sorry but the account you entered doesn't exist. Please try again. </html>");
+
+	      }
+			}
+			else{
+					accountInfo.setText("You can not delete main account");
+			}
+
   }
 
   public void viewAccountAction() {
@@ -597,16 +605,22 @@ public class Panel extends JPanel {
 
   public void submitAccountAction() {
       //if info is invalid
+			boolean existingName = false;
+			for(Account accountNames:accountArray){
+				if(accountNames.toString().equalsIgnoreCase(name.getText())){
+					existingName = true;
+				}
+			}
       if(name.getText().equalsIgnoreCase("Name") || name.getText().equalsIgnoreCase("") //This is a messy way of doing it but, hey it works.
       || email.getText().equalsIgnoreCase("Email") || email.getText().equalsIgnoreCase("")
       || phoneNum.getText().equalsIgnoreCase("Phone Number") || phoneNum.getText().equalsIgnoreCase("")
       || description.getText().equalsIgnoreCase("Description") || description.getText().equalsIgnoreCase("")){
-          //TODO: make it loop through the array of already existing accounts so that you can't make an account with the same name as one already made.
           accountCreationPanel.setBackground(Color.red);
           enterInCredentials.setText("Please enter in all the information.");
           System.out.println("Invalid information");
       }
-      else{
+
+      else if(!existingName){
           accountCreationPanel.setBackground(Color.lightGray);
           //setBackground(Color.darkGray);
           newAccountname = name.getText();
@@ -629,6 +643,10 @@ public class Panel extends JPanel {
           }
 
       }
+			else{
+				accountCreationPanel.setBackground(Color.red);
+				enterInCredentials.setText("An account with this name already exists.");
+			}
   }
 
   public void deleteAccountSetup() {
@@ -640,10 +658,12 @@ public class Panel extends JPanel {
       //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
       Iterator<Account> it = accountArray.iterator();
-      while (it.hasNext()){
+			for(Account name:accountArray){
+				if(!name.toString().equalsIgnoreCase("Master Account")){
+					listOfAccounts.setText(listOfAccounts.getText() + "<br>" + it.next());
+				}
+			}
 
-          listOfAccounts.setText(listOfAccounts.getText() + "<br>" + it.next());
-      }
       listOfAccounts.setText(listOfAccounts.getText() + "</html>");
       revalidate();
       repaint();

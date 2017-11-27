@@ -826,9 +826,11 @@ public void setButton(JButton testButton){
           Transaction myTransaction;
           if(check.isSelected()) {
               System.out.println("awd");
+              tempDA = tempDA*(.92);
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);
           }
           else {
+        	  tempDA = tempDA*(.88);
               System.out.println("dwa");
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true);
           }

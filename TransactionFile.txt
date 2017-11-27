@@ -9,3 +9,4 @@ Jeff,Master Account,100.0,as;ldfj,Transaction Type:Deposit Payment Type:Credit
 Josh,Trish,55.0,Tue Nov 21 10:10:31 MST 2017,Transaction Type:Deposit Payment Type:Check
 asdf,Trsih,900.0,Mon Nov 27 11:32:17 MST 2017,Transaction Type:Deposit Payment Type:Check
 Josh,Trish,900.0,sdf,Transaction Type:Deposit Payment Type:Check
+Jeff,Michael,88.0,Mon Nov 27 15:00:14 MST 2017,Transaction Type:Deposit Payment Type:Credit

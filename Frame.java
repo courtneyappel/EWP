@@ -12,13 +12,22 @@ public class Frame {
 
     		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+    		myFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    		
+    		myFrame.setIconImage(new ImageIcon(ClassLoader.getSystemResource(
+    	            "ewpLogo.png")).getImage());
+    		
+    		myFrame.setUndecorated(true);
+    		
     		myFrame.getContentPane().add(new Panel());
 
     		myFrame.pack();
 
-			myFrame.setSize(new Dimension(500,600));
+			myFrame.setSize(new Dimension(1200,750));
 
 			myFrame.setResizable(false);
+			
+			myFrame.setLocationRelativeTo(null);
 
     		myFrame.setVisible(true);
     }

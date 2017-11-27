@@ -21,7 +21,8 @@ public class Panel extends JPanel {
 	boolean loggedIn = false;
 
 	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
-	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton,submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion;
+	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
+	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
 	JTextField username,dAmount, dDate, dAccount, dName,wAmount, wDate, wAccount, wName,name,email,phoneNum,description,enteredAccount;
 	JCheckBox check;
 	JComboBox<Account> accountList;
@@ -45,7 +46,7 @@ public class Panel extends JPanel {
 "62315 Advertising-Newspaper Non Re","62817 Meetings & Conference Costs","62852 Bank Service Charges"};
 	//String fileName;
     //for header Image and Buttons (imageLabel now replaces topPanel)
-    ImageIcon backgroundPic = new ImageIcon("headerImage.png");
+    ImageIcon backgroundPic = new ImageIcon("headerImage2.png");
 	JLabel imageLabel = new JLabel();
 	ImageIcon ewpLogo =new ImageIcon("ewpLogo.png");
 	JLabel logoLabel = new JLabel();
@@ -92,7 +93,8 @@ public class Panel extends JPanel {
         setButton(newAccount); setButton(viewAccount); setButton(deletAccount);
         setButton(submitAccountInfo); setButton(displayEnteredInfo);
         setButton(deleteSelectedAccount); setButton(confirmDeletion);
-
+        setButton(exitApp);
+        
         setTextField(username);
         //setTextField(password);
         setTextField(name); setTextField(email);
@@ -112,7 +114,8 @@ public class Panel extends JPanel {
         setButton(withdrawalButton);
 
         setPasswordField(password);
-        setComboBox(accountList);
+        setComboBoxAccount(accountList);
+        setComboBoxString(codeList);
 	}
 
 	public void setTextField(JTextField field){
@@ -149,12 +152,18 @@ public class Panel extends JPanel {
 	    });
 		}
 
-	public void setComboBox(JComboBox<Account> field) {
+	public void setComboBoxAccount(JComboBox<Account> field) {
 	     field.setPreferredSize( new Dimension( 200, 42 ) );
 	        field.setMaximumSize( new Dimension( 450, 42 ) );
 	        field.setFont(new Font("Tahoma", Font.BOLD, 14));
 	}
-	public void setButton(JButton testButton){
+	
+   public void setComboBoxString(JComboBox<String> field) {
+         field.setPreferredSize( new Dimension( 200, 42 ) );
+            field.setMaximumSize( new Dimension( 450, 42 ) );
+            field.setFont(new Font("Tahoma", Font.BOLD, 14));
+    }
+public void setButton(JButton testButton){
 
 				testButton.setOpaque(true);
 				testButton.setBorderPainted(false);
@@ -188,7 +197,7 @@ public class Panel extends JPanel {
             lineScan.close();
         }
         accountList = new JComboBox(accountArray.toArray());
-        setComboBox(accountList);
+        setComboBoxAccount(accountList);
         myScan.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -239,22 +248,24 @@ public class Panel extends JPanel {
 	        imageLabel.setLayout(new BorderLayout());
 	        topPanel.setOpaque(false); //
 	        topPanel.setBackground(Color.lightGray);
-	        topPanel.setLayout(new FlowLayout());
+	        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 	        top = new JLabel("Account Manager", JLabel.CENTER);
-	        top.setFont(new Font("Tahoma", Font.BOLD, 24));
+	        top.setFont(new Font("Tahoma", Font.BOLD, 42));
 	        home = new JButton("HOME");
 	        home.addActionListener(new homeListener());
 	        logout = new JButton("Log Out");
 	        logout.addActionListener(new logoutListener());
+	        exitApp = new JButton("X");
+	        exitApp.addActionListener(new exitListener());
 	        topPanel.add(home);
 	        topPanel.add(top);
 	        topPanel.add(logout);
+	        topPanel.add(exitApp);
 	        imageLabel.add(topPanel);
 	        add(imageLabel, BorderLayout.PAGE_START);
-
-					logoLabel.setIcon(ewpLogo);
-					logoLabel.setHorizontalAlignment(JLabel.CENTER);
-					//logoLabel.setLayout(new BoarderLayout());
+			logoLabel.setIcon(ewpLogo);
+			logoLabel.setHorizontalAlignment(JLabel.CENTER);
+			//logoLabel.setLayout(new BoarderLayout());
 	        bottom = new JLabel("Developed with love by EWP 2017", JLabel.CENTER);
 	        bottom.setFont(new Font("Tahoma", Font.BOLD, 12));
 	        add(bottom, BorderLayout.PAGE_END);
@@ -337,8 +348,8 @@ public class Panel extends JPanel {
 	        withdrawalButton = new JButton("Withdraw");
 	        wMessage = new JLabel("");
 
-					codeLabel = new JLabel("<html> Select your desired code:");
-					codeList = new JComboBox<String>(codez);
+			codeLabel = new JLabel("<html> Select your desired code:");
+			codeList = new JComboBox<String>(codez);
 
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
 	        withdrawalPanel.add(wName);
@@ -347,8 +358,8 @@ public class Panel extends JPanel {
 	        withdrawalPanel.add(wAmount);
 	        withdrawalPanel.add(wDate);
 
-					withdrawalPanel.add(codeLabel);
-					withdrawalPanel.add(codeList);
+			withdrawalPanel.add(codeLabel);
+			withdrawalPanel.add(codeList);
 
 	        withdrawalPanel.add(withdrawalButton);
 	        withdrawalPanel.add(wMessage);
@@ -393,7 +404,7 @@ public class Panel extends JPanel {
 	       accountPanel.setBackground(Color.lightGray);
 	        accountPanel.setLayout(new BoxLayout(accountPanel, BoxLayout.Y_AXIS));
 
-	        newAccount = new JButton("New Account"){
+	        newAccount = new JButton("NEW ACCOUNT"){
 	            {
 	                setSize(200,100);
 	                setMaximumSize(getSize());
@@ -403,7 +414,7 @@ public class Panel extends JPanel {
 	        newAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
 	        newAccount.addActionListener(new newAccountListener());
 
-	        viewAccount = new JButton("View Account"){
+	        viewAccount = new JButton("VIEW ACCOUNT"){
 	            {
 	                setSize(200,100);
 	                setMaximumSize(getSize());
@@ -413,7 +424,7 @@ public class Panel extends JPanel {
 	        viewAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
 	        viewAccount.addActionListener(new viewAccountListener());
 
-	        deletAccount = new JButton("Delete Account"){
+	        deletAccount = new JButton("DELETE ACCOUNT"){
 	            {
 	                setSize(200,100);
 	                setMaximumSize(getSize());
@@ -880,7 +891,7 @@ public class Panel extends JPanel {
   }
 
 
-	//Button listeners
+	//Button listeners | These contain the methods shown above.
 	private class confirmDeletionListener implements ActionListener{
 		public void actionPerformed (ActionEvent enver){
 		    deleteAccountFinal();
@@ -956,6 +967,14 @@ public class Panel extends JPanel {
 		public void actionPerformed (ActionEvent event)
         {
 		    accountSetup();
+        }
+	}
+	
+	private class exitListener implements ActionListener
+	{
+        public void actionPerformed(ActionEvent e) 
+        {
+            System.exit(0);
         }
 	}
 

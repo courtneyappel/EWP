@@ -93,7 +93,7 @@ public class Panel extends JPanel {
         setButton(submitAccountInfo); setButton(displayEnteredInfo);
         setButton(deleteSelectedAccount); setButton(confirmDeletion);
         setButton(exitApp);
-        
+
         setTextField(username);
         //setTextField(password);
         setTextField(name); setTextField(email);
@@ -115,7 +115,7 @@ public class Panel extends JPanel {
         setPasswordField(password);
         setComboBoxAccount(accountList);
         setComboBoxString(codeList);
-        
+
 	}
 
 	public void setTextField(JTextField field){
@@ -157,7 +157,7 @@ public class Panel extends JPanel {
 	        field.setMaximumSize( new Dimension( 450, 42 ) );
 	        field.setFont(new Font("Tahoma", Font.BOLD, 14));
 	}
-	
+
    public void setComboBoxString(JComboBox<String> field) {
          field.setPreferredSize( new Dimension( 200, 42 ) );
             field.setMaximumSize( new Dimension( 450, 42 ) );
@@ -822,7 +822,7 @@ public void setButton(JButton testButton){
 
   public void depositConfirm(){
 
-      if (dName.getText().equalsIgnoreCase("") || dAmount.getText().equalsIgnoreCase("") || 
+      if (dName.getText().equalsIgnoreCase("") || dAmount.getText().equalsIgnoreCase("") ||
       dName.getText().equalsIgnoreCase("Your Name") || dAmount.getText().equalsIgnoreCase("Deposit Amount")){
           dMessage.setText("Please Fill All Fields");
           depositPanel.setBackground(Color.red);
@@ -842,11 +842,13 @@ public void setButton(JButton testButton){
           newDepositDate = dDate.getText();
           Transaction myTransaction;
           if(check.isSelected()) {
-              //System.out.println("awd");
+              System.out.println("awd");
+              tempDA = tempDA*(.92);
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false, " no applicable code ");
           }
           else {
-              //System.out.println("dwa");
+        	  tempDA = tempDA*(.88);
+              System.out.println("dwa");
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true, " no applicable code ");
           }
           //System.out.println(myTransaction.getAllInfo());
@@ -879,11 +881,11 @@ public void setButton(JButton testButton){
   }
 
   public void withdrawConfirm() {
-      
-      
+
+
       if (wName.getText().equalsIgnoreCase("") || wAmount.getText().equalsIgnoreCase("") ||
       wName.getText().equalsIgnoreCase("Your Name") || wAmount.getText().equalsIgnoreCase("Withdrawal Amount")){
-          
+
           wMessage.setText("Please Fill All Fields");
           withdrawalPanel.setBackground(Color.red);
       }
@@ -990,10 +992,10 @@ public void setButton(JButton testButton){
 		    accountSetup();
         }
 	}
-	
+
 	private class exitListener implements ActionListener
 	{
-        public void actionPerformed(ActionEvent e) 
+        public void actionPerformed(ActionEvent e)
         {
             System.exit(0);
         }

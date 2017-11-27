@@ -20,14 +20,13 @@ public class Panel extends JPanel {
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
+	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, wDate, dDate;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
-	JTextField username,dAmount, dDate, dAccount, dName,wAmount, wDate, wAccount, wName,name,email,phoneNum,description,enteredAccount;
+	JTextField username,dAmount, /*dDate,*/ dAccount, dName,wAmount, /*wDate,*/ wAccount, wName,name,email,phoneNum,description,enteredAccount;
 	JCheckBox check;
 	JComboBox<Account> accountList;
-
-	JComboBox<String> codeList;
+	JComboBox<String> codeList, cbAccount;
 	//JCheckBox cc;
 	JPasswordField password;
 	JPanel topPanel = new JPanel();//(imageLabel now replaces topPanel)
@@ -102,20 +101,21 @@ public class Panel extends JPanel {
         setTextField(enteredAccount);
 
         setTextField(dName);
-        setTextField(dAccount);
+        //setTextField(dAccount);
         setTextField(dAmount);
-        setTextField(dDate);
+        //setTextField(dDate);
         setButton(depositButton);
 
         setTextField(wName);
-        setTextField(wAccount);
+        //setTextField(wAccount);
         setTextField(wAmount);
-        setTextField(wDate);
+        //setTextField(wDate);
         setButton(withdrawalButton);
 
         setPasswordField(password);
         setComboBoxAccount(accountList);
         setComboBoxString(codeList);
+        
 	}
 
 	public void setTextField(JTextField field){
@@ -208,7 +208,7 @@ public void setButton(JButton testButton){
 	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
         try{
             FileWriter Writer = new FileWriter("TransactionFile.txt",true);
-            Writer.write(transac.getName()+","+transac.getAccount()+","+transac.getAmount()+","+transac.getDate()+","+transac.getType());
+            Writer.write(transac.getName()+","+transac.getAccount()+",$"+transac.getAmount()+","+transac.getDate()+","+transac.getType()+", Code:"+transac.getCode());
             Writer.write("\n");
             Writer.close();
         }
@@ -342,9 +342,16 @@ public void setButton(JButton testButton){
 	       withdrawalPanel.setBackground(Color.lightGray);
 	        withdrawalPanel.setLayout(new BoxLayout(withdrawalPanel, BoxLayout.Y_AXIS));
 	        wName = new JTextField("Your Name");
-	        wAccount = new JTextField("Account Name");
+	        //wAccount = new JTextField("Account Name");
+	        cbAccount = new JComboBox<String>();
+	        for(Account i: accountArray) {
+	            cbAccount.addItem(i.getName());
+	        }
+	        setComboBoxString(cbAccount);
 	        wAmount = new JTextField("Withdrawal Amount");
-	        wDate = new JTextField(myDate.toString());
+	        //wDate = new JTextField(myDate.toString());
+	        wDate = new JLabel(myDate.toString());
+	        wDate.setFont(new Font("Tahoma", Font.BOLD, 16));
 	        withdrawalButton = new JButton("Withdraw");
 	        wMessage = new JLabel("");
 
@@ -353,7 +360,8 @@ public void setButton(JButton testButton){
 
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
 	        withdrawalPanel.add(wName);
-	        withdrawalPanel.add(wAccount);
+	        //withdrawalPanel.add(wAccount);
+	        withdrawalPanel.add(cbAccount);
 					withdrawalPanel.add(accountList);
 	        withdrawalPanel.add(wAmount);
 	        withdrawalPanel.add(wDate);
@@ -369,9 +377,16 @@ public void setButton(JButton testButton){
 	       depositPanel.setBackground(Color.lightGray);
 	        depositPanel.setLayout(new BoxLayout(depositPanel, BoxLayout.Y_AXIS));
 	        dName = new JTextField("Your Name");
-	        dAccount = new JTextField("Account Name");
+	        //dAccount = new JTextField("Account Name");
+            cbAccount = new JComboBox<String>();
+            for(Account i: accountArray) {
+                cbAccount.addItem(i.getName());
+            }
+            setComboBoxString(cbAccount);
 	        dAmount = new JTextField("Deposit Amount");
-	        dDate = new JTextField(myDate.toString());
+	        //dDate = new JTextField(myDate.toString());
+	        dDate = new JLabel(myDate.toString());
+	        dDate.setFont(new Font("Tahoma", Font.BOLD, 16));
 	        depositButton = new JButton("Submit Deposit");
 	        dMessage = new JLabel("");
 					//codeLabel = new JLabel("<html> Select your desired code:");
@@ -386,7 +401,8 @@ public void setButton(JButton testButton){
 	        depositButton.addActionListener(new depositButtonListener());
 					codeList.addActionListener(new codeListener());
 	        depositPanel.add(dName);
-	        depositPanel.add(dAccount);
+	        //depositPanel.add(dAccount);
+	        depositPanel.add(cbAccount);
 	        depositPanel.add(dAmount);
 	        depositPanel.add(dDate);
 					//depositPanel.add(codeLabel);
@@ -796,7 +812,7 @@ public void setButton(JButton testButton){
       add(imageLabel, BorderLayout.PAGE_START);
       add(depositPanel, BorderLayout.CENTER);
       dName.setText("Your Name");
-      dAccount.setText("Account Name");
+      //dAccount.setText("Account Name");
       dAmount.setText("Deposit Amount");
       dDate.setText(myDate.toString());
       depositButton.setText("Submit Deposit");
@@ -805,32 +821,33 @@ public void setButton(JButton testButton){
   }
 
   public void depositConfirm(){
-      System.out.println("Deposit has been Made");
-      dMessage.setText("Congrats! You have made a deposit!");
-      if (dName.getText().equalsIgnoreCase("") || dAccount.getText().equalsIgnoreCase("") ||
-      dAmount.getText().equalsIgnoreCase("") || dDate.getText().equalsIgnoreCase("") ||
-      dName.getText().equalsIgnoreCase("Name") || dAccount.getText().equalsIgnoreCase("Account Name") ||
-      dAmount.getText().equalsIgnoreCase("Deposit Amount")){
+
+      if (dName.getText().equalsIgnoreCase("") || dAmount.getText().equalsIgnoreCase("") || 
+      dName.getText().equalsIgnoreCase("Your Name") || dAmount.getText().equalsIgnoreCase("Deposit Amount")){
           dMessage.setText("Please Fill All Fields");
           depositPanel.setBackground(Color.red);
       }
       else{
-					codeLabel.setText("");
-          accountToView = dAccount.getText();
+          System.out.println("Deposit has been Made");
+          dMessage.setText("Congrats! You have made a deposit!");
+          codeLabel.setText("");
+          //accountToView = dAccount.getText();
+          accountToView = (String) cbAccount.getSelectedItem();
           depositPanel.setBackground(Color.lightGray);
           newDepositName = dName.getText();
-          newDepositAccount = dAccount.getText();
+          //newDepositAccount = dAccount.getText();
+          newDepositAccount = (String) cbAccount.getSelectedItem();
           newDepositAmount = dAmount.getText();
           double tempDA = Double.parseDouble(newDepositAmount);
           newDepositDate = dDate.getText();
           Transaction myTransaction;
           if(check.isSelected()) {
-              System.out.println("awd");
-              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false);
+              //System.out.println("awd");
+              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false, " no applicable code ");
           }
           else {
-              System.out.println("dwa");
-              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true);
+              //System.out.println("dwa");
+              myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true, " no applicable code ");
           }
           //System.out.println(myTransaction.getAllInfo());
           //Different transactions based on either Credit or Check/ note the 2 booleans at the end.
@@ -853,7 +870,7 @@ public void setButton(JButton testButton){
       add(imageLabel, BorderLayout.PAGE_START);
       add(withdrawalPanel, BorderLayout.CENTER);
       wName.setText("Your Name");
-      wAccount.setText("Account Name");
+      //wAccount.setText("Account Name");
       wAmount.setText("Withdrawal Amount");
       wDate.setText(myDate.toString());
       withdrawalButton.setText("Withdraw");
@@ -862,24 +879,28 @@ public void setButton(JButton testButton){
   }
 
   public void withdrawConfirm() {
-      System.out.println("Withdrawal has been Made");
-      wMessage.setText("Congrats! You have made a withdrawal!");
-      if (wName.getText().equalsIgnoreCase("") || wAccount.getText().equalsIgnoreCase("") ||
-      wAmount.getText().equalsIgnoreCase("") || wDate.getText().equalsIgnoreCase("") ||
-      wName.getText().equalsIgnoreCase("Name") || wAccount.getText().equalsIgnoreCase("Account Name") ||
-      wAmount.getText().equalsIgnoreCase("Deposit Amount")){
+      
+      
+      if (wName.getText().equalsIgnoreCase("") || wAmount.getText().equalsIgnoreCase("") ||
+      wName.getText().equalsIgnoreCase("Your Name") || wAmount.getText().equalsIgnoreCase("Withdrawal Amount")){
+          
           wMessage.setText("Please Fill All Fields");
           withdrawalPanel.setBackground(Color.red);
       }
       else{
-          accountToView = wAccount.getText();
+          System.out.println("Withdrawal has been Made");
+          wMessage.setText("Congrats! You have made a withdrawal!");
+          //accountToView = wAccount.getText();
+          accountToView = (String) cbAccount.getSelectedItem();
+          String code = (String) codeList.getSelectedItem();
           withdrawalPanel.setBackground(Color.lightGray);
           newWithdrawalName = wName.getText();
-          newWithdrawalAccount = wAccount.getText();
+          //newWithdrawalAccount = wAccount.getText();
+          newWithdrawalAccount = (String) cbAccount.getSelectedItem();
           newWithdrawalAmount = wAmount.getText();
           double tempWA = Double.parseDouble(newWithdrawalAmount);
           newWithdrawalDate = wDate.getText();
-          Transaction myTransaction = new Transaction(newWithdrawalName, newWithdrawalAccount, tempWA, newWithdrawalDate, true, accountArray, accountToView, false, false);
+          Transaction myTransaction = new Transaction(newWithdrawalName, newWithdrawalAccount, tempWA, newWithdrawalDate, true, accountArray, accountToView, false, false, code);
           transactionArray.add(myTransaction);
           saveTransactionArray(transactionArray,myTransaction);
           System.out.println("Transaction created");

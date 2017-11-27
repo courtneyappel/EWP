@@ -8,14 +8,14 @@ public class Transaction {
     private String accountName;
     private double amount;
     private String date;
-    private String stringType,stringPayment;
+    private String stringType,stringPayment,stringCode;
     private boolean type,credit,check;
     //Important..
     //Withdrawals are noted as TRUE
     //Deposits are noted as FALSE
     //when creating a new transaction be mindful if your giving or taking away money.
 
-    public Transaction(String name, String accountName, double amount, String date, boolean type, ArrayList<Account> accountArray, String accountToView,boolean check, boolean credit){
+    public Transaction(String name, String accountName, double amount, String date, boolean type, ArrayList<Account> accountArray, String accountToView,boolean check, boolean credit,String stringCode){
         this.name = name;
         this.accountName = accountName;
         this.amount = amount;
@@ -29,10 +29,12 @@ public class Transaction {
             //remove/update from balance of accountName
             updateW(accountArray,accountToView);
             stringPayment = "N/A";
+            this.stringCode = stringCode;
         }
 
         else if(type == false) {
             stringType = "Deposit";
+            this.stringCode = "N/A";
             //add/update to balance of accountName
             updateD(accountArray,accountToView);
             if (check == true && credit == false) stringPayment = "Check";
@@ -50,6 +52,10 @@ public class Transaction {
           return ret;
       }
 
+      public String getCode() {
+          return this.stringCode;
+      }
+      
       public String getName(){
         return this.name;
       }
@@ -63,7 +69,7 @@ public class Transaction {
         return this.date;
       }
       public String getAllInfo(){
-        return "Name: " + this.name + " Account Name: " + this.accountName + " Amount: " + this.amount + " Date: " + this.date + " "+getType();
+        return "Name: " + this.name + " Account Name: " + this.accountName + " Amount: " + this.amount + " Date: " + this.date + " "+getType() + " Code: "+this.stringCode;
       }
 
 

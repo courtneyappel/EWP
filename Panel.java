@@ -23,7 +23,7 @@ public class Panel extends JPanel {
 	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, wDate, dDate;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
-	JTextField username,dAmount, /*dDate,*/ dAccount, dName,wAmount, /*wDate,*/ wAccount, wName,name,email,phoneNum,description,enteredAccount;
+	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description;
 	JCheckBox check;
 	JComboBox<Account> accountList;
 	JComboBox<String> codeList, cbAccount;
@@ -89,27 +89,23 @@ public class Panel extends JPanel {
 	    //Here are visual settings for things like buttons, textfields...etc
         setButton(home); setButton(logout); setButton(login);
         setButton(account); setButton(deposit); setButton(withdrawal);
-        setButton(newAccount); setButton(viewAccount); setButton(deletAccount);
+        setButton(newAccount);
         setButton(submitAccountInfo); setButton(displayEnteredInfo);
         setButton(deleteSelectedAccount); setButton(confirmDeletion);
         setButton(exitApp);
 
         setTextField(username);
-        //setTextField(password);
         setTextField(name); setTextField(email);
         setTextField(phoneNum); setTextField(description);
-        setTextField(enteredAccount);
 
         setTextField(dName);
-        //setTextField(dAccount);
         setTextField(dAmount);
-        //setTextField(dDate);
+ 
         setButton(depositButton);
 
         setTextField(wName);
-        //setTextField(wAccount);
         setTextField(wAmount);
-        //setTextField(wDate);
+
         setButton(withdrawalButton);
 
         setPasswordField(password);
@@ -123,12 +119,9 @@ public class Panel extends JPanel {
 		field.setMaximumSize( new Dimension( 450, 42 ) );
 		field.setFont(new Font("Tahoma", Font.BOLD, 14));
 		field.addFocusListener(new FocusListener(){ //Sets the text to null on click
-        @Override
         public void focusGained(FocusEvent e){
             field.setText("");
         }
-
-				@Override
 				public void focusLost(FocusEvent e) {
 
 				}
@@ -158,12 +151,13 @@ public class Panel extends JPanel {
 	        field.setFont(new Font("Tahoma", Font.BOLD, 14));
 	}
 
-   public void setComboBoxString(JComboBox<String> field) {
+    public void setComboBoxString(JComboBox<String> field) {
          field.setPreferredSize( new Dimension( 200, 42 ) );
             field.setMaximumSize( new Dimension( 450, 42 ) );
             field.setFont(new Font("Tahoma", Font.BOLD, 14));
     }
-public void setButton(JButton testButton){
+   
+    public void setButton(JButton testButton){
 
 				testButton.setOpaque(true);
 				testButton.setBorderPainted(false);
@@ -280,7 +274,6 @@ public void setButton(JButton testButton){
 		userLabel = new JLabel("Username:");
 		userLabel.setFont(myFont);
 		username = new JTextField();
-		//password = new JTextField("Password");
 		pwLabel = new JLabel("Password: ");
 		pwLabel.setFont(myFont);
 		password = new JPasswordField();
@@ -297,7 +290,7 @@ public void setButton(JButton testButton){
 	}
 
 	public void createHomeScreen(){
-	       homePanel.setBackground(Color.lightGray);
+	        homePanel.setBackground(Color.lightGray);
 	        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.Y_AXIS));
 
 	        account = new JButton("ACCOUNTS"){
@@ -342,33 +335,39 @@ public void setButton(JButton testButton){
 	       withdrawalPanel.setBackground(Color.lightGray);
 	        withdrawalPanel.setLayout(new BoxLayout(withdrawalPanel, BoxLayout.Y_AXIS));
 	        wName = new JTextField("Your Name");
-	        //wAccount = new JTextField("Account Name");
 	        cbAccount = new JComboBox<String>();
 	        for(Account i: accountArray) {
 	            cbAccount.addItem(i.getName());
 	        }
 	        setComboBoxString(cbAccount);
 	        wAmount = new JTextField("Withdrawal Amount");
-	        //wDate = new JTextField(myDate.toString());
 	        wDate = new JLabel(myDate.toString());
 	        wDate.setFont(new Font("Tahoma", Font.BOLD, 16));
 	        withdrawalButton = new JButton("Withdraw");
 	        wMessage = new JLabel("");
 
-			codeLabel = new JLabel("<html> Select your desired code:");
+			codeLabel = new JLabel("Select Withdrawal Code");
 			codeList = new JComboBox<String>(codez);
 
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
+	        
+	        wName.setAlignmentX(CENTER_ALIGNMENT);
+	        cbAccount.setAlignmentX(CENTER_ALIGNMENT);
+	        wAmount.setAlignmentX(CENTER_ALIGNMENT);
+	        wDate.setAlignmentX(CENTER_ALIGNMENT);
+	        //codeLabel.setAlignmentX(JButton.CENTER_ALIGNMENT);
+	        codeList.setAlignmentX(CENTER_ALIGNMENT);
+	        withdrawalButton.setAlignmentX(CENTER_ALIGNMENT);
+	        wMessage.setAlignmentX(CENTER_ALIGNMENT);
+	        
+	        withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        withdrawalPanel.add(wName);
-	        //withdrawalPanel.add(wAccount);
 	        withdrawalPanel.add(cbAccount);
-					withdrawalPanel.add(accountList);
+			withdrawalPanel.add(accountList);
 	        withdrawalPanel.add(wAmount);
 	        withdrawalPanel.add(wDate);
-
 			withdrawalPanel.add(codeLabel);
 			withdrawalPanel.add(codeList);
-
 	        withdrawalPanel.add(withdrawalButton);
 	        withdrawalPanel.add(wMessage);
 	}
@@ -377,20 +376,18 @@ public void setButton(JButton testButton){
 	       depositPanel.setBackground(Color.lightGray);
 	        depositPanel.setLayout(new BoxLayout(depositPanel, BoxLayout.Y_AXIS));
 	        dName = new JTextField("Your Name");
-	        //dAccount = new JTextField("Account Name");
             cbAccount = new JComboBox<String>();
             for(Account i: accountArray) {
                 cbAccount.addItem(i.getName());
             }
             setComboBoxString(cbAccount);
 	        dAmount = new JTextField("Deposit Amount");
-	        //dDate = new JTextField(myDate.toString());
 	        dDate = new JLabel(myDate.toString());
 	        dDate.setFont(new Font("Tahoma", Font.BOLD, 16));
 	        depositButton = new JButton("Submit Deposit");
 	        dMessage = new JLabel("");
-					//codeLabel = new JLabel("<html> Select your desired code:");
-					//codeList = new JComboBox<String>(codez);
+			//codeLabel = new JLabel("<html> Select your desired code:");
+			//codeList = new JComboBox<String>(codez);
 	        //cc = new JCheckBox("Credit Card");
 	        //cc.setMnemonic(KeyEvent.VK_C);
 	        //cc.setSelected(true);
@@ -399,20 +396,29 @@ public void setButton(JButton testButton){
 	        check.setSelected(false);
 
 	        depositButton.addActionListener(new depositButtonListener());
-					codeList.addActionListener(new codeListener());
+			codeList.addActionListener(new codeListener());
+			
+			
+	        dName.setAlignmentX(CENTER_ALIGNMENT);
+            cbAccount.setAlignmentX(CENTER_ALIGNMENT);
+            dAmount.setAlignmentX(CENTER_ALIGNMENT);
+            dDate.setAlignmentX(CENTER_ALIGNMENT);
+            check.setAlignmentX(CENTER_ALIGNMENT);
+            //codeLabel.setAlignmentX(JButton.CENTER_ALIGNMENT);
+            //codeList.setAlignmentX(JButton.CENTER_ALIGNMENT);
+            depositButton.setAlignmentX(CENTER_ALIGNMENT);
+            dMessage.setAlignmentX(CENTER_ALIGNMENT);
+            
+            depositPanel.add(Box.createRigidArea(new Dimension (0,25)));		
 	        depositPanel.add(dName);
-	        //depositPanel.add(dAccount);
 	        depositPanel.add(cbAccount);
 	        depositPanel.add(dAmount);
 	        depositPanel.add(dDate);
-					//depositPanel.add(codeLabel);
-					//depositPanel.add(codeList);
-
+			//depositPanel.add(codeLabel);
+			//depositPanel.add(codeList);
 	        //depositPanel.add(cc);
 	        depositPanel.add(check);
-
 	        depositPanel.add(depositButton);
-
 	        depositPanel.add(dMessage);
 	}
 
@@ -427,35 +433,12 @@ public void setButton(JButton testButton){
 	            }
 
 	        };
-	        newAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
+	        newAccount.setAlignmentX(CENTER_ALIGNMENT);
 	        newAccount.addActionListener(new newAccountListener());
-
-	        viewAccount = new JButton("VIEW ACCOUNT"){
-	            {
-	                setSize(200,100);
-	                setMaximumSize(getSize());
-	            }
-
-	        };
-	        viewAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
-	        viewAccount.addActionListener(new viewAccountListener());
-
-	        deletAccount = new JButton("DELETE ACCOUNT"){
-	            {
-	                setSize(200,100);
-	                setMaximumSize(getSize());
-	            }
-
-	        };
-	        deletAccount.setAlignmentX(JButton.CENTER_ALIGNMENT);
-	        deletAccount.addActionListener(new deleteAccountListener());
-
+	        
 	        accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        accountPanel.add(newAccount);
-	        accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
-	        accountPanel.add(viewAccount);
-	        accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
-	        accountPanel.add(deletAccount);
+
 	}
 
 	public void createCreationPanel() {
@@ -468,6 +451,15 @@ public void setButton(JButton testButton){
 	        enterInCredentials = new JLabel("Please enter in the information.");
 	        submitAccountInfo = new JButton("Submit");
 	        submitAccountInfo.addActionListener(new submitAccountInfoListener());
+	        
+	        enterInCredentials.setAlignmentX(CENTER_ALIGNMENT);
+	        name.setAlignmentX(CENTER_ALIGNMENT);
+	        email.setAlignmentX(CENTER_ALIGNMENT);
+	        phoneNum.setAlignmentX(CENTER_ALIGNMENT);
+	        description.setAlignmentX(CENTER_ALIGNMENT);
+	        submitAccountInfo.setAlignmentX(CENTER_ALIGNMENT);
+            accountCreationPanel.add(Box.createRigidArea(new Dimension (0,25)));        
+        
 	        accountCreationPanel.add(enterInCredentials);
 	        accountCreationPanel.add(name);
 	        accountCreationPanel.add(email);
@@ -479,24 +471,40 @@ public void setButton(JButton testButton){
 	public void createViewPanel() {
 	        accountViewPanel.setBackground(Color.lightGray);
 	        accountViewPanel.setLayout(new BoxLayout(accountViewPanel, BoxLayout.Y_AXIS));
-	        listOfAccounts = new JLabel("<html>Type in the name of the account you would like.<br> Here is a list of current accounts.<br>");
+	        
+	        listOfAccounts = new JLabel("<html>Here is a list of current accounts.<br>");
 	        accountInfo = new JLabel("");
-	        enteredAccount = new JTextField("");
 	        displayEnteredInfo = new JButton("View selected account");
 	        deleteSelectedAccount = new JButton("Delete Account");
 	        confirmDeletion = new JButton("Confirm Delete");
+	        
 	        confirmDeletion.addActionListener(new confirmDeletionListener());
 	        deleteSelectedAccount.addActionListener(new deleteSelectedAccountListener());
 	        displayEnteredInfo.addActionListener(new displayEnteredInfoListener());
+	        
+	        accountList.setAlignmentX(CENTER_ALIGNMENT);
+	        accountInfo.setAlignmentX(CENTER_ALIGNMENT);
+	        displayEnteredInfo.setAlignmentX(CENTER_ALIGNMENT);
+	        listOfAccounts.setAlignmentX(CENTER_ALIGNMENT);
+	        deleteSelectedAccount.setAlignmentX(CENTER_ALIGNMENT);
+	        confirmDeletion.setAlignmentX(CENTER_ALIGNMENT);
+	        
+            accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        //accountViewPanel.add(listOfAccounts);
 	        accountViewPanel.add(accountList);
 	        accountViewPanel.add(accountInfo);
-	        //accountViewPanel.add(enteredAccount);
+	        accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        accountViewPanel.add(displayEnteredInfo);
+            accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
+            accountViewPanel.add(deleteSelectedAccount);
+	        
+	        accountPanel.add(accountViewPanel);
 	}
 
 
 	//Methods for Listeners
+
+	
   public void deleteAccountFinal() {
       Iterator<Account> it = accountArray.iterator();
       try{
@@ -512,6 +520,7 @@ public void setButton(JButton testButton){
           Account current = it.next();
           if(accountToView.equalsIgnoreCase(current.toString())){
               it.remove();
+              accountList.removeItem(current);
               System.out.println(accountToView + " was removed.");
               accountInfo.setText(accountToView + " was removed.");
               accountViewPanel.remove(confirmDeletion);
@@ -531,16 +540,16 @@ public void setButton(JButton testButton){
           }
       }
   }
-	public void codeSelection(){
+  
+  public void codeSelection(){
 		codeChoice = String.valueOf(codeList.getSelectedItem());
 		System.out.println(codeChoice);
 		codeLabel.setText(codeChoice+"?");
 	}
+	
   public void deleteAccountSelect() {
-      //accountToView = enteredAccount.getText();
-      Account myAccount = (Account) accountList.getSelectedItem();
-      //accountToView = String.valueOf(accountList.getSelectedItem());
 
+      Account myAccount = (Account) accountList.getSelectedItem();
       accountToView = String.valueOf(myAccount);
 			if(!accountToView.equalsIgnoreCase("Master Account")){
 				//accountList.removeItem(myAccount);
@@ -571,7 +580,7 @@ public void setButton(JButton testButton){
   }
 
   public void viewAccountAction() {
-      //accountToView = enteredAccount.getText();
+      
       accountToView = String.valueOf(accountList.getSelectedItem());
       String accountToDisplay = "";
       Boolean foundAccount = false;
@@ -609,17 +618,19 @@ public void setButton(JButton testButton){
           add(bottom, BorderLayout.PAGE_END);
 					add(logoLabel, BorderLayout.PAGE_END);
           add(homePanel, BorderLayout.CENTER);
-          //add(topPanel, BorderLayout.PAGE_START);
           add(imageLabel, BorderLayout.PAGE_START);
+          
           accountViewPanel.removeAll();
-          listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
           accountInfo.setText("");
-          enteredAccount.setText("");
-          //accountViewPanel.add(listOfAccounts);
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(accountList);
           accountViewPanel.add(accountInfo);
-          //accountViewPanel.add(enteredAccount);
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(displayEnteredInfo);
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
+          accountViewPanel.add(deleteSelectedAccount);
+          
+          
           accountToView = "";
           dMessage.setText("");
           depositButton.setEnabled(true);
@@ -676,53 +687,12 @@ public void setButton(JButton testButton){
 			}
   }
 
-  public void deleteAccountSetup() {
-      System.out.println("Deleting account.");
-      removeAll();
-      add(bottom, BorderLayout.PAGE_END);
-			add(logoLabel, BorderLayout.PAGE_END);
-      add(accountViewPanel, BorderLayout.CENTER);
-      //add(topPanel, BorderLayout.PAGE_START);
-      add(imageLabel, BorderLayout.PAGE_START);
-      Iterator<Account> it = accountArray.iterator();
-			for(Account name:accountArray){
-				if(!name.toString().equalsIgnoreCase("Master Account")){
-					listOfAccounts.setText(listOfAccounts.getText() + "<br>" + it.next());
-				}
-			}
-
-      listOfAccounts.setText(listOfAccounts.getText() + "</html>");
-      revalidate();
-      repaint();
-      accountViewPanel.remove(displayEnteredInfo);
-      accountViewPanel.add(deleteSelectedAccount);
-  }
-
-  public void viewAccountSetup() {
-      System.out.println("viewing account.");
-      removeAll();
-      add(bottom, BorderLayout.PAGE_END);
-			add(logoLabel, BorderLayout.PAGE_END);
-      add(accountViewPanel, BorderLayout.CENTER);
-      //add(topPanel, BorderLayout.PAGE_START);
-      add(imageLabel, BorderLayout.PAGE_START);
-      Iterator<Account> it = accountArray.iterator();
-      while (it.hasNext()){
-
-          listOfAccounts.setText(listOfAccounts.getText() + "<br>" + it.next());
-      }
-      listOfAccounts.setText(listOfAccounts.getText() + "</html>");
-      revalidate();
-      repaint();
-  }
-
   public void newAccountSetup() {
       System.out.println("making a new account");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
-			add(logoLabel, BorderLayout.PAGE_END);
+	  add(logoLabel, BorderLayout.PAGE_END);
       add(accountCreationPanel, BorderLayout.CENTER);
-      //add(topPanel, BorderLayout.PAGE_START);
       add(imageLabel, BorderLayout.PAGE_START);
       revalidate();
       repaint();
@@ -738,25 +708,23 @@ public void setButton(JButton testButton){
           phoneNum.setText("Phone Number");
           description.setText("Description");
           accountCreationPanel.setBackground(Color.lightGray);
-
+          
           accountViewPanel.removeAll();
-          //listOfAccounts.setText("<html>Type in the name of the account you would like to view.<br> Here is a list of current accounts.<br>");
           accountInfo.setText("");
-          enteredAccount.setText("");
-          //accountViewPanel.add(listOfAccounts);
-					accountViewPanel.add(accountList);
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
+          accountViewPanel.add(accountList);
           accountViewPanel.add(accountInfo);
-          //accountViewPanel.add(enteredAccount);
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(displayEnteredInfo);
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
+          accountViewPanel.add(deleteSelectedAccount);
 
           add(bottom, BorderLayout.PAGE_END);
 					add(logoLabel, BorderLayout.PAGE_END);
           add(loginPanel, BorderLayout.CENTER);
-          //add(topPanel, BorderLayout.PAGE_START);
           add(imageLabel, BorderLayout.PAGE_START);
           repaint();
 
-          //setBackground(Color.red);
           username.setText("Username");
           password.setText("Password");
       }
@@ -775,7 +743,6 @@ public void setButton(JButton testButton){
           userEntry = null;
           pwEntry = null;
           setBackground(Color.lightGray);
-          //topPanel.setBackground(Color.lightGray);
           loginPanel.setBackground(Color.lightGray);
 
           remove(loginPanel);
@@ -787,7 +754,6 @@ public void setButton(JButton testButton){
       {
           setBackground(Color.red);
           loginPanel.setBackground(Color.red);
-          //topPanel.setBackground(Color.red);
       }
   }
 
@@ -795,8 +761,7 @@ public void setButton(JButton testButton){
       System.out.println("Account");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
-			add(logoLabel, BorderLayout.PAGE_END);
-      //add(topPanel, BorderLayout.PAGE_START);
+	  add(logoLabel, BorderLayout.PAGE_END);
       add(imageLabel, BorderLayout.PAGE_START);
       add(accountPanel, BorderLayout.CENTER);
       revalidate();
@@ -807,12 +772,10 @@ public void setButton(JButton testButton){
       System.out.println("Deposit");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
-			add(logoLabel, BorderLayout.PAGE_END);
-      //add(topPanel, BorderLayout.PAGE_START);
+	  add(logoLabel, BorderLayout.PAGE_END);
       add(imageLabel, BorderLayout.PAGE_START);
       add(depositPanel, BorderLayout.CENTER);
       dName.setText("Your Name");
-      //dAccount.setText("Account Name");
       dAmount.setText("Deposit Amount");
       dDate.setText(myDate.toString());
       depositButton.setText("Submit Deposit");
@@ -831,11 +794,9 @@ public void setButton(JButton testButton){
           System.out.println("Deposit has been Made");
           dMessage.setText("Congrats! You have made a deposit!");
           codeLabel.setText("");
-          //accountToView = dAccount.getText();
           accountToView = (String) cbAccount.getSelectedItem();
           depositPanel.setBackground(Color.lightGray);
           newDepositName = dName.getText();
-          //newDepositAccount = dAccount.getText();
           newDepositAccount = (String) cbAccount.getSelectedItem();
           newDepositAmount = dAmount.getText();
           double tempDA = Double.parseDouble(newDepositAmount);
@@ -867,12 +828,10 @@ public void setButton(JButton testButton){
       System.out.println("Withdrawal");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
-			add(logoLabel, BorderLayout.PAGE_END);
-      //add(topPanel, BorderLayout.PAGE_START);
+	  add(logoLabel, BorderLayout.PAGE_END);
       add(imageLabel, BorderLayout.PAGE_START);
       add(withdrawalPanel, BorderLayout.CENTER);
       wName.setText("Your Name");
-      //wAccount.setText("Account Name");
       wAmount.setText("Withdrawal Amount");
       wDate.setText(myDate.toString());
       withdrawalButton.setText("Withdraw");
@@ -892,12 +851,10 @@ public void setButton(JButton testButton){
       else{
           System.out.println("Withdrawal has been Made");
           wMessage.setText("Congrats! You have made a withdrawal!");
-          //accountToView = wAccount.getText();
           accountToView = (String) cbAccount.getSelectedItem();
           String code = (String) codeList.getSelectedItem();
           withdrawalPanel.setBackground(Color.lightGray);
           newWithdrawalName = wName.getText();
-          //newWithdrawalAccount = wAccount.getText();
           newWithdrawalAccount = (String) cbAccount.getSelectedItem();
           newWithdrawalAmount = wAmount.getText();
           double tempWA = Double.parseDouble(newWithdrawalAmount);
@@ -920,12 +877,14 @@ public void setButton(JButton testButton){
 		    deleteAccountFinal();
 		}
 	}
+	
 	private class codeListener implements ActionListener{
 		public void actionPerformed (ActionEvent event){
 			codeSelection();
 		}
 	}
-	private class deleteSelectedAccountListener implements ActionListener{//button to delete selected account. I got lazy and added this to the view account instead of making a new panel.
+	
+	private class deleteSelectedAccountListener implements ActionListener{//button to delete selected account.
 		public void actionPerformed (ActionEvent event){
 		    deleteAccountSelect();
 		}
@@ -948,18 +907,6 @@ public void setButton(JButton testButton){
 	private class submitAccountInfoListener implements ActionListener{//when you submit the information to create an account
 			public void actionPerformed(ActionEvent event){
 			    submitAccountAction();
-			}
-	}
-
-	private class deleteAccountListener implements ActionListener{ // deletes accounts
-			public void actionPerformed (ActionEvent event){
-			    deleteAccountSetup();
-			}
-	}
-
-	private class viewAccountListener implements ActionListener{ //views the accounts
-			public void actionPerformed (ActionEvent event){
-			    viewAccountSetup();
 			}
 	}
 

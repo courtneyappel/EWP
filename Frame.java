@@ -11,8 +11,6 @@ public class Frame {
     		JFrame myFrame = new JFrame();
 
     		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    		myFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     		
     		myFrame.setIconImage(new ImageIcon(ClassLoader.getSystemResource(
     	            "ewpLogo.png")).getImage());

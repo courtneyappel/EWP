@@ -11,3 +11,4 @@ asdf,Trsih,900.0,Mon Nov 27 11:32:17 MST 2017,Transaction Type:Deposit Payment T
 Josh,Trish,900.0,sdf,Transaction Type:Deposit Payment Type:Check
 Jeff,Michael,88.0,Mon Nov 27 15:00:14 MST 2017,Transaction Type:Deposit Payment Type:Credit
 WyattWithdraw,Trish,$11.0,Mon Nov 27 16:46:28 MST 2017,Transaction Type:Withdrawal Payment Type:N/A, Code:61225 Student
+Jeff,Michael,$88.0,Tue Nov 28 08:51:43 MST 2017,Transaction Type:Deposit Payment Type:Credit, Code:N/A

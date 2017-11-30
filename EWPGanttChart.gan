@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><project name="Engorged Wicket Pandoras" company="EWP" webLink="http://" view-date="2017-11-14" view-index="0" gantt-divider-location="618" resource-divider-location="300" version="2.8.5" locale="en_US">
     <description/>
     <view zooming-state="default:0" id="gantt-chart">
-        <field id="tpd3" name="Name" width="231" order="0"/>
-        <field id="tpd4" name="Begin date" width="109" order="1"/>
-        <field id="tpd5" name="End date" width="112" order="2"/>
-        <field id="tpc0" name="Group Member" width="145" order="3"/>
+        <field id="tpd3" name="Name" width="235" order="0"/>
+        <field id="tpd4" name="Begin date" width="113" order="1"/>
+        <field id="tpd5" name="End date" width="117" order="2"/>
+        <field id="tpc0" name="Group Member" width="149" order="3"/>
         <option id="color.recent"><![CDATA[#99ccff #ffcc33 #ffcc00 #ffcc66 #ffff33 #666666 #999999 #9999ff #ccccff #6666ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Name" width="209" order="0"/>
-        <field id="1" name="Default role" width="85" order="1"/>
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -183,6 +183,11 @@ Jeff - 1 hr]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Jeff"/>
                 </task>
             </task>
+        </task>
+        <task id="91" name="TransactionHistory" color="#8cb6ce" meeting="false" start="2017-11-21" duration="8" complete="0" expand="true">
+            <notes><![CDATA[7 hours
+-->merge conflicts need to be worked out, not seen in sprint 4]]></notes>
+            <customproperty taskproperty-id="tpc0" value="Courtney"/>
         </task>
     </tasks>
     <resources/>

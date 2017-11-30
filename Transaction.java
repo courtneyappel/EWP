@@ -48,14 +48,14 @@ public class Transaction {
     }
 
       public String getType() {
-          String ret = "Transaction Type:"+this.stringType +" Payment Type:"+ this.stringPayment;
+          String ret = this.stringType +","+ this.stringPayment;
           return ret;
       }
 
       public String getCode() {
           return this.stringCode;
       }
-      
+
       public String getName(){
         return this.name;
       }

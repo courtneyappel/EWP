@@ -20,10 +20,10 @@ public class Panel extends JPanel {
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, wDate, dDate;
+	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
-	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description;
+	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate;
 	JCheckBox check;
 	JComboBox<Account> accountList;
 	JComboBox<String> codeList, cbAccount;
@@ -85,6 +85,8 @@ public class Panel extends JPanel {
 
 
 	//Methods Used to Construct the Panels
+	
+	//broad method to apply visual settings
 	public void setAll() {
 	    //Here are visual settings for things like buttons, textfields...etc
         setButton(home); setButton(logout); setButton(login);
@@ -100,7 +102,8 @@ public class Panel extends JPanel {
 
         setTextField(dName);
         setTextField(dAmount);
- 
+        setTextField(wDate);
+        setTextField(dDate);
         setButton(depositButton);
 
         setTextField(wName);
@@ -149,12 +152,18 @@ public class Panel extends JPanel {
 	     field.setPreferredSize( new Dimension( 200, 42 ) );
 	        field.setMaximumSize( new Dimension( 450, 42 ) );
 	        field.setFont(new Font("Tahoma", Font.BOLD, 14));
+	        Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+	        field.setCursor(cursor);
+	        //field.setBackground(Color.LIGHT_GRAY);
 	}
 
     public void setComboBoxString(JComboBox<String> field) {
          field.setPreferredSize( new Dimension( 200, 42 ) );
             field.setMaximumSize( new Dimension( 450, 42 ) );
             field.setFont(new Font("Tahoma", Font.BOLD, 14));
+            Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+            field.setCursor(cursor);
+            //field.setBackground(Color.LIGHT_GRAY);
     }
    
     public void setButton(JButton testButton){
@@ -168,6 +177,7 @@ public class Panel extends JPanel {
 
 		}
 
+    //Manually updates the array for accounts when needed
 	public void updateAccountArray() {
 	    try {
 	    accountArray.clear();
@@ -198,7 +208,7 @@ public class Panel extends JPanel {
         }
 
 	}
-
+	//Manually saves the transaction array with given transaction
 	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
         try{
             FileWriter Writer = new FileWriter("TransactionFile.txt",true);
@@ -210,7 +220,7 @@ public class Panel extends JPanel {
             System.err.println("You done goofed");
         }
 	}
-
+	//Initializes the save file
 	public void initFile() {
             try {
                 File myFile = new File("SaveFile.txt");
@@ -236,7 +246,7 @@ public class Panel extends JPanel {
                 e.printStackTrace();
             }
 	}
-
+	//Methods to setup all Panel Objects
 	public void createHeaderFooter(){
 	        imageLabel.setIcon( backgroundPic );
 	        imageLabel.setLayout(new BorderLayout());
@@ -252,7 +262,9 @@ public class Panel extends JPanel {
 	        exitApp = new JButton("X");
 	        exitApp.addActionListener(new exitListener());
 	        topPanel.add(home);
+	        topPanel.add(Box.createRigidArea(new Dimension (250,25)));
 	        topPanel.add(top);
+	        topPanel.add(Box.createRigidArea(new Dimension (175,25)));
 	        topPanel.add(logout);
 	        topPanel.add(exitApp);
 	        imageLabel.add(topPanel);
@@ -268,22 +280,32 @@ public class Panel extends JPanel {
 
 	public void createLogin() {
 		loginPanel.setBackground(Color.lightGray);
-
+		loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
 		Font myFont = new Font("Tahoma", Font.BOLD, 24);
 		loginPanel.setBackground(Color.lightGray);
-		userLabel = new JLabel("Username:");
+		userLabel = new JLabel("Username");
 		userLabel.setFont(myFont);
 		username = new JTextField();
-		pwLabel = new JLabel("Password: ");
+		pwLabel = new JLabel("Password");
 		pwLabel.setFont(myFont);
 		password = new JPasswordField();
 		login = new JButton("Log In");
 
 		login.addActionListener(new loginListener());
+		
+		userLabel.setAlignmentX(CENTER_ALIGNMENT);
+		username.setAlignmentX(CENTER_ALIGNMENT);
+		pwLabel.setAlignmentX(CENTER_ALIGNMENT);
+		password.setAlignmentX(CENTER_ALIGNMENT);
+		login.setAlignmentX(CENTER_ALIGNMENT);
+		
+		loginPanel.add(Box.createRigidArea(new Dimension (0,25)));
 		loginPanel.add(userLabel);
 		loginPanel.add(username);
+		loginPanel.add(Box.createRigidArea(new Dimension (0,25)));
 		loginPanel.add(pwLabel);
 		loginPanel.add(password);
+		loginPanel.add(Box.createRigidArea(new Dimension (0,25)));
 		loginPanel.add(login);
 
 		add(loginPanel, BorderLayout.CENTER);
@@ -341,7 +363,7 @@ public class Panel extends JPanel {
 	        }
 	        setComboBoxString(cbAccount);
 	        wAmount = new JTextField("Withdrawal Amount");
-	        wDate = new JLabel(myDate.toString());
+	        wDate = new JTextField(myDate.toString());
 	        wDate.setFont(new Font("Tahoma", Font.BOLD, 16));
 	        withdrawalButton = new JButton("Withdraw");
 	        wMessage = new JLabel("");
@@ -366,8 +388,9 @@ public class Panel extends JPanel {
 			withdrawalPanel.add(accountList);
 	        withdrawalPanel.add(wAmount);
 	        withdrawalPanel.add(wDate);
-			withdrawalPanel.add(codeLabel);
+			//withdrawalPanel.add(codeLabel);
 			withdrawalPanel.add(codeList);
+			withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        withdrawalPanel.add(withdrawalButton);
 	        withdrawalPanel.add(wMessage);
 	}
@@ -382,7 +405,7 @@ public class Panel extends JPanel {
             }
             setComboBoxString(cbAccount);
 	        dAmount = new JTextField("Deposit Amount");
-	        dDate = new JLabel(myDate.toString());
+	        dDate = new JTextField(myDate.toString());
 	        dDate.setFont(new Font("Tahoma", Font.BOLD, 16));
 	        depositButton = new JButton("Submit Deposit");
 	        dMessage = new JLabel("");
@@ -417,7 +440,9 @@ public class Panel extends JPanel {
 			//depositPanel.add(codeLabel);
 			//depositPanel.add(codeList);
 	        //depositPanel.add(cc);
+	        depositPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        depositPanel.add(check);
+	        depositPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        depositPanel.add(depositButton);
 	        depositPanel.add(dMessage);
 	}
@@ -461,10 +486,12 @@ public class Panel extends JPanel {
             accountCreationPanel.add(Box.createRigidArea(new Dimension (0,25)));        
         
 	        accountCreationPanel.add(enterInCredentials);
+	          accountCreationPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        accountCreationPanel.add(name);
 	        accountCreationPanel.add(email);
 	        accountCreationPanel.add(phoneNum);
 	        accountCreationPanel.add(description);
+	          accountCreationPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        accountCreationPanel.add(submitAccountInfo);
 	}
 
@@ -500,11 +527,12 @@ public class Panel extends JPanel {
 	        
 	        accountPanel.add(accountViewPanel);
 	}
-
+	//End of creation for panel objects 
+	
 
 	//Methods for Listeners
 
-	
+	//final action for perm deleting an account
   public void deleteAccountFinal() {
       Iterator<Account> it = accountArray.iterator();
       try{
@@ -546,7 +574,7 @@ public class Panel extends JPanel {
 		System.out.println(codeChoice);
 		codeLabel.setText(codeChoice+"?");
 	}
-	
+	//changes window to confirm account delete
   public void deleteAccountSelect() {
 
       Account myAccount = (Account) accountList.getSelectedItem();
@@ -578,7 +606,7 @@ public class Panel extends JPanel {
 			}
 
   }
-
+    //changes window to display account information from selected account
   public void viewAccountAction() {
       
       accountToView = String.valueOf(accountList.getSelectedItem());
@@ -604,7 +632,7 @@ public class Panel extends JPanel {
 
       }
   }
-
+    //Main Action to go to the home menu
   public void goHome() {
       if(loggedIn == true)
       {
@@ -640,7 +668,7 @@ public class Panel extends JPanel {
           repaint();
       }
   }
-
+    //Final action to enter a new account into the program
   public void submitAccountAction() {
       //if info is invalid
 			boolean existingName = false;
@@ -686,7 +714,7 @@ public class Panel extends JPanel {
 				enterInCredentials.setText("An account with this name already exists.");
 			}
   }
-
+    //changes the window to prepare creating a new account
   public void newAccountSetup() {
       System.out.println("making a new account");
       removeAll();
@@ -697,7 +725,7 @@ public class Panel extends JPanel {
       revalidate();
       repaint();
   }
-
+    //action for logging the user out
   public void logoutAction() {
       if(loggedIn == true)
       {
@@ -725,11 +753,10 @@ public class Panel extends JPanel {
           add(imageLabel, BorderLayout.PAGE_START);
           repaint();
 
-          username.setText("Username");
-          password.setText("Password");
+
       }
   }
-
+    //action for logging the user in
   public void loginAction() {
       String userEntry = username.getText();
       String pwEntry = password.getText();
@@ -756,7 +783,7 @@ public class Panel extends JPanel {
           loginPanel.setBackground(Color.red);
       }
   }
-
+    //Setups of the main HomePage for navigation
   public void accountSetup() {
       System.out.println("Account");
       removeAll();
@@ -767,7 +794,7 @@ public class Panel extends JPanel {
       revalidate();
       repaint();
   }
-
+    //changes the window to prepare new deposits
   public void depositSetup(){
       System.out.println("Deposit");
       removeAll();
@@ -782,7 +809,7 @@ public class Panel extends JPanel {
       revalidate();
       repaint();
   }
-
+    //final action to enter in the deposit
   public void depositConfirm(){
 
       if (dName.getText().equalsIgnoreCase("") || dAmount.getText().equalsIgnoreCase("") ||
@@ -823,7 +850,7 @@ public class Panel extends JPanel {
           updateAccountArray();
       }
   }
-
+    //changes the window to prepare new withdraws
   public void withdrawSetup() {
       System.out.println("Withdrawal");
       removeAll();
@@ -838,7 +865,7 @@ public class Panel extends JPanel {
       revalidate();
       repaint();
   }
-
+    //final action to create a withdrawal
   public void withdrawConfirm() {
 
 
@@ -870,7 +897,7 @@ public class Panel extends JPanel {
       }
   }
 
-
+    //Uses methods shown above.
 	//Button listeners | These contain the methods shown above.
 	private class confirmDeletionListener implements ActionListener{
 		public void actionPerformed (ActionEvent enver){
@@ -889,7 +916,6 @@ public class Panel extends JPanel {
 		    deleteAccountSelect();
 		}
 	}
-
 	private class displayEnteredInfoListener implements ActionListener { //button to display the enteredAccount
 				public void actionPerformed (ActionEvent event){
 				    viewAccountAction();
@@ -909,7 +935,6 @@ public class Panel extends JPanel {
 			    submitAccountAction();
 			}
 	}
-
 	private class newAccountListener implements ActionListener { //creates a new account
 			public void actionPerformed (ActionEvent event){
 			    newAccountSetup();

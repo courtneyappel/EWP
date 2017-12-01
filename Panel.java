@@ -40,9 +40,8 @@ public class Panel extends JPanel {
 	Date myDate = new Date();
 
 
-	String[] codez = new String[] {"61123 Contract Faculty","61225 Student","62210 Minor Equipment","62241 Office Supplies",
-"62245 Computer Equipment (<$5000)", "62249 Minor Software (<$100,00)", "62255 Promotional Aids","62280 Program Expense","62282 Ink",
-"62315 Advertising-Newspaper Non Re","62817 Meetings & Conference Costs","62852 Bank Service Charges"};
+	String[] codez = new String[50];
+	int numCodez = 0;
 	//String fileName;
     //for header Image and Buttons (imageLabel now replaces topPanel)
     ImageIcon backgroundPic = new ImageIcon("headerImage2.png");
@@ -250,6 +249,8 @@ public class Panel extends JPanel {
 					Scanner myScan = new Scanner(myFile);
 					while(myScan.hasNextLine()){
 							String code = myScan.nextLine();
+							codez[numCodez] = code;
+							numCodez++;
 					}
 				}
 				catch(FileNotFoundException e){

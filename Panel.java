@@ -22,7 +22,7 @@ public class Panel extends JPanel {
 
 	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
-	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
+	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion,exitApp,newCodeButton;
 	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate,newCodeBox;
 	JCheckBox check;
 	JComboBox<Account> accountList;
@@ -94,6 +94,7 @@ public class Panel extends JPanel {
         setButton(submitAccountInfo); setButton(displayEnteredInfo);
         setButton(deleteSelectedAccount); setButton(confirmDeletion);
         setButton(exitApp);
+				setButton(newCodeButton);
 
         setTextField(username);
         setTextField(name); setTextField(email);
@@ -382,6 +383,8 @@ public class Panel extends JPanel {
 
 			codeLabel = new JLabel("Select Withdrawal Code");
 			codeList = new JComboBox<String>(codez);
+			newCodeButton = new JButton("Add new code");
+			newCodeButton.addActionListener(new codeButtonListener());
 			newCodeBox = new JTextField("Type in hear to add a new code.");
 
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
@@ -392,6 +395,7 @@ public class Panel extends JPanel {
 	        wDate.setAlignmentX(CENTER_ALIGNMENT);
 	        //codeLabel.setAlignmentX(JButton.CENTER_ALIGNMENT);
 	        codeList.setAlignmentX(CENTER_ALIGNMENT);
+					newCodeButton.setAlignmentX(CENTER_ALIGNMENT);
 					newCodeBox.setAlignmentX(CENTER_ALIGNMENT);
 	        withdrawalButton.setAlignmentX(CENTER_ALIGNMENT);
 	        wMessage.setAlignmentX(CENTER_ALIGNMENT);
@@ -407,6 +411,7 @@ public class Panel extends JPanel {
 			withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        withdrawalPanel.add(withdrawalButton);
 					withdrawalPanel.add(newCodeBox);
+					withdrawalPanel.add(newCodeButton);
 	        withdrawalPanel.add(wMessage);
 	}
 
@@ -880,6 +885,10 @@ public class Panel extends JPanel {
       revalidate();
       repaint();
   }
+
+	public void addNewCode(){
+		System.out.println("Work fucker");
+	}
     //final action to create a withdrawal
   public void withdrawConfirm() {
 
@@ -1012,5 +1021,11 @@ public class Panel extends JPanel {
            withdrawConfirm();
 		}
 	}
+	private class codeButtonListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+           addNewCode();
+		}
+	}
+
 
 }

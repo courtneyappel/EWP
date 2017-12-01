@@ -23,7 +23,7 @@ public class Panel extends JPanel {
 	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
-	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate;
+	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate,newCodeBox;
 	JCheckBox check;
 	JComboBox<Account> accountList;
 	JComboBox<String> codeList, cbAccount;
@@ -106,6 +106,7 @@ public class Panel extends JPanel {
         setButton(depositButton);
 
         setTextField(wName);
+				setTextField(newCodeBox);
         setTextField(wAmount);
 
         setButton(withdrawalButton);
@@ -381,6 +382,7 @@ public class Panel extends JPanel {
 
 			codeLabel = new JLabel("Select Withdrawal Code");
 			codeList = new JComboBox<String>(codez);
+			newCodeBox = new JTextField("Type in hear to add a new code.");
 
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
 
@@ -390,6 +392,7 @@ public class Panel extends JPanel {
 	        wDate.setAlignmentX(CENTER_ALIGNMENT);
 	        //codeLabel.setAlignmentX(JButton.CENTER_ALIGNMENT);
 	        codeList.setAlignmentX(CENTER_ALIGNMENT);
+					newCodeBox.setAlignmentX(CENTER_ALIGNMENT);
 	        withdrawalButton.setAlignmentX(CENTER_ALIGNMENT);
 	        wMessage.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -403,6 +406,7 @@ public class Panel extends JPanel {
 			withdrawalPanel.add(codeList);
 			withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        withdrawalPanel.add(withdrawalButton);
+					withdrawalPanel.add(newCodeBox);
 	        withdrawalPanel.add(wMessage);
 	}
 

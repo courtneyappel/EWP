@@ -22,9 +22,9 @@ public class Panel extends JPanel {
 
 	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
-	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
+	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp,newCodeButton;
 	JButton deleteTransac, saveAccountInfo;
-	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate;
+	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate,newCodeBox;
 	JTextField viewName, viewEmail, viewPhone, viewDesc, viewBal;
 	JCheckBox check;
 	JComboBox<Account> accountList;
@@ -43,9 +43,8 @@ public class Panel extends JPanel {
 	Date myDate = new Date();
 
 
-	String[] codez = new String[] {"61123 Contract Faculty","61225 Student","62210 Minor Equipment","62241 Office Supplies",
-"62245 Computer Equipment (<$5000)", "62249 Minor Software (<$100,00)", "62255 Promotional Aids","62280 Program Expense","62282 Ink",
-"62315 Advertising-Newspaper Non Re","62817 Meetings & Conference Costs","62852 Bank Service Charges"};
+	String[] codez = new String[50];
+	int numCodez = 0;
 	//String fileName;
     //for header Image and Buttons (imageLabel now replaces topPanel)
     ImageIcon backgroundPic = new ImageIcon("headerImage2.png");
@@ -88,7 +87,7 @@ public class Panel extends JPanel {
 
 
 	//Methods Used to Construct the Panels
-	
+
 	//broad method to apply visual settings
 	public void setAll() {
 	    //Here are visual settings for things like buttons, textfields...etc
@@ -100,6 +99,7 @@ public class Panel extends JPanel {
         setButton(exitApp);
         setButton(deleteTransac);
         setButton(saveAccountInfo);
+				setButton(newCodeButton);
 
         setTextField(username);
         setTextField(name); setTextField(email);
@@ -112,6 +112,7 @@ public class Panel extends JPanel {
         setButton(depositButton);
 
         setTextField(wName);
+				setTextField(newCodeBox);
         setTextField(wAmount);
 
         setButton(withdrawalButton);
@@ -119,7 +120,7 @@ public class Panel extends JPanel {
         setPasswordField(password);
         setComboBoxAccount(accountList);
         setComboBoxString(codeList);
-        
+
         //setTextFieldNoRemoval(viewName);
         //setTextField(viewEmail);
         //setTextField(viewPhone);
@@ -140,7 +141,7 @@ public class Panel extends JPanel {
 				}
     });
 	}
-	
+
     public void setTextFieldNoRemoval(JTextField field){
         field.setPreferredSize( new Dimension( 300, 42 ) );
         field.setMaximumSize( new Dimension( 450, 42 ) );
@@ -181,7 +182,7 @@ public class Panel extends JPanel {
             field.setCursor(cursor);
             //field.setBackground(Color.LIGHT_GRAY);
     }
-   
+
     public void setButton(JButton testButton){
 
 				testButton.setOpaque(true);
@@ -261,7 +262,7 @@ public class Panel extends JPanel {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            
+
             try {
                 File myFile = new File("TransactionFile.txt");
                 Scanner myScan = new Scanner(myFile);
@@ -269,7 +270,7 @@ public class Panel extends JPanel {
                     String line = myScan.nextLine();
                     Scanner lineScan = new Scanner(line);
                     lineScan.useDelimiter(",");
-                    
+
                     String trName = lineScan.next();
                     String trAccountName = lineScan.next();
                     String Amount = lineScan.next();
@@ -281,9 +282,9 @@ public class Panel extends JPanel {
                     if(Type.equals("Deposit")) {
                           trType = false;
                     }else trType = true;
-                    
+
                     String CheckCredit = lineScan.next();
-                    
+
                     Boolean trCheck,trCredit;
                     if(CheckCredit.equalsIgnoreCase("Credit")) {
                           trCheck = false;  trCredit = true;
@@ -292,10 +293,10 @@ public class Panel extends JPanel {
                         trCheck = true; trCredit = false;
                     }*/
                     else {trCheck = false; trCredit = false;}
-                   
-                    
+
+
                     String trStringCode = lineScan.next();
-                    
+
                     Transaction transac = new Transaction( trName,  trAccountName,  trAmount,  trDate,  trType, accountArray,  accountToView, trCheck,  trCredit, trStringCode);
                     transactionArray.add(transac);
                     lineScan.close();
@@ -305,6 +306,19 @@ public class Panel extends JPanel {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+
+						try{
+					File myFile = new File("Codes.txt");
+					Scanner myScan = new Scanner(myFile);
+					while(myScan.hasNextLine()){
+							String code = myScan.nextLine();
+							codez[numCodez] = code;
+							numCodez++;
+					}
+				}
+				catch(FileNotFoundException e){
+					e.printStackTrace();
+				}
 	}
 	//Methods to setup all Panel Objects
 	public void createHeaderFooter(){
@@ -352,13 +366,13 @@ public class Panel extends JPanel {
 		login = new JButton("Log In");
 
 		login.addActionListener(new loginListener());
-		
+
 		userLabel.setAlignmentX(CENTER_ALIGNMENT);
 		username.setAlignmentX(CENTER_ALIGNMENT);
 		pwLabel.setAlignmentX(CENTER_ALIGNMENT);
 		password.setAlignmentX(CENTER_ALIGNMENT);
 		login.setAlignmentX(CENTER_ALIGNMENT);
-		
+
 		loginPanel.add(Box.createRigidArea(new Dimension (0,25)));
 		loginPanel.add(userLabel);
 		loginPanel.add(username);
@@ -430,18 +444,23 @@ public class Panel extends JPanel {
 
 			codeLabel = new JLabel("Select Withdrawal Code");
 			codeList = new JComboBox<String>(codez);
+			newCodeButton = new JButton("Add new code");
+			newCodeButton.addActionListener(new codeButtonListener());
+			newCodeBox = new JTextField("Type in hear to add a new code.");
 
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
-	        
+
 	        wName.setAlignmentX(CENTER_ALIGNMENT);
 	        cbAccount.setAlignmentX(CENTER_ALIGNMENT);
 	        wAmount.setAlignmentX(CENTER_ALIGNMENT);
 	        wDate.setAlignmentX(CENTER_ALIGNMENT);
 	        //codeLabel.setAlignmentX(JButton.CENTER_ALIGNMENT);
 	        codeList.setAlignmentX(CENTER_ALIGNMENT);
+					newCodeButton.setAlignmentX(CENTER_ALIGNMENT);
+					newCodeBox.setAlignmentX(CENTER_ALIGNMENT);
 	        withdrawalButton.setAlignmentX(CENTER_ALIGNMENT);
 	        wMessage.setAlignmentX(CENTER_ALIGNMENT);
-	        
+
 	        withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        withdrawalPanel.add(wName);
 	        withdrawalPanel.add(cbAccount);
@@ -452,6 +471,8 @@ public class Panel extends JPanel {
 			withdrawalPanel.add(codeList);
 			withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        withdrawalPanel.add(withdrawalButton);
+					withdrawalPanel.add(newCodeBox);
+					withdrawalPanel.add(newCodeButton);
 	        withdrawalPanel.add(wMessage);
 	}
 
@@ -480,8 +501,8 @@ public class Panel extends JPanel {
 
 	        depositButton.addActionListener(new depositButtonListener());
 			codeList.addActionListener(new codeListener());
-			
-			
+
+
 	        dName.setAlignmentX(CENTER_ALIGNMENT);
             cbAccount.setAlignmentX(CENTER_ALIGNMENT);
             dAmount.setAlignmentX(CENTER_ALIGNMENT);
@@ -491,8 +512,8 @@ public class Panel extends JPanel {
             //codeList.setAlignmentX(JButton.CENTER_ALIGNMENT);
             depositButton.setAlignmentX(CENTER_ALIGNMENT);
             dMessage.setAlignmentX(CENTER_ALIGNMENT);
-            
-            depositPanel.add(Box.createRigidArea(new Dimension (0,25)));		
+
+            depositPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        depositPanel.add(dName);
 	        depositPanel.add(cbAccount);
 	        depositPanel.add(dAmount);
@@ -520,7 +541,7 @@ public class Panel extends JPanel {
 	        };
 	        newAccount.setAlignmentX(CENTER_ALIGNMENT);
 	        newAccount.addActionListener(new newAccountListener());
-	        
+
 	        accountPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        accountPanel.add(newAccount);
 
@@ -536,15 +557,15 @@ public class Panel extends JPanel {
 	        enterInCredentials = new JLabel("Please enter in the information.");
 	        submitAccountInfo = new JButton("Submit");
 	        submitAccountInfo.addActionListener(new submitAccountInfoListener());
-	        
+
 	        enterInCredentials.setAlignmentX(CENTER_ALIGNMENT);
 	        name.setAlignmentX(CENTER_ALIGNMENT);
 	        email.setAlignmentX(CENTER_ALIGNMENT);
 	        phoneNum.setAlignmentX(CENTER_ALIGNMENT);
 	        description.setAlignmentX(CENTER_ALIGNMENT);
 	        submitAccountInfo.setAlignmentX(CENTER_ALIGNMENT);
-            accountCreationPanel.add(Box.createRigidArea(new Dimension (0,25)));        
-        
+            accountCreationPanel.add(Box.createRigidArea(new Dimension (0,25)));
+
 	        accountCreationPanel.add(enterInCredentials);
 	          accountCreationPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        accountCreationPanel.add(name);
@@ -558,7 +579,7 @@ public class Panel extends JPanel {
 	public void createViewPanel() {
 	        accountViewPanel.setBackground(Color.lightGray);
 	        accountViewPanel.setLayout(new BoxLayout(accountViewPanel, BoxLayout.Y_AXIS));
-	        
+
 	        listOfAccounts = new JLabel("<html>Here is a list of current accounts.<br>");
 	        accountInfo = new JLabel("");
 	        displayEnteredInfo = new JButton("View selected account");
@@ -566,13 +587,13 @@ public class Panel extends JPanel {
 	        confirmDeletion = new JButton("Confirm Delete");
 	        saveAccountInfo = new JButton("Save Info");
 	        deleteTransac = new JButton("Delete Transaction");
-	        
+
 	        confirmDeletion.addActionListener(new confirmDeletionListener());
 	        deleteSelectedAccount.addActionListener(new deleteSelectedAccountListener());
 	        displayEnteredInfo.addActionListener(new displayEnteredInfoListener());
 	        saveAccountInfo.addActionListener(new saveInfoEditListener());
 	        deleteTransac.addActionListener(new deleteTransacListener());
-	        
+
 	        accountList.setAlignmentX(CENTER_ALIGNMENT);
 	        accountInfo.setAlignmentX(CENTER_ALIGNMENT);
 	        displayEnteredInfo.setAlignmentX(CENTER_ALIGNMENT);
@@ -581,7 +602,7 @@ public class Panel extends JPanel {
 	        confirmDeletion.setAlignmentX(CENTER_ALIGNMENT);
 	        deleteTransac.setAlignmentX(CENTER_ALIGNMENT);
 	        saveAccountInfo.setAlignmentX(CENTER_ALIGNMENT);
-	        
+
             accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        //accountViewPanel.add(listOfAccounts);
 	        accountViewPanel.add(accountList);
@@ -590,11 +611,11 @@ public class Panel extends JPanel {
 	        accountViewPanel.add(displayEnteredInfo);
             accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
             accountViewPanel.add(deleteSelectedAccount);
-	        
+
 	        accountPanel.add(accountViewPanel);
 	}
-	//End of creation for panel objects 
-	
+	//End of creation for panel objects
+
 
 	//Methods for Listeners
 
@@ -634,7 +655,7 @@ public class Panel extends JPanel {
           }
       }
   }
-  
+
   public void codeSelection(){
 		codeChoice = String.valueOf(codeList.getSelectedItem());
 		System.out.println(codeChoice);
@@ -695,12 +716,12 @@ public class Panel extends JPanel {
                       }
                       else if(i.getAccount().equalsIgnoreCase(name.getName())) {
                           cbTransaction.addItem(i.getAllInfo());
-                          
-                          
+
+
                       }
                   }
-                  
-                  
+
+
               }
       }
       if(foundAccount){
@@ -749,7 +770,7 @@ public class Panel extends JPanel {
 					add(logoLabel, BorderLayout.PAGE_END);
           add(homePanel, BorderLayout.CENTER);
           add(imageLabel, BorderLayout.PAGE_START);
-          
+
           accountViewPanel.removeAll();
           accountInfo.setText("");
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
@@ -759,7 +780,7 @@ public class Panel extends JPanel {
           accountViewPanel.add(displayEnteredInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteSelectedAccount);
-          
+
           newAccount.setVisible(true);
           accountToView = "";
           dMessage.setText("");
@@ -838,7 +859,7 @@ public class Panel extends JPanel {
           phoneNum.setText("Phone Number");
           description.setText("Description");
           accountCreationPanel.setBackground(Color.lightGray);
-          
+
           accountViewPanel.removeAll();
           accountInfo.setText("");
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
@@ -967,6 +988,10 @@ public class Panel extends JPanel {
       revalidate();
       repaint();
   }
+
+	public void addNewCode(){
+		System.out.println("Work fucker");
+	}
     //final action to create a withdrawal
   public void withdrawConfirm() {
 
@@ -1000,13 +1025,13 @@ public class Panel extends JPanel {
   }
 
   public void saveInfoEdit() {
-      
+
   }
-  
+
   public void deleteTransac() {
-      
+
   }
-  
+
     //Uses methods shown above.
 	//Button listeners | These contain the methods shown above.
 	private class confirmDeletionListener implements ActionListener{
@@ -1014,13 +1039,13 @@ public class Panel extends JPanel {
 		    deleteAccountFinal();
 		}
 	}
-	
+
 	private class codeListener implements ActionListener{
 		public void actionPerformed (ActionEvent event){
 			codeSelection();
 		}
 	}
-	
+
 	private class deleteSelectedAccountListener implements ActionListener{//button to delete selected account.
 		public void actionPerformed (ActionEvent event){
 		    deleteAccountSelect();
@@ -1088,17 +1113,17 @@ public class Panel extends JPanel {
 
 	            saveInfoEdit();
 	        }
-	        
+
 	    }
-	
+
 	private class deleteTransacListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
 
                 deleteTransac();
         }
-	    
+
 	}
-	
+
 	//deposit page setup
 	private class depositListener implements ActionListener{
 		public void actionPerformed (ActionEvent event){
@@ -1123,6 +1148,12 @@ public class Panel extends JPanel {
            withdrawConfirm();
 		}
 	}
+	private class codeButtonListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+           addNewCode();
+		}
+	}
+
 
 
 }

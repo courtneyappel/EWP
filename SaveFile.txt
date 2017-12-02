@@ -1,3 +1,3 @@
-Trish,patricia.duce@umontana.edu,406-243-2866,Trish's Camp Account,2013.95
-Michael,michael.cassens@umontana.edu,415-787-0577,Michael's Camp Account,1549.18
-Master Account,N/A,N/A,Main account for all sub accounts.,2590.88
+Trish,patricia.duce@umontana.edu,406-243-2866,Trish's Camp Account,2117.19
+Michael,michael.cassens@umontana.edu,415-787-0577,Michael's Camp Account,1599.9800000000002
+Master Account,N/A,N/A,Main account for all sub accounts.,8106.919999999988

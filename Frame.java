@@ -13,8 +13,10 @@ public class Frame {
     		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     		
             System.out.println(System.getProperty("os.name"));
-    		
-    		myFrame.setIconImage(new ImageIcon(ClassLoader.getSystemResource("ewpLogo.png")).getImage());
+            String osName = System.getProperty("os.name");
+    		if(osName.equalsIgnoreCase("Windows 10")) {
+    	    myFrame.setIconImage(new ImageIcon(ClassLoader.getSystemResource("ewpLogo.png")).getImage());  
+    		}
     		
     		myFrame.setUndecorated(true);
     		

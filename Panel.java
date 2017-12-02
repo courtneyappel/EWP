@@ -23,10 +23,13 @@ public class Panel extends JPanel {
 	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp;
+	JButton deleteTransac, saveAccountInfo;
 	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate;
+	JTextField viewName, viewEmail, viewPhone, viewDesc, viewBal;
 	JCheckBox check;
 	JComboBox<Account> accountList;
-	JComboBox<String> codeList, cbAccount;
+	JComboBox<String> codeList, cbAccount,cbTransaction;
+	//JComboBox<Transaction> cbTransaction;
 	//JCheckBox cc;
 	JPasswordField password;
 	JPanel topPanel = new JPanel();//(imageLabel now replaces topPanel)
@@ -95,6 +98,8 @@ public class Panel extends JPanel {
         setButton(submitAccountInfo); setButton(displayEnteredInfo);
         setButton(deleteSelectedAccount); setButton(confirmDeletion);
         setButton(exitApp);
+        setButton(deleteTransac);
+        setButton(saveAccountInfo);
 
         setTextField(username);
         setTextField(name); setTextField(email);
@@ -102,8 +107,8 @@ public class Panel extends JPanel {
 
         setTextField(dName);
         setTextField(dAmount);
-        setTextField(wDate);
-        setTextField(dDate);
+        setTextFieldNoRemoval(wDate);
+        setTextFieldNoRemoval(dDate);
         setButton(depositButton);
 
         setTextField(wName);
@@ -114,7 +119,12 @@ public class Panel extends JPanel {
         setPasswordField(password);
         setComboBoxAccount(accountList);
         setComboBoxString(codeList);
-
+        
+        //setTextFieldNoRemoval(viewName);
+        //setTextField(viewEmail);
+        //setTextField(viewPhone);
+        //setTextField(viewDesc);
+        //setTextField(viewBal);
 	}
 
 	public void setTextField(JTextField field){
@@ -130,6 +140,12 @@ public class Panel extends JPanel {
 				}
     });
 	}
+	
+    public void setTextFieldNoRemoval(JTextField field){
+        field.setPreferredSize( new Dimension( 300, 42 ) );
+        field.setMaximumSize( new Dimension( 450, 42 ) );
+        field.setFont(new Font("Tahoma", Font.BOLD, 14));
+    }
 
 	public void setPasswordField(JPasswordField field){
 			field.setPreferredSize( new Dimension( 300, 42 ) );
@@ -241,6 +257,50 @@ public class Panel extends JPanel {
                     lineScan.close();
                 }
                 accountList = new JComboBox(accountArray.toArray());
+                myScan.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            
+            try {
+                File myFile = new File("TransactionFile.txt");
+                Scanner myScan = new Scanner(myFile);
+                while(myScan.hasNextLine()){
+                    String line = myScan.nextLine();
+                    Scanner lineScan = new Scanner(line);
+                    lineScan.useDelimiter(",");
+                    
+                    String trName = lineScan.next();
+                    String trAccountName = lineScan.next();
+                    String Amount = lineScan.next();
+                    Double trAmount = Double.valueOf(Amount.replace("$", ""));
+                    String trDate = lineScan.next();
+                    String Type = lineScan.next();
+                    Boolean trType;
+
+                    if(Type.equals("Deposit")) {
+                          trType = false;
+                    }else trType = true;
+                    
+                    String CheckCredit = lineScan.next();
+                    
+                    Boolean trCheck,trCredit;
+                    if(CheckCredit.equalsIgnoreCase("Credit")) {
+                          trCheck = false;  trCredit = true;
+                    }
+/*                    if(CheckCredit.equalsIgnoreCase("Check")) {
+                        trCheck = true; trCredit = false;
+                    }*/
+                    else {trCheck = false; trCredit = false;}
+                   
+                    
+                    String trStringCode = lineScan.next();
+                    
+                    Transaction transac = new Transaction( trName,  trAccountName,  trAmount,  trDate,  trType, accountArray,  accountToView, trCheck,  trCredit, trStringCode);
+                    transactionArray.add(transac);
+                    lineScan.close();
+                }
+                //accountList = new JComboBox(accountArray.toArray());
                 myScan.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -504,10 +564,14 @@ public class Panel extends JPanel {
 	        displayEnteredInfo = new JButton("View selected account");
 	        deleteSelectedAccount = new JButton("Delete Account");
 	        confirmDeletion = new JButton("Confirm Delete");
+	        saveAccountInfo = new JButton("Save Info");
+	        deleteTransac = new JButton("Delete Transaction");
 	        
 	        confirmDeletion.addActionListener(new confirmDeletionListener());
 	        deleteSelectedAccount.addActionListener(new deleteSelectedAccountListener());
 	        displayEnteredInfo.addActionListener(new displayEnteredInfoListener());
+	        saveAccountInfo.addActionListener(new saveInfoEditListener());
+	        deleteTransac.addActionListener(new deleteTransacListener());
 	        
 	        accountList.setAlignmentX(CENTER_ALIGNMENT);
 	        accountInfo.setAlignmentX(CENTER_ALIGNMENT);
@@ -515,6 +579,8 @@ public class Panel extends JPanel {
 	        listOfAccounts.setAlignmentX(CENTER_ALIGNMENT);
 	        deleteSelectedAccount.setAlignmentX(CENTER_ALIGNMENT);
 	        confirmDeletion.setAlignmentX(CENTER_ALIGNMENT);
+	        deleteTransac.setAlignmentX(CENTER_ALIGNMENT);
+	        saveAccountInfo.setAlignmentX(CENTER_ALIGNMENT);
 	        
             accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        //accountViewPanel.add(listOfAccounts);
@@ -576,7 +642,7 @@ public class Panel extends JPanel {
 	}
 	//changes window to confirm account delete
   public void deleteAccountSelect() {
-
+      newAccount.setVisible(false);
       Account myAccount = (Account) accountList.getSelectedItem();
       accountToView = String.valueOf(myAccount);
 			if(!accountToView.equalsIgnoreCase("Master Account")){
@@ -608,22 +674,58 @@ public class Panel extends JPanel {
   }
     //changes window to display account information from selected account
   public void viewAccountAction() {
-      
+      newAccount.setVisible(false);
       accountToView = String.valueOf(accountList.getSelectedItem());
       String accountToDisplay = "";
       Boolean foundAccount = false;
+      cbTransaction = new JComboBox<String>();
       for(Account name:accountArray){
               if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
                   foundAccount = true;
                   accountToDisplay = name.getAllInfo();
-									System.out.println("Transaction History");
-
+                  viewName = new JTextField(name.getName());
+                  viewEmail = new JTextField(name.getEmail());
+                  viewPhone = new JTextField(name.getPhoneNum());
+                  viewDesc = new JTextField(name.getDescription());
+                  viewBal = new JTextField("$"+name.getBalance());
+				  //System.out.println("Transaction History");
+                  for(Transaction i: transactionArray) {
+                      if(accountToView.equalsIgnoreCase("Master Account")) {
+                          cbTransaction.addItem(i.getAllInfo());
+                      }
+                      else if(i.getAccount().equalsIgnoreCase(name.getName())) {
+                          cbTransaction.addItem(i.getAllInfo());
+                          
+                          
+                      }
+                  }
+                  
+                  
               }
       }
       if(foundAccount){
           accountViewPanel.removeAll();
-          accountInfo.setText(accountToDisplay);
-          accountViewPanel.add(accountInfo);
+          //accountInfo.setText(accountToDisplay);
+          //accountViewPanel.add(accountInfo);
+          accountViewPanel.add(viewName);
+          accountViewPanel.add(viewEmail);
+          accountViewPanel.add(viewPhone);
+          accountViewPanel.add(viewDesc);
+          accountViewPanel.add(viewBal);
+          setTextFieldNoRemoval(viewName);
+          setTextFieldNoRemoval(viewEmail);
+          setTextFieldNoRemoval(viewPhone);
+          setTextFieldNoRemoval(viewDesc);
+          setTextFieldNoRemoval(viewBal);
+          viewBal.setEditable(false);
+          accountViewPanel.add(cbTransaction);
+          setComboBoxString(cbTransaction);
+          //accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
+          accountViewPanel.add(deleteTransac);
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
+          accountViewPanel.add(saveAccountInfo);
+          cbTransaction.setPreferredSize( new Dimension( 200, 42 ) );
+          cbTransaction.setMaximumSize( new Dimension( 900, 42 ) );
           revalidate();
           repaint();
       }
@@ -658,7 +760,7 @@ public class Panel extends JPanel {
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteSelectedAccount);
           
-          
+          newAccount.setVisible(true);
           accountToView = "";
           dMessage.setText("");
           depositButton.setEnabled(true);
@@ -897,6 +999,14 @@ public class Panel extends JPanel {
       }
   }
 
+  public void saveInfoEdit() {
+      
+  }
+  
+  public void deleteTransac() {
+      
+  }
+  
     //Uses methods shown above.
 	//Button listeners | These contain the methods shown above.
 	private class confirmDeletionListener implements ActionListener{
@@ -973,6 +1083,22 @@ public class Panel extends JPanel {
         }
 	}
 
+	   private class saveInfoEditListener implements ActionListener{
+	        public void actionPerformed(ActionEvent e) {
+
+	            saveInfoEdit();
+	        }
+	        
+	    }
+	
+	private class deleteTransacListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+
+                deleteTransac();
+        }
+	    
+	}
+	
 	//deposit page setup
 	private class depositListener implements ActionListener{
 		public void actionPerformed (ActionEvent event){
@@ -997,5 +1123,6 @@ public class Panel extends JPanel {
            withdrawConfirm();
 		}
 	}
+
 
 }

@@ -27,3 +27,5 @@
 /Panel$8.class
 /Panel$codeListener.class
 /Panel$exitListener.class
+/Panel$deleteTransacListener.class
+/Panel$saveInfoEditListener.class

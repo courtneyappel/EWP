@@ -1056,6 +1056,7 @@ public class Panel extends JPanel {
           dMessage.setText("<html>Thank you, "+newDepositName+".<br> The amount of $"+newDepositAmount+" has been added to account "+newDepositAccount+" on "+newDepositDate);
           depositButton.setEnabled(false);
           updateAccountArray();
+					updateTransactions();
       }
   }
     //changes the window to prepare new withdraws
@@ -1106,6 +1107,7 @@ public class Panel extends JPanel {
           wMessage.setText("<html>Thank you, "+newWithdrawalName+".<br> The amount of $"+newWithdrawalAmount+" has been withdrawn from the account "+newWithdrawalAccount+" on "+newWithdrawalDate);
           withdrawalButton.setEnabled(false);
           updateAccountArray();
+					updateTransactions();
       }
   }
 
@@ -1113,11 +1115,9 @@ public class Panel extends JPanel {
 
   }
 
-//Still working on a way to delete the transaction from the text file -Courtney
+//deletes from transaction file and is removed from table but the deleted transaction amount is not accounted for in the total amounts -Courtney
   public void deleteTransac() {
 		int r =ransactions.getSelectedRow();
-		System.out.print("R: "+r);
-		model.getValueAt(1,1);
 
 		delName = model.getValueAt(r,0).toString();
 		delAccount = model.getValueAt(r,1).toString();
@@ -1129,40 +1129,28 @@ public class Panel extends JPanel {
 		delfinal = delName+","+delAccount+","+delAmount+","+delDate+","+delType+","+delPayment+","+delCode;
 		System.out.println("DELFINAL: "+delfinal);
 		model.removeRow(r);
-//		try{
-//			File input = new File("TransactionFile.txt");
-//			File tmp = new File("tmp.txt");/
-
-//			BufferedReader read = new BufferedReader(new FileReader(input));
-//			BufferedWriter writer = new BufferedWriter(new FileWriter(tmp));
-
-//			String currentln;
-
-//			while((currentln = read.readLine())!=null){
-//				String trim = currentln.trim();
-//				if(trim.equals(delfinal)) continue;
-//				writer.write(currentln+System.getProperty("line.separator"));
-
-//			}
-//			writer.close();
-//			read.close();
-//			boolean success = tmp.renameTo(input);
-//			System.out.println(success);
-//		}
 		try{
-			File delFile = new File("TransactionFile.txt");
-			Scanner delScan = new Scanner(delFile);
-			while(delScan.hasNextLine()){
-				String delLine=delScan.nextLine();
-				if(delLine.equals(delfinal)){
-					System.out.println("MATCH");
-				}
-				else{
-					System.out.println("NOT A MATCH");
-				}
+			File input = new File("TransactionFile.txt");
+			File tmp = new File("tmp.txt");
+
+			BufferedReader read = new BufferedReader(new FileReader(input));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tmp));
+
+			String currentln;
+
+			while((currentln = read.readLine())!=null){
+				String trim = currentln.trim();
+				if(trim.equals(delfinal)) continue;
+				writer.write(currentln+System.getProperty("line.separator"));
+
 			}
+			writer.close();
+			read.close();
+			boolean success = tmp.renameTo(input);
+			System.out.println(success);
 		}
-		catch (FileNotFoundException e) {
+
+		catch (IOException e) {
 				e.printStackTrace();
 		}
 

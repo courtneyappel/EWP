@@ -1,8 +1,8 @@
-aw,Trish,$108.24,Thu Nov 30 10:39:41 MST 2017,Deposit,Credit, Code:N/A
-Wyatt,Michael,$18.400000000000002,Sat Dec 02 14:54:49 MST 2017,Deposit,Check, Code:N/A
 Wyatt,Michael,$10.0,Sat Dec 02 14:54:49 MST 2017,Withdrawal,N/A, Code:62241 Office Supplies
 Test,Michael,$48.4,Sat Dec 02 14:54:49 MST 2017,Deposit,Credit, Code:N/A
-Test,Michael,$6.0,Sat Dec 02 14:54:49 MST 2017,Withdrawal,N/A, Code:61123 Contract Faculty
 Wyatt,Trish,$5.0,Sat Dec 02 14:57:26 MST 2017,Withdrawal,N/A, Code:62249 Minor Software (<$100,00)
 Court,Trish,$32.11,Sat Dec 02 22:49:17 MST 2017,Withdrawal,N/A, Code:61123 Contract Faculty
-Court,Michael,$29.8448,Sat Dec 02 23:25:49 MST 2017,Deposit,Check, Code:N/A
+Courtney,Michael,$2.99,Sun Dec 03 14:22:49 MST 2017,Deposit,Check, Code:N/A
+Courtney,Michael,$1.98,Sun Dec 03 14:22:49 MST 2017,Deposit,Credit, Code:N/A
+Courtney,Michael,$4.5,Sun Dec 03 14:22:49 MST 2017,Withdrawal,N/A, Code:62241 Office Supplies
+Court,Trish,$17.6,Sun Dec 03 14:33:29 MST 2017,Deposit,Credit, Code:N/A

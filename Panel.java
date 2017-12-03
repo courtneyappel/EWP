@@ -3,6 +3,14 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.io.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 @SuppressWarnings("serial")
 public class Panel extends JPanel {
 	//variable inits
@@ -20,7 +28,7 @@ public class Panel extends JPanel {
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel;
+	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, tHistory;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp,newCodeButton;
 	JButton deleteTransac, saveAccountInfo;
@@ -42,6 +50,16 @@ public class Panel extends JPanel {
 	JPanel accountViewPanel = new JPanel();
 	Date myDate = new Date();
 
+	String tType, tPayment, tName, tAccount, tAmount, tDate, tcode, delfinal;
+	String delType, delPayment, delName, delAccount, delAmount, delDate, delCode;
+	JTable Transactions;
+	DefaultTableModel model = new DefaultTableModel();
+	String[] tArray1 = {};
+	Object[] columnNames ={"Person",
+	"Account","Date","Description","Withdrawal/Deposit","Check/Credit","Amount"};
+
+	JTable ransactions = new JTable(model);
+	JScrollPane scrollPane = new JScrollPane(ransactions);
 
 	String[] codez = new String[50];
 	int numCodez = 0;
@@ -193,6 +211,65 @@ public class Panel extends JPanel {
 				testButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		}
+
+		public void updateTransactions(){
+			for (int i = model.getRowCount() - 1; i >-1; i--){
+				model.removeRow(i);
+			}
+			int x = model.getColumnCount();
+			if (x<5){
+				model.addColumn("Person");
+				model.addColumn("Account");
+				model.addColumn("Amount");
+				//model.addColumn("Description");
+				model.addColumn("Date");
+				model.addColumn("Type");
+				model.addColumn("Check/Credit");
+				model.addColumn("Code");
+			}
+
+			try{
+				tArray1 = null;
+				File tFile = new File("TransactionFile.txt");
+				Scanner tScan = new Scanner(tFile);
+				while(tScan.hasNextLine()){
+					tArray1 = null;
+					String tLine = tScan.nextLine();
+					Scanner tLineScan = new Scanner(tLine);
+					tLineScan.useDelimiter(",");
+					tName=tLineScan.next();
+					tAccount=tLineScan.next();
+					if (accountToView.equals("Master Account")){
+						tAmount=tLineScan.next();
+						tDate=tLineScan.next();
+						//tDescription=tLineScan.next();
+						tType=tLineScan.next();
+						tPayment=tLineScan.next();
+						tcode=tLineScan.next();
+						Object[] tArray1 ={tName, tAccount, tAmount, tDate, tType, tPayment,tcode};
+						model.addRow(tArray1);
+					}
+					if (tAccount.equals(accountToView)){
+						tAmount=tLineScan.next();
+						tDate=tLineScan.next();
+						//tDescription=tLineScan.next();
+						tType=tLineScan.next();
+						tPayment=tLineScan.next();
+						tcode=tLineScan.next();
+						Object[] tArray1 ={tName, tAccount, tAmount, tDate, tType, tPayment,tcode};
+						model.addRow(tArray1);
+					}
+					else{
+						System.out.println("NOT FOUND");
+					}
+
+				}
+			}
+			catch (FileNotFoundException e) {
+					e.printStackTrace();
+			}
+		}
+
 
     //Manually updates the array for accounts when needed
 	public void updateAccountArray() {
@@ -697,7 +774,8 @@ public class Panel extends JPanel {
   public void viewAccountAction() {
       newAccount.setVisible(false);
       accountToView = String.valueOf(accountList.getSelectedItem());
-      String accountToDisplay = "";
+
+			String accountToDisplay = "";
       Boolean foundAccount = false;
       cbTransaction = new JComboBox<String>();
       for(Account name:accountArray){
@@ -747,7 +825,14 @@ public class Panel extends JPanel {
           accountViewPanel.add(saveAccountInfo);
           cbTransaction.setPreferredSize( new Dimension( 200, 42 ) );
           cbTransaction.setMaximumSize( new Dimension( 900, 42 ) );
-          revalidate();
+					updateTransactions();
+					tHistory = new JLabel("");
+					tHistory.setText("<html><br>TRANSACTION HISTORY<br>");
+					accountViewPanel.add(tHistory);
+					tHistory.setAlignmentX(CENTER_ALIGNMENT);
+					tHistory.setFont(new Font("Serif",Font.PLAIN, 24));
+					accountViewPanel.add(scrollPane);
+					revalidate();
           repaint();
       }
       else{
@@ -1028,7 +1113,58 @@ public class Panel extends JPanel {
 
   }
 
+//Still working on a way to delete the transaction from the text file -Courtney
   public void deleteTransac() {
+		int r =ransactions.getSelectedRow();
+		System.out.print("R: "+r);
+		model.getValueAt(1,1);
+
+		delName = model.getValueAt(r,0).toString();
+		delAccount = model.getValueAt(r,1).toString();
+		delAmount = model.getValueAt(r,2).toString();
+		delDate = model.getValueAt(r,3).toString();
+		delType = model.getValueAt(r,4).toString();
+		delPayment = model.getValueAt(r,5).toString();
+		delCode = model.getValueAt(r,6).toString();
+		delfinal = delName+","+delAccount+","+delAmount+","+delDate+","+delType+","+delPayment+","+delCode;
+		System.out.println("DELFINAL: "+delfinal);
+		model.removeRow(r);
+//		try{
+//			File input = new File("TransactionFile.txt");
+//			File tmp = new File("tmp.txt");/
+
+//			BufferedReader read = new BufferedReader(new FileReader(input));
+//			BufferedWriter writer = new BufferedWriter(new FileWriter(tmp));
+
+//			String currentln;
+
+//			while((currentln = read.readLine())!=null){
+//				String trim = currentln.trim();
+//				if(trim.equals(delfinal)) continue;
+//				writer.write(currentln+System.getProperty("line.separator"));
+
+//			}
+//			writer.close();
+//			read.close();
+//			boolean success = tmp.renameTo(input);
+//			System.out.println(success);
+//		}
+		try{
+			File delFile = new File("TransactionFile.txt");
+			Scanner delScan = new Scanner(delFile);
+			while(delScan.hasNextLine()){
+				String delLine=delScan.nextLine();
+				if(delLine.equals(delfinal)){
+					System.out.println("MATCH");
+				}
+				else{
+					System.out.println("NOT A MATCH");
+				}
+			}
+		}
+		catch (FileNotFoundException e) {
+				e.printStackTrace();
+		}
 
   }
 

@@ -2,14 +2,14 @@
     <description/>
     <view zooming-state="default:0" id="gantt-chart">
         <field id="tpd3" name="Name" width="228" order="0"/>
-        <field id="tpd4" name="Begin date" width="110" order="1"/>
-        <field id="tpd5" name="End date" width="114" order="2"/>
+        <field id="tpd4" name="Begin date" width="111" order="1"/>
+        <field id="tpd5" name="End date" width="115" order="2"/>
         <field id="tpc0" name="Group Member" width="145" order="3"/>
         <option id="color.recent"><![CDATA[#99ccff #ffcc33 #ffcc00 #ffcc66 #ffff33 #666666 #999999 #9999ff #ccccff #6666ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Name" width="209" order="0"/>
-        <field id="1" name="Default role" width="85" order="1"/>
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -36,7 +36,7 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
             <taskproperty id="tpc0" name="Group Member" type="custom" valuetype="text"/>
         </taskproperties>
-        <task id="3" name="Software Engineering Tools" color="#666666" meeting="false" start="2017-08-31" duration="95" complete="0" expand="true">
+        <task id="3" name="Software Engineering Tools" color="#666666" meeting="false" start="2017-08-31" duration="97" complete="0" expand="true">
             <customproperty taskproperty-id="tpc0" value="Group"/>
             <task id="0" name="GIT" color="#999999" meeting="false" start="2017-08-31" duration="22" complete="0" expand="true">
                 <notes><![CDATA[Courtney - 2 hours
@@ -188,7 +188,7 @@ Jeff - 1 hr]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Courtney"/>
                 </task>
             </task>
-            <task id="92" name="Sprint 5" meeting="false" start="2017-11-30" duration="4" complete="0" expand="true">
+            <task id="92" name="Sprint 5" meeting="false" start="2017-11-30" duration="6" complete="0" expand="true">
                 <task id="93" name="TransactionHistory" color="#8cb6ce" meeting="false" start="2017-11-30" duration="3" complete="0" expand="true">
                     <notes><![CDATA[2 hrs]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Courtney"/>
@@ -196,6 +196,10 @@ Jeff - 1 hr]]></notes>
                 <task id="94" name="DeleteTransaction" color="#8cb6ce" meeting="false" start="2017-12-03" duration="1" complete="0" expand="true">
                     <notes><![CDATA[2 hrs]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Courtney"/>
+                </task>
+                <task id="95" name="Add a new code and save it to text file" color="#8cb6ce" meeting="false" start="2017-11-30" duration="6" complete="0" expand="true">
+                    <notes><![CDATA[2.5 hours]]></notes>
+                    <customproperty taskproperty-id="tpc0" value="Josh"/>
                 </task>
             </task>
         </task>

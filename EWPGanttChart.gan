@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><project name="Engorged Wicket Pandoras" company="EWP" webLink="http://" view-date="2017-11-14" view-index="0" gantt-divider-location="618" resource-divider-location="300" version="2.8.5" locale="en_US">
     <description/>
     <view zooming-state="default:0" id="gantt-chart">
-        <field id="tpd3" name="Name" width="228" order="0"/>
+        <field id="tpd3" name="Name" width="227" order="0"/>
         <field id="tpd4" name="Begin date" width="111" order="1"/>
         <field id="tpd5" name="End date" width="115" order="2"/>
-        <field id="tpc0" name="Group Member" width="145" order="3"/>
+        <field id="tpc0" name="Group Member" width="144" order="3"/>
         <option id="color.recent"><![CDATA[#99ccff #ffcc33 #ffcc00 #ffcc66 #ffff33 #666666 #999999 #9999ff #ccccff #6666ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Name" width="210" order="0"/>
-        <field id="1" name="Default role" width="86" order="1"/>
+        <field id="0" name="Name" width="209" order="0"/>
+        <field id="1" name="Default role" width="85" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -200,6 +200,17 @@ Jeff - 1 hr]]></notes>
                 <task id="95" name="Add a new code and save it to text file" color="#8cb6ce" meeting="false" start="2017-11-30" duration="6" complete="0" expand="true">
                     <notes><![CDATA[2.5 hours]]></notes>
                     <customproperty taskproperty-id="tpc0" value="Josh"/>
+                </task>
+                <task id="96" name="Usability Tests" color="#8cb6ce" meeting="false" start="2017-11-30" duration="5" complete="0" expand="true">
+                    <notes><![CDATA[Jeff - 1 hour]]></notes>
+                    <customproperty taskproperty-id="tpc0" value="Jeff"/>
+                </task>
+                <task id="98" name="PPT" color="#8cb6ce" meeting="false" start="2017-12-05" duration="1" complete="0" expand="true">
+                    <notes><![CDATA[Jeff - 1 hour]]></notes>
+                    <customproperty taskproperty-id="tpc0" value="Jeff"/>
+                </task>
+                <task id="100" name="System Document" color="#8cb6ce" meeting="false" start="2017-12-03" duration="1" complete="0" expand="true">
+                    <notes><![CDATA[Jeff - 1 hour]]></notes>
                 </task>
             </task>
         </task>

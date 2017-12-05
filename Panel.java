@@ -523,7 +523,7 @@ public class Panel extends JPanel {
 			codeList = new JComboBox<String>(codez);
 			newCodeButton = new JButton("Add new code");
 			newCodeButton.addActionListener(new codeButtonListener());
-			newCodeBox = new JTextField("Type in hear to add a new code.");
+			newCodeBox = new JTextField("Type in here to add a new code.");
 
 	        withdrawalButton.addActionListener(new withdrawalButtonListener());
 
@@ -1083,7 +1083,59 @@ public class Panel extends JPanel {
   }
 
 	public void addNewCode(){
-		System.out.println("Work fucker");
+		String nCode = newCodeBox.getText();
+		if(nCode.equalsIgnoreCase("Type in here to add a new code.") || nCode.equalsIgnoreCase("")){
+			wMessage.setText("Please type in your code.");
+		}
+		else{
+			codez[numCodez] = nCode;
+			System.out.println(codez[numCodez]);
+			numCodez++;
+			//TODO: save file.
+			withdrawalPanel.removeAll();
+			codeList = new JComboBox<String>(codez);
+			codeList.setAlignmentX(CENTER_ALIGNMENT);
+			setComboBoxString(codeList);
+			withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
+			withdrawalPanel.add(wName);
+			withdrawalPanel.add(cbAccount);
+			withdrawalPanel.add(wAmount);
+			withdrawalPanel.add(wDate);
+			withdrawalPanel.add(codeList);
+			withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
+			withdrawalPanel.add(withdrawalButton);
+			withdrawalPanel.add(newCodeBox);
+			withdrawalPanel.add(newCodeButton);
+			withdrawalPanel.add(wMessage);
+			wMessage.setText("Thank you for making a new code. You can find it in the drop down menu now.");
+			newCodeBox.setText("Type in here to add a new code.");
+			try{
+          FileWriter myWriter = new FileWriter("Codes.txt",false); // Delete file to be overwritten later.
+          myWriter.write("");
+          myWriter.close();
+      }
+      catch(IOException ioe){
+          System.err.println("You done goofed");
+      }
+
+			try{
+					FileWriter myWriter = new FileWriter("Codes.txt",true);
+					for(int i = 0; i<numCodez;i++){
+						String c = codez[i];
+						myWriter.write(c);
+						myWriter.write("\n");
+					}
+					myWriter.close();
+			}
+			catch(IOException ioe){
+					System.err.println("You done goofed");
+			}
+
+
+			revalidate();
+			repaint();
+		}
+
 	}
     //final action to create a withdrawal
   public void withdrawConfirm() {

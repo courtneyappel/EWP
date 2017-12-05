@@ -8,4 +8,3 @@ Courtney,Michael,$4.5,Sun Dec 03 14:22:49 MST 2017,Withdrawal,N/A, Code:62241 Of
 Court,Trish,$17.6,Sun Dec 03 14:33:29 MST 2017,Deposit,Credit, Code:N/A
 Josh,Trish,$40.0,Mon Dec 04 11:34:46 MST 2017,Withdrawal,N/A, Code:1234 Test
 Josh,Trish,$2.0,Mon Dec 04 11:36:08 MST 2017,Withdrawal,N/A, Code:1234 tset
-Josh,Trish,$5.0,Mon Dec 04 11:47:58 MST 2017,Withdrawal,N/A, Code:5678 Test2

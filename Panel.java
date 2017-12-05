@@ -548,7 +548,9 @@ public class Panel extends JPanel {
 			withdrawalPanel.add(codeList);
 			withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        withdrawalPanel.add(withdrawalButton);
+	        withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 					withdrawalPanel.add(newCodeBox);
+					withdrawalPanel.add(Box.createRigidArea(new Dimension (0,25)));
 					withdrawalPanel.add(newCodeButton);
 	        withdrawalPanel.add(wMessage);
 	}
@@ -663,7 +665,7 @@ public class Panel extends JPanel {
 	        deleteSelectedAccount = new JButton("Delete Account");
 	        confirmDeletion = new JButton("Confirm Delete");
 	        saveAccountInfo = new JButton("Save Info");
-	        deleteTransac = new JButton("Delete Transaction");
+	        deleteTransac = new JButton("Delete Selected Transaction");
 
 	        confirmDeletion.addActionListener(new confirmDeletionListener());
 	        deleteSelectedAccount.addActionListener(new deleteSelectedAccountListener());
@@ -819,12 +821,11 @@ public class Panel extends JPanel {
           viewBal.setEditable(false);
           accountViewPanel.add(cbTransaction);
           setComboBoxString(cbTransaction);
-          //accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
-          accountViewPanel.add(deleteTransac);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(saveAccountInfo);
-          cbTransaction.setPreferredSize( new Dimension( 200, 42 ) );
-          cbTransaction.setMaximumSize( new Dimension( 900, 42 ) );
+          accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
+          accountViewPanel.add(deleteTransac);
+ 
 					updateTransactions();
 					tHistory = new JLabel("");
 					tHistory.setText("<html><br>TRANSACTION HISTORY<br>");
@@ -832,6 +833,7 @@ public class Panel extends JPanel {
 					tHistory.setAlignmentX(CENTER_ALIGNMENT);
 					tHistory.setFont(new Font("Serif",Font.PLAIN, 24));
 					accountViewPanel.add(scrollPane);
+					logoLabel.setIcon(null);
 					revalidate();
           repaint();
       }
@@ -873,6 +875,7 @@ public class Panel extends JPanel {
           wMessage.setText("");
           withdrawalButton.setEnabled(true);
           submitAccountInfo.setEnabled(true);
+          logoLabel.setIcon(ewpLogo);
           repaint();
       }
   }
@@ -954,11 +957,12 @@ public class Panel extends JPanel {
           accountViewPanel.add(displayEnteredInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteSelectedAccount);
-
+          
           add(bottom, BorderLayout.PAGE_END);
 					add(logoLabel, BorderLayout.PAGE_END);
           add(loginPanel, BorderLayout.CENTER);
           add(imageLabel, BorderLayout.PAGE_START);
+          logoLabel.setIcon(ewpLogo);
           repaint();
 
 
@@ -979,7 +983,7 @@ public class Panel extends JPanel {
           pwEntry = null;
           setBackground(Color.lightGray);
           loginPanel.setBackground(Color.lightGray);
-
+          
           remove(loginPanel);
           add(homePanel, BorderLayout.CENTER);
           revalidate();
@@ -999,6 +1003,7 @@ public class Panel extends JPanel {
 	  add(logoLabel, BorderLayout.PAGE_END);
       add(imageLabel, BorderLayout.PAGE_START);
       add(accountPanel, BorderLayout.CENTER);
+      //logoLabel.setIcon(null);
       revalidate();
       repaint();
   }
@@ -1014,6 +1019,7 @@ public class Panel extends JPanel {
       dAmount.setText("Deposit Amount");
       dDate.setText(myDate.toString());
       depositButton.setText("Submit Deposit");
+      //logoLabel.setIcon(null);
       revalidate();
       repaint();
   }
@@ -1071,6 +1077,7 @@ public class Panel extends JPanel {
       wAmount.setText("Withdrawal Amount");
       wDate.setText(myDate.toString());
       withdrawalButton.setText("Withdraw");
+      logoLabel.setIcon(null);
       revalidate();
       repaint();
   }

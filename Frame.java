@@ -14,9 +14,7 @@ public class Frame {
 
             System.out.println(System.getProperty("os.name"));
             String osName = System.getProperty("os.name");
-    		//if(osName.equalsIgnoreCase("Windows 10")) {
-    	  //  myFrame.setIconImage(new ImageIcon(ClassLoader.getSystemResource("ewpLogo.png")).getImage());
-    		//}
+    	
 
     		myFrame.setUndecorated(true);
 

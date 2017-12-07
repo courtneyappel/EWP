@@ -409,14 +409,14 @@ public class Panel extends JPanel {
 	        home = new JButton("HOME");
 	        home.addActionListener(new homeListener());
 					bCButton = new JButton("Benefits Calculator");
-
+					bCButton.addActionListener(new benefitsListener());
 	        logout = new JButton("Log Out");
 	        logout.addActionListener(new logoutListener());
 	        exitApp = new JButton("X");
 	        exitApp.addActionListener(new exitListener());
 	        topPanel.add(home);
 					topPanel.add(bCButton);
-	        topPanel.add(Box.createRigidArea(new Dimension (250,25)));
+	        topPanel.add(Box.createRigidArea(new Dimension (125,25)));
 	        topPanel.add(top);
 	        topPanel.add(Box.createRigidArea(new Dimension (175,25)));
 	        topPanel.add(logout);
@@ -1176,6 +1176,9 @@ public class Panel extends JPanel {
   public void saveInfoEdit() {
 
   }
+	public void benefitsCalc(){
+		System.out.println("asdf");
+	}
 
 //deletes from transaction file and is removed from table but the deleted transaction amount is not accounted for in the total amounts -Courtney
   public void deleteTransac() {
@@ -1332,6 +1335,11 @@ public class Panel extends JPanel {
 	private class withdrawalButtonListener implements ActionListener{
 		public void actionPerformed (ActionEvent event){
            withdrawConfirm();
+		}
+	}
+	private class benefitsListener implements ActionListener{
+		public void actionPerformed (ActionEvent event){
+           benefitsCalc();
 		}
 	}
 	private class codeButtonListener implements ActionListener{

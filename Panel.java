@@ -31,7 +31,7 @@ public class Panel extends JPanel {
 	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, tHistory;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp,newCodeButton;
-	JButton deleteTransac, saveAccountInfo;
+	JButton deleteTransac, saveAccountInfo, bCButton;
 	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate,newCodeBox;
 	JTextField viewName, viewEmail, viewPhone, viewDesc, viewBal;
 	JCheckBox check;
@@ -118,7 +118,7 @@ public class Panel extends JPanel {
         setButton(deleteTransac);
         setButton(saveAccountInfo);
 				setButton(newCodeButton);
-
+				setButton(bCButton);
         setTextField(username);
         setTextField(name); setTextField(email);
         setTextField(phoneNum); setTextField(description);
@@ -408,11 +408,14 @@ public class Panel extends JPanel {
 	        top.setFont(new Font("Tahoma", Font.BOLD, 42));
 	        home = new JButton("HOME");
 	        home.addActionListener(new homeListener());
+					bCButton = new JButton("Benefits Calculator");
+
 	        logout = new JButton("Log Out");
 	        logout.addActionListener(new logoutListener());
 	        exitApp = new JButton("X");
 	        exitApp.addActionListener(new exitListener());
 	        topPanel.add(home);
+					topPanel.add(bCButton);
 	        topPanel.add(Box.createRigidArea(new Dimension (250,25)));
 	        topPanel.add(top);
 	        topPanel.add(Box.createRigidArea(new Dimension (175,25)));
@@ -825,7 +828,7 @@ public class Panel extends JPanel {
           accountViewPanel.add(saveAccountInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteTransac);
- 
+
 					updateTransactions();
 					tHistory = new JLabel("");
 					tHistory.setText("<html><br>TRANSACTION HISTORY<br>");
@@ -957,7 +960,7 @@ public class Panel extends JPanel {
           accountViewPanel.add(displayEnteredInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteSelectedAccount);
-          
+
           add(bottom, BorderLayout.PAGE_END);
 					add(logoLabel, BorderLayout.PAGE_END);
           add(loginPanel, BorderLayout.CENTER);
@@ -983,7 +986,7 @@ public class Panel extends JPanel {
           pwEntry = null;
           setBackground(Color.lightGray);
           loginPanel.setBackground(Color.lightGray);
-          
+
           remove(loginPanel);
           add(homePanel, BorderLayout.CENTER);
           revalidate();

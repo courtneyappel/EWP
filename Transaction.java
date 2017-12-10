@@ -130,7 +130,7 @@ public class Transaction {
 
           while (it.hasNext()){
               Account current = it.next();
-              if(accountToView.equalsIgnoreCase(current.toString()) || current.toString().equalsIgnoreCase("Master Account")){
+              if(accountToView.equalsIgnoreCase(current.toString())){
                   Account tempAccount = new Account(current.getName(),current.getEmail(),current.getPhoneNum(),current.getDescription());
                   double tempBalance = current.getBalance() + this.amount;
                   tempAccount.setBalance(tempBalance);

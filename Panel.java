@@ -822,6 +822,13 @@ public class Panel extends JPanel {
           setTextFieldNoRemoval(viewDesc);
           setTextFieldNoRemoval(viewBal);
           viewBal.setEditable(false);
+          if(viewName.getText().equalsIgnoreCase("Master Account")) {
+              viewName.setEditable(false);
+              viewEmail.setEditable(false);
+              viewPhone.setEditable(false);
+              viewDesc.setEditable(false);
+              saveAccountInfo.setEnabled(false);
+          }
           accountViewPanel.add(cbTransaction);
           setComboBoxString(cbTransaction);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
@@ -878,6 +885,7 @@ public class Panel extends JPanel {
           wMessage.setText("");
           withdrawalButton.setEnabled(true);
           submitAccountInfo.setEnabled(true);
+          saveAccountInfo.setEnabled(true);
           logoLabel.setIcon(ewpLogo);
           repaint();
       }
@@ -1174,7 +1182,50 @@ public class Panel extends JPanel {
   }
 
   public void saveInfoEdit() {
+      saveAccountInfo.setEnabled(false);
+      System.out.println("Saving Info");
+      Iterator<Account> it = accountArray.iterator();
+      try{
+          FileWriter myWriter = new FileWriter("SaveFile.txt",false); // Delete file to be overwritten later.
+          myWriter.write("");
+          myWriter.close();
+      }
+      catch(IOException ioe){
+          System.err.println("You done goofed");
+      }
 
+      while (it.hasNext()){
+          Account current = it.next();
+          //accountToView = viewName.getText();
+          if(accountToView.equalsIgnoreCase(current.getName())){
+              Account tempAccount = new Account(viewName.getText(),viewEmail.getText(),viewPhone.getText(),viewDesc.getText());
+              double tempBalance = Double.parseDouble(viewBal.getText().substring(1));
+              tempAccount.setBalance(tempBalance);
+              it.equals(tempAccount);
+              try{ //Rewrite file.
+                  FileWriter Writer = new FileWriter("SaveFile.txt",true);
+                  Writer.write(tempAccount.getName()+","+tempAccount.getEmail()+","+tempAccount.getPhoneNum()+","+tempAccount.getDescription()+","+tempAccount.getBalance());
+                  Writer.write("\n");
+                  Writer.close();
+              }
+              catch(IOException ioe){
+                  System.err.println("You done goofed");
+              }
+              //update line
+          }
+          else{
+              try{ //Rewrite file.
+                  FileWriter Writer = new FileWriter("SaveFile.txt",true);
+                  Writer.write(current.getName()+","+current.getEmail()+","+current.getPhoneNum()+","+current.getDescription()+","+current.getBalance());
+                  Writer.write("\n");
+                  Writer.close();
+              }
+              catch(IOException ioe){
+                  System.err.println("You done goofed");
+              }
+          }
+      }
+          updateAccountArray();
   }
 	public void benefitsCalc(){
 		System.out.println("asdf");

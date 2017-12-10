@@ -49,7 +49,7 @@ public class Panel extends JPanel {
 	JPanel accountCreationPanel = new JPanel();
 	JPanel accountViewPanel = new JPanel();
 	Date myDate = new Date();
-
+	Double newAmount;
 	String tType, tPayment, tName, tAccount, tAmount, tDate, tcode, delfinal;
 	String delType, delPayment, delName, delAccount, delAmount, delDate, delCode;
 	JTable Transactions;
@@ -306,7 +306,7 @@ public class Panel extends JPanel {
 	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
         try{
             FileWriter Writer = new FileWriter("TransactionFile.txt",true);
-            Writer.write(transac.getName()+","+transac.getAccount()+",$"+transac.getAmount()+","+transac.getDate()+","+transac.getType()+", Code:"+transac.getCode());
+            Writer.write(transac.getName()+","+transac.getAccount()+","+transac.getAmount()+","+transac.getDate()+","+transac.getType()+", Code:"+transac.getCode());
             Writer.write("\n");
             Writer.close();
         }
@@ -1195,6 +1195,50 @@ public class Panel extends JPanel {
 		System.out.println("DELFINAL: "+delfinal);
 		model.removeRow(r);
 		try{
+			File saveInput = new File("SaveFile.txt");
+			File saveTMP = new File("saveTMP.txt");
+
+			BufferedReader saveRead = new BufferedReader(new FileReader(saveInput));
+			BufferedWriter saveWriter = new BufferedWriter(new FileWriter(saveTMP));
+
+			String sCurrentln;
+
+			while((sCurrentln = saveRead.readLine())!=null){
+				System.out.println("sCurrentln: "+sCurrentln);
+				String sTrim = sCurrentln.trim();
+				String tokens[] =sTrim.split(",");
+				if(tokens[0].equals(accountToView)){
+					String currentAmount = tokens[4];
+					Double dCurrentAmount=Double.parseDouble(currentAmount);
+					Double dTrans=Double.parseDouble(delAmount);
+					if(delType.equals("Withdrawal")){
+						System.out.println("Amount before delete: "+dCurrentAmount);
+						newAmount = dCurrentAmount+dTrans;
+						System.out.println("Undo Withdrawal of $"+dTrans);
+						System.out.println("New Amount in "+accountToView+" is "+newAmount);
+					}
+					else{
+						System.out.println("Amount before delete: "+dCurrentAmount);
+						newAmount=dCurrentAmount-dTrans;
+						System.out.println("Undo Deposit of $"+dTrans);
+						System.out.println("New Amount in "+accountToView+" is "+newAmount);
+					}
+					String replaceln=tokens[0]+","+tokens[1]+","+tokens[2]+","+tokens[3]+","+newAmount;
+					saveWriter.write(replaceln+System.getProperty("line.separator"));
+				}
+				else{
+					saveWriter.write(sCurrentln+System.getProperty("line.separator"));
+				}
+
+			}
+			saveWriter.close();
+			saveRead.close();
+			boolean success = saveTMP.renameTo(saveInput);
+		}
+		catch (IOException e) {
+				e.printStackTrace();
+		}
+		try{
 			File input = new File("TransactionFile.txt");
 			File tmp = new File("tmp.txt");
 
@@ -1218,7 +1262,8 @@ public class Panel extends JPanel {
 		catch (IOException e) {
 				e.printStackTrace();
 		}
-
+		//String value2display = String.valueOf(newAmount);
+		//viewBal.setText(value2display);
   }
 
     //Uses methods shown above.

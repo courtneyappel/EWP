@@ -260,7 +260,7 @@ public class Panel extends JPanel {
 						model.addRow(tArray1);
 					}
 					else{
-						System.out.println("NOT FOUND");
+						//System.out.println("NOT FOUND");
 					}
 
 				}
@@ -784,6 +784,7 @@ public class Panel extends JPanel {
       Boolean foundAccount = false;
       cbTransaction = new JComboBox<String>();
       for(Account name:accountArray){
+          
               if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
                   foundAccount = true;
                   accountToDisplay = name.getAllInfo();
@@ -835,7 +836,6 @@ public class Panel extends JPanel {
           accountViewPanel.add(saveAccountInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteTransac);
-
 					updateTransactions();
 					tHistory = new JLabel("");
 					tHistory.setText("<html><br>TRANSACTION HISTORY<br>");
@@ -1055,13 +1055,13 @@ public class Panel extends JPanel {
           newDepositDate = dDate.getText();
           Transaction myTransaction;
           if(check.isSelected()) {
-              System.out.println("awd");
+              //System.out.println("awd");
               tempDA = tempDA*(.92);
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false, " no applicable code ");
           }
           else {
         	  tempDA = tempDA*(.88);
-              System.out.println("dwa");
+              //System.out.println("dwa");
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true, " no applicable code ");
           }
           //System.out.println(myTransaction.getAllInfo());

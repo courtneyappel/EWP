@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< current
 Trish,patricia.duce@umontana.edu,406-243-2866,Trish's Camp Account,2102.68
 Michael,michael.cassens@umontana.edu,415-787-0577,Michael's Camp Account,1630.2948000000004
@@ -7,3 +8,8 @@ Trish,patricia.duce@umontana.edu,406-243-2866,Trish's Camp Account,2102.68
 Michael,michael.cassens@umontana.edu,415-787-0577,Michael's Camp Account,1630.2948000000004
 Master Account,N/A,N/A,Main account for all sub accounts.,9765.210400000027
 >>>>>>> before discard
+=======
+Trish,patricia.duce@umontana.edu,406-243-2866,Trish's Camp Fund,2119.3648
+Michael,michael.cassens@umontana.edu,415-787-0577,Michael's Money,1605.7248000000004
+Master Account,N/A,N/A,Main account for all sub accounts.,9866.608400000025
+>>>>>>> 70f7e90f408580c9408cdd3554dc3ddb2073b8df

@@ -50,7 +50,7 @@ public class Panel extends JPanel {
 	JPanel accountViewPanel = new JPanel();
 	JPanel benefitPanel = new JPanel();
 	Date myDate = new Date();
-
+	Double newAmount;
 	String tType, tPayment, tName, tAccount, tAmount, tDate, tcode, delfinal;
 	String delType, delPayment, delName, delAccount, delAmount, delDate, delCode;
 	JTable Transactions;
@@ -265,7 +265,7 @@ public class Panel extends JPanel {
 						model.addRow(tArray1);
 					}
 					else{
-						System.out.println("NOT FOUND");
+						//System.out.println("NOT FOUND");
 					}
 
 				}
@@ -311,7 +311,7 @@ public class Panel extends JPanel {
 	public void saveTransactionArray(ArrayList<Transaction> transactionArray,Transaction transac) {
         try{
             FileWriter Writer = new FileWriter("TransactionFile.txt",true);
-            Writer.write(transac.getName()+","+transac.getAccount()+",$"+transac.getAmount()+","+transac.getDate()+","+transac.getType()+", Code:"+transac.getCode());
+            Writer.write(transac.getName()+","+transac.getAccount()+","+transac.getAmount()+","+transac.getDate()+","+transac.getType()+", Code:"+transac.getCode());
             Writer.write("\n");
             Writer.close();
         }
@@ -810,6 +810,7 @@ public class Panel extends JPanel {
       Boolean foundAccount = false;
       cbTransaction = new JComboBox<String>();
       for(Account name:accountArray){
+          
               if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
                   foundAccount = true;
                   accountToDisplay = name.getAllInfo();
@@ -848,13 +849,19 @@ public class Panel extends JPanel {
           setTextFieldNoRemoval(viewDesc);
           setTextFieldNoRemoval(viewBal);
           viewBal.setEditable(false);
+          if(viewName.getText().equalsIgnoreCase("Master Account")) {
+              viewName.setEditable(false);
+              viewEmail.setEditable(false);
+              viewPhone.setEditable(false);
+              viewDesc.setEditable(false);
+              saveAccountInfo.setEnabled(false);
+          }
           accountViewPanel.add(cbTransaction);
           setComboBoxString(cbTransaction);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(saveAccountInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteTransac);
-
 					updateTransactions();
 					tHistory = new JLabel("");
 					tHistory.setText("<html><br>TRANSACTION HISTORY<br>");
@@ -904,6 +911,7 @@ public class Panel extends JPanel {
           wMessage.setText("");
           withdrawalButton.setEnabled(true);
           submitAccountInfo.setEnabled(true);
+          saveAccountInfo.setEnabled(true);
           logoLabel.setIcon(ewpLogo);
           repaint();
       }
@@ -1073,13 +1081,13 @@ public class Panel extends JPanel {
           newDepositDate = dDate.getText();
           Transaction myTransaction;
           if(check.isSelected()) {
-              System.out.println("awd");
+              //System.out.println("awd");
               tempDA = tempDA*(.92);
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,true, false, " no applicable code ");
           }
           else {
         	  tempDA = tempDA*(.88);
-              System.out.println("dwa");
+              //System.out.println("dwa");
               myTransaction = new Transaction(newDepositName, newDepositAccount, tempDA, newDepositDate, false, accountArray, accountToView,false, true, " no applicable code ");
           }
           //System.out.println(myTransaction.getAllInfo());
@@ -1198,7 +1206,50 @@ public class Panel extends JPanel {
   }
 
   public void saveInfoEdit() {
+      saveAccountInfo.setEnabled(false);
+      System.out.println("Saving Info");
+      Iterator<Account> it = accountArray.iterator();
+      try{
+          FileWriter myWriter = new FileWriter("SaveFile.txt",false); // Delete file to be overwritten later.
+          myWriter.write("");
+          myWriter.close();
+      }
+      catch(IOException ioe){
+          System.err.println("You done goofed");
+      }
 
+      while (it.hasNext()){
+          Account current = it.next();
+          //accountToView = viewName.getText();
+          if(accountToView.equalsIgnoreCase(current.getName())){
+              Account tempAccount = new Account(viewName.getText(),viewEmail.getText(),viewPhone.getText(),viewDesc.getText());
+              double tempBalance = Double.parseDouble(viewBal.getText().substring(1));
+              tempAccount.setBalance(tempBalance);
+              it.equals(tempAccount);
+              try{ //Rewrite file.
+                  FileWriter Writer = new FileWriter("SaveFile.txt",true);
+                  Writer.write(tempAccount.getName()+","+tempAccount.getEmail()+","+tempAccount.getPhoneNum()+","+tempAccount.getDescription()+","+tempAccount.getBalance());
+                  Writer.write("\n");
+                  Writer.close();
+              }
+              catch(IOException ioe){
+                  System.err.println("You done goofed");
+              }
+              //update line
+          }
+          else{
+              try{ //Rewrite file.
+                  FileWriter Writer = new FileWriter("SaveFile.txt",true);
+                  Writer.write(current.getName()+","+current.getEmail()+","+current.getPhoneNum()+","+current.getDescription()+","+current.getBalance());
+                  Writer.write("\n");
+                  Writer.close();
+              }
+              catch(IOException ioe){
+                  System.err.println("You done goofed");
+              }
+          }
+      }
+          updateAccountArray();
   }
 
 	public void doTheBenefiting(){
@@ -1267,6 +1318,50 @@ public class Panel extends JPanel {
 		System.out.println("DELFINAL: "+delfinal);
 		model.removeRow(r);
 		try{
+			File saveInput = new File("SaveFile.txt");
+			File saveTMP = new File("saveTMP.txt");
+
+			BufferedReader saveRead = new BufferedReader(new FileReader(saveInput));
+			BufferedWriter saveWriter = new BufferedWriter(new FileWriter(saveTMP));
+
+			String sCurrentln;
+
+			while((sCurrentln = saveRead.readLine())!=null){
+				System.out.println("sCurrentln: "+sCurrentln);
+				String sTrim = sCurrentln.trim();
+				String tokens[] =sTrim.split(",");
+				if(tokens[0].equals(accountToView)){
+					String currentAmount = tokens[4];
+					Double dCurrentAmount=Double.parseDouble(currentAmount);
+					Double dTrans=Double.parseDouble(delAmount);
+					if(delType.equals("Withdrawal")){
+						System.out.println("Amount before delete: "+dCurrentAmount);
+						newAmount = dCurrentAmount+dTrans;
+						System.out.println("Undo Withdrawal of $"+dTrans);
+						System.out.println("New Amount in "+accountToView+" is "+newAmount);
+					}
+					else{
+						System.out.println("Amount before delete: "+dCurrentAmount);
+						newAmount=dCurrentAmount-dTrans;
+						System.out.println("Undo Deposit of $"+dTrans);
+						System.out.println("New Amount in "+accountToView+" is "+newAmount);
+					}
+					String replaceln=tokens[0]+","+tokens[1]+","+tokens[2]+","+tokens[3]+","+newAmount;
+					saveWriter.write(replaceln+System.getProperty("line.separator"));
+				}
+				else{
+					saveWriter.write(sCurrentln+System.getProperty("line.separator"));
+				}
+
+			}
+			saveWriter.close();
+			saveRead.close();
+			boolean success = saveTMP.renameTo(saveInput);
+		}
+		catch (IOException e) {
+				e.printStackTrace();
+		}
+		try{
 			File input = new File("TransactionFile.txt");
 			File tmp = new File("tmp.txt");
 
@@ -1290,7 +1385,8 @@ public class Panel extends JPanel {
 		catch (IOException e) {
 				e.printStackTrace();
 		}
-
+		//String value2display = String.valueOf(newAmount);
+		//viewBal.setText(value2display);
   }
 
     //Uses methods shown above.

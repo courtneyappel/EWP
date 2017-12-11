@@ -14,7 +14,7 @@ public class Frame {
 
             System.out.println(System.getProperty("os.name"));
             String osName = System.getProperty("os.name");
-    	
+
 
     		myFrame.setUndecorated(true);
 
@@ -22,11 +22,11 @@ public class Frame {
 
     		myFrame.pack();
 
-			myFrame.setSize(new Dimension(1200,720));
+			  myFrame.setSize(new Dimension(1200,720));
 
-			myFrame.setResizable(false);
+			  myFrame.setResizable(false);
 
-			myFrame.setLocationRelativeTo(null);
+			  myFrame.setLocationRelativeTo(null);
 
     		myFrame.setVisible(true);
 

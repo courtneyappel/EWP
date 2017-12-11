@@ -22,19 +22,19 @@ public class Panel extends JPanel {
 	String newDepositName, newDepositDate, newDepositAmount, newDepositAccount;
 	String accountToView;
 	String codeChoice;
-	double newAccountBalance;
+	double newAccountBalance, amountToCalc;
 
 	String user = "csadmin";
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, tHistory;
+	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, tHistory, bMessage;
 	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp,newCodeButton;
-	JButton deleteTransac, saveAccountInfo, bCButton;
+	JButton deleteTransac, saveAccountInfo, bCButton, calcButton;
 	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate,newCodeBox;
-	JTextField viewName, viewEmail, viewPhone, viewDesc, viewBal;
-	JCheckBox check;
+	JTextField viewName, viewEmail, viewPhone, viewDesc, viewBal,benefitText;
+	JCheckBox check, SorF;
 	JComboBox<Account> accountList;
 	JComboBox<String> codeList, cbAccount,cbTransaction;
 	//JComboBox<Transaction> cbTransaction;
@@ -48,6 +48,7 @@ public class Panel extends JPanel {
 	JPanel withdrawalPanel = new JPanel();
 	JPanel accountCreationPanel = new JPanel();
 	JPanel accountViewPanel = new JPanel();
+	JPanel benefitPanel = new JPanel();
 	Date myDate = new Date();
 
 	String tType, tPayment, tName, tAccount, tAmount, tDate, tcode, delfinal;
@@ -97,6 +98,8 @@ public class Panel extends JPanel {
 		createCreationPanel();
 		//create the accountViewPanel
 		createViewPanel();
+		//create benefitPanel
+		createBenefitPanel();
 		//Finally, Apply custom visuals for buttons and text fields
 		setAll();
 
@@ -119,9 +122,11 @@ public class Panel extends JPanel {
         setButton(saveAccountInfo);
 				setButton(newCodeButton);
 				setButton(bCButton);
+				setButton(calcButton);
         setTextField(username);
         setTextField(name); setTextField(email);
         setTextField(phoneNum); setTextField(description);
+				setTextField(benefitText);
 
         setTextField(dName);
         setTextField(dAmount);
@@ -416,7 +421,7 @@ public class Panel extends JPanel {
 	        exitApp.addActionListener(new exitListener());
 	        topPanel.add(home);
 					topPanel.add(bCButton);
-	        topPanel.add(Box.createRigidArea(new Dimension (125,25)));
+	        topPanel.add(Box.createRigidArea(new Dimension (150,25)));
 	        topPanel.add(top);
 	        topPanel.add(Box.createRigidArea(new Dimension (175,25)));
 	        topPanel.add(logout);
@@ -505,6 +510,27 @@ public class Panel extends JPanel {
 	        homePanel.add(deposit);
 	        homePanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        homePanel.add(withdrawal);
+	}
+
+	public void createBenefitPanel(){
+					benefitPanel.setBackground(Color.lightGray);
+					benefitPanel.setLayout(new BoxLayout(benefitPanel, BoxLayout.Y_AXIS));
+
+					benefitText = new JTextField("Type in the amount here");
+					benefitText.setAlignmentX(CENTER_ALIGNMENT);
+					benefitPanel.add(benefitText);
+					SorF = new JCheckBox("Check if a student. Uncheck if faculty");
+					SorF.setAlignmentX(CENTER_ALIGNMENT);
+					SorF.setSelected(false);
+					//benefitPanel.add(Box.createRigidArea(new Dimension(0,250)));
+					benefitPanel.add(SorF);
+					calcButton = new JButton("Calculate");
+					calcButton.setAlignmentX(CENTER_ALIGNMENT);
+					calcButton.addActionListener(new calcButtonListener());
+					benefitPanel.add(calcButton);
+					bMessage = new JLabel();
+					bMessage.setAlignmentX(CENTER_ALIGNMENT);
+					benefitPanel.add(bMessage);
 	}
 
 	public void createWithdrawPanel() {
@@ -1133,8 +1159,6 @@ public class Panel extends JPanel {
 			catch(IOException ioe){
 					System.err.println("You done goofed");
 			}
-
-
 			revalidate();
 			repaint();
 		}
@@ -1176,8 +1200,56 @@ public class Panel extends JPanel {
   public void saveInfoEdit() {
 
   }
+
+	public void doTheBenefiting(){
+				String numAmount = benefitText.getText();
+				if(numAmount.equalsIgnoreCase("")|| numAmount.equalsIgnoreCase("Type in the amount here")){
+						benefitPanel.setBackground(Color.red);
+						bMessage.setText("Please enter in an amount.");
+				}
+				else{
+					benefitPanel.setBackground(Color.lightGray);
+					try{
+						if(SorF.isSelected()){
+							System.out.println("student");
+							double amountToCalc = Double.parseDouble(numAmount);
+							 System.out.println(amountToCalc);
+							 double total = amountToCalc;
+							 total = total - (total * 0.25);
+							 bMessage.setText("$" + amountToCalc + " after benefits for a faculty member is $" + total + ".");
+						}
+						else{
+							System.out.println("Faculty");
+							double amountToCalc = Double.parseDouble(numAmount);
+							System.out.println(amountToCalc);
+							double total = amountToCalc;
+							total = total - (total * 0.12);
+
+							bMessage.setText("$" + amountToCalc + " after benefits for a student is $" + total + ".");
+
+						}
+					}
+					catch(NumberFormatException exception){
+							benefitPanel.setBackground(Color.red);
+							bMessage.setText("Please enter in a numerical value.");
+						}
+				}
+	}
+
 	public void benefitsCalc(){
-		System.out.println("asdf");
+
+		if(loggedIn){
+			removeAll();
+			add(bottom,BorderLayout.PAGE_END);
+			add(logoLabel,BorderLayout.PAGE_END);
+			add(imageLabel, BorderLayout.PAGE_START);
+			add(benefitPanel, BorderLayout.CENTER);
+			bMessage.setText("");
+			benefitText.setText("Type in the amount here");
+			repaint();
+			revalidate();
+		}
+
 	}
 
 //deletes from transaction file and is removed from table but the deleted transaction amount is not accounted for in the total amounts -Courtney
@@ -1313,6 +1385,12 @@ public class Panel extends JPanel {
 
 	}
 
+	private class calcButtonListener implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+							doTheBenefiting();
+			}
+	}
+
 	//deposit page setup
 	private class depositListener implements ActionListener{
 		public void actionPerformed (ActionEvent event){
@@ -1347,7 +1425,4 @@ public class Panel extends JPanel {
            addNewCode();
 		}
 	}
-
-
-
 }

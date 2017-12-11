@@ -33,7 +33,7 @@ public class Panel extends JPanel {
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp,newCodeButton;
 	JButton deleteTransac, saveAccountInfo, bCButton, calcButton;
 	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate,newCodeBox;
-	JTextField viewName, viewEmail, viewPhone, viewDesc, viewBal,benefitText;
+	JTextField viewName, viewEmail, viewPhone, viewDesc, viewBal, benefitText;
 	JCheckBox check, SorF;
 	JComboBox<Account> accountList;
 	JComboBox<String> codeList, cbAccount,cbTransaction;
@@ -127,7 +127,6 @@ public class Panel extends JPanel {
         setTextField(name); setTextField(email);
         setTextField(phoneNum); setTextField(description);
 				setTextField(benefitText);
-
         setTextField(dName);
         setTextField(dAmount);
         setTextFieldNoRemoval(wDate);
@@ -511,18 +510,15 @@ public class Panel extends JPanel {
 	        homePanel.add(Box.createRigidArea(new Dimension (0,25)));
 	        homePanel.add(withdrawal);
 	}
-
 	public void createBenefitPanel(){
 					benefitPanel.setBackground(Color.lightGray);
-					benefitPanel.setLayout(new BoxLayout(benefitPanel, BoxLayout.Y_AXIS));
-
+					benefitPanel.setLayout(new BoxLayout(benefitPanel,BoxLayout.Y_AXIS));
 					benefitText = new JTextField("Type in the amount here");
 					benefitText.setAlignmentX(CENTER_ALIGNMENT);
 					benefitPanel.add(benefitText);
 					SorF = new JCheckBox("Check if a student. Uncheck if faculty");
 					SorF.setAlignmentX(CENTER_ALIGNMENT);
 					SorF.setSelected(false);
-					//benefitPanel.add(Box.createRigidArea(new Dimension(0,250)));
 					benefitPanel.add(SorF);
 					calcButton = new JButton("Calculate");
 					calcButton.setAlignmentX(CENTER_ALIGNMENT);
@@ -810,7 +806,7 @@ public class Panel extends JPanel {
       Boolean foundAccount = false;
       cbTransaction = new JComboBox<String>();
       for(Account name:accountArray){
-          
+
               if(name.toString().equalsIgnoreCase(accountToView)){ // When it gets the account selected it displays it.
                   foundAccount = true;
                   accountToDisplay = name.getAllInfo();
@@ -1251,7 +1247,6 @@ public class Panel extends JPanel {
       }
           updateAccountArray();
   }
-
 	public void doTheBenefiting(){
 				String numAmount = benefitText.getText();
 				if(numAmount.equalsIgnoreCase("")|| numAmount.equalsIgnoreCase("Type in the amount here")){
@@ -1286,9 +1281,7 @@ public class Panel extends JPanel {
 						}
 				}
 	}
-
 	public void benefitsCalc(){
-
 		if(loggedIn){
 			removeAll();
 			add(bottom,BorderLayout.PAGE_END);
@@ -1299,9 +1292,8 @@ public class Panel extends JPanel {
 			benefitText.setText("Type in the amount here");
 			repaint();
 			revalidate();
-		}
-
 	}
+}
 
 //deletes from transaction file and is removed from table but the deleted transaction amount is not accounted for in the total amounts -Courtney
   public void deleteTransac() {
@@ -1480,7 +1472,6 @@ public class Panel extends JPanel {
         }
 
 	}
-
 	private class calcButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e){
 							doTheBenefiting();
@@ -1521,4 +1512,7 @@ public class Panel extends JPanel {
            addNewCode();
 		}
 	}
+
+
+
 }

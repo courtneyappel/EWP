@@ -845,6 +845,7 @@ public class Panel extends JPanel {
           setTextFieldNoRemoval(viewDesc);
           setTextFieldNoRemoval(viewBal);
           viewBal.setEditable(false);
+					viewName.setEditable(false);
           if(viewName.getText().equalsIgnoreCase("Master Account")) {
               viewName.setEditable(false);
               viewEmail.setEditable(false);
@@ -852,8 +853,8 @@ public class Panel extends JPanel {
               viewDesc.setEditable(false);
               saveAccountInfo.setEnabled(false);
           }
-          accountViewPanel.add(cbTransaction);
-          setComboBoxString(cbTransaction);
+          //accountViewPanel.add(cbTransaction);
+          //setComboBoxString(cbTransaction);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(saveAccountInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));

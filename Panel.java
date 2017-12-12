@@ -60,7 +60,13 @@ public class Panel extends JPanel {
 	Object[] columnNames ={"Person",
 	"Account","Date","Description","Withdrawal/Deposit","Check/Credit","Amount"};
 
-	JTable ransactions = new JTable(model);
+	JTable ransactions = new JTable(model){
+		@Override
+		public boolean isCellEditable(int row, int column){
+			return false;
+		}
+	};
+
 	JScrollPane scrollPane = new JScrollPane(ransactions);
 
 	String[] codez = new String[50];

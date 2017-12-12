@@ -1256,7 +1256,7 @@ public class Panel extends JPanel {
 				else{
 					benefitPanel.setBackground(Color.lightGray);
 					try{
-						if(SorF.isSelected()){
+						if(!SorF.isSelected()){
 							System.out.println("student");
 							double amountToCalc = Double.parseDouble(numAmount);
 							 System.out.println(amountToCalc);
@@ -1377,8 +1377,13 @@ public class Panel extends JPanel {
 		catch (IOException e) {
 				e.printStackTrace();
 		}
-		//String value2display = String.valueOf(newAmount);
-		//viewBal.setText(value2display);
+
+
+		String value2display = String.valueOf(newAmount);
+		viewBal.setText(value2display);
+
+		repaint();
+		revalidate();
   }
 
     //Uses methods shown above.

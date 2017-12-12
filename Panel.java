@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.io.FileNotFoundException;
 @SuppressWarnings("serial")
 public class Panel extends JPanel {
@@ -70,6 +71,8 @@ public class Panel extends JPanel {
 	JLabel imageLabel = new JLabel();
 	ImageIcon ewpLogo =new ImageIcon("ewpLogo.png");
 	JLabel logoLabel = new JLabel();
+
+	DecimalFormat df = new DecimalFormat("#.##");
     //start of the main panel
 	public Panel()
 	{
@@ -814,7 +817,7 @@ public class Panel extends JPanel {
                   viewEmail = new JTextField(name.getEmail());
                   viewPhone = new JTextField(name.getPhoneNum());
                   viewDesc = new JTextField(name.getDescription());
-                  viewBal = new JTextField("$"+name.getBalance());
+                  viewBal = new JTextField("$"+df.format(name.getBalance()));
 				  //System.out.println("Transaction History");
                   for(Transaction i: transactionArray) {
                       if(accountToView.equalsIgnoreCase("Master Account")) {
@@ -1381,8 +1384,8 @@ public class Panel extends JPanel {
 
 
 		String value2display = String.valueOf(newAmount);
-		viewBal.setText(value2display);
-
+		//viewBal.setText(value2display);
+		viewBal.setText("$"+df.format(newAmount));
 		repaint();
 		revalidate();
   }

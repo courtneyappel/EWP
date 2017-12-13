@@ -348,6 +348,7 @@ public class Panel extends JPanel {
                     lineScan.close();
                 }
                 accountList = new JComboBox(accountArray.toArray());
+								accountList.setSelectedIndex(-1);
                 myScan.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -1334,7 +1335,7 @@ public class Panel extends JPanel {
 				System.out.println("sCurrentln: "+sCurrentln);
 				String sTrim = sCurrentln.trim();
 				String tokens[] =sTrim.split(",");
-				if(tokens[0].equals(accountToView)){
+				if(tokens[0].equals(accountToView) || tokens[0].equals("Master Account")){
 					String currentAmount = tokens[4];
 					Double dCurrentAmount=Double.parseDouble(currentAmount);
 					Double dTrans=Double.parseDouble(delAmount);

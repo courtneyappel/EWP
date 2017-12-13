@@ -4,7 +4,6 @@ Josh,Michael,11.6472,Sun Dec 10 01:14:09 MST 2017,Deposit,Check, Code:N/A
 Court,Michael,19.32,Sun Dec 10 01:52:23 MST 2017,Deposit,Check, Code:N/A
 Wyatt,Michael,13.45,Sun Dec 10 01:52:23 MST 2017,Withdrawal,N/A, Code:62255 Promotional Aids
 Jeff,Michael,25.6,Sun Dec 10 01:52:23 MST 2017,Withdrawal,N/A, Code:62241 Office Supplies
-Josh,Michael,4.75,Sun Dec 10 01:52:23 MST 2017,Withdrawal,N/A, Code:61225 Student
 Court,Trish,26.4,Sun Dec 10 01:57:50 MST 2017,Deposit,Credit, Code:N/A
 Josh,Trish,16.72,Wed Dec 13 10:54:28 MST 2017,Deposit,Credit, Code:N/A
 asdf,Master Account,88000.0,Wed Dec 13 12:59:37 MST 2017,Deposit,Credit, Code:N/A

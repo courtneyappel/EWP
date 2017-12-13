@@ -23,23 +23,29 @@ public class Transaction {
         this.type = type;
         this.check = check;
         this.credit = credit;
+        System.out.println("There better be nothing here -->"+accountToView);
+        if (accountToView==""){
+          System.out.print("acountToView is empty so i better no do anything");
+        }
+        else{
+          if (type == true) {
+              stringType = "Withdrawal";
+              //remove/update from balance of accountName
+              updateW(accountArray,accountToView);
+              stringPayment = "N/A";
+              this.stringCode = stringCode;
+          }
 
-        if (type == true) {
-            stringType = "Withdrawal";
-            //remove/update from balance of accountName
-            updateW(accountArray,accountToView);
-            stringPayment = "N/A";
-            this.stringCode = stringCode;
+          else if(type == false) {
+              stringType = "Deposit";
+              this.stringCode = "N/A";
+              //add/update to balance of accountName
+              updateD(accountArray,accountToView);
+              if (check == true && credit == false) stringPayment = "Check";
+              if(credit == true && check == false) stringPayment = "Credit";
+          }
         }
 
-        else if(type == false) {
-            stringType = "Deposit";
-            this.stringCode = "N/A";
-            //add/update to balance of accountName
-            updateD(accountArray,accountToView);
-            if (check == true && credit == false) stringPayment = "Check";
-            if(credit == true && check == false) stringPayment = "Credit";
-        }
 
     }
     public String toString(){ //for whatever reason when i have the accounts as Iterators I can't seem to access any functions but having it to

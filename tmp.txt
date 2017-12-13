@@ -1,8 +1,0 @@
-Wyatt,Michael,23.11,Sun Dec 10 00:57:38 MST 2017,Withdrawal,N/A, Code:61225 Student
-Court,Michael,35.834,Sun Dec 10 00:57:38 MST 2017,Deposit,Check, Code:N/A
-Josh,Michael,11.6472,Sun Dec 10 01:14:09 MST 2017,Deposit,Check, Code:N/A
-Court,Michael,19.32,Sun Dec 10 01:52:23 MST 2017,Deposit,Check, Code:N/A
-Wyatt,Michael,13.45,Sun Dec 10 01:52:23 MST 2017,Withdrawal,N/A, Code:62255 Promotional Aids
-Jeff,Michael,25.6,Sun Dec 10 01:52:23 MST 2017,Withdrawal,N/A, Code:62241 Office Supplies
-Josh,Michael,4.75,Sun Dec 10 01:52:23 MST 2017,Withdrawal,N/A, Code:61225 Student
-Court,Trish,26.4,Sun Dec 10 01:57:50 MST 2017,Deposit,Credit, Code:N/A

@@ -262,7 +262,7 @@ public class Panel extends JPanel {
 						Object[] tArray1 ={tName, tAccount, tAmount, tDate, tType, tPayment,tcode};
 						model.addRow(tArray1);
 					}
-					if (tAccount.equals(accountToView)){
+					else if (tAccount.equals(accountToView)){
 						tAmount=tLineScan.next();
 						tDate=tLineScan.next();
 						//tDescription=tLineScan.next();

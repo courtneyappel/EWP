@@ -874,6 +874,7 @@ public class Panel extends JPanel {
 					accountViewPanel.add(tHistory);
 					tHistory.setAlignmentX(CENTER_ALIGNMENT);
 					tHistory.setFont(new Font("Serif",Font.PLAIN, 24));
+					ransactions.getTableHeader().setReorderingAllowed(false);
 					accountViewPanel.add(scrollPane);
 					logoLabel.setIcon(null);
 					revalidate();

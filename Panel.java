@@ -878,6 +878,7 @@ public class Panel extends JPanel {
 					ransactions.getTableHeader().setReorderingAllowed(false);
 					accountViewPanel.add(scrollPane);
 					logoLabel.setIcon(null);
+					viewBal.setText("$"+df.format(newAmount));
 					revalidate();
           repaint();
       }

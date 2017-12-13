@@ -994,13 +994,14 @@ public class Panel extends JPanel {
           accountViewPanel.removeAll();
           accountInfo.setText("");
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
-          accountViewPanel.add(accountList);
+					accountViewPanel.add(accountList);
           accountViewPanel.add(accountInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(displayEnteredInfo);
           accountViewPanel.add(Box.createRigidArea(new Dimension (0,25)));
           accountViewPanel.add(deleteSelectedAccount);
-
+					goHome();
+					newAccount.setVisible(true);
           add(bottom, BorderLayout.PAGE_END);
 					add(logoLabel, BorderLayout.PAGE_END);
           add(loginPanel, BorderLayout.CENTER);

@@ -14,7 +14,7 @@ public class Frame {
 
             System.out.println(System.getProperty("os.name"));
             String osName = System.getProperty("os.name");
-    	
+
 
     		myFrame.setUndecorated(true);
 

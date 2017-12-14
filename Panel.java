@@ -29,8 +29,8 @@ public class Panel extends JPanel {
 	String pw = "csci323";
 	boolean loggedIn = false;
 
-	JLabel top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, tHistory, bMessage;
-	JButton home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
+	JLabel text,body,title,top,bottom,dMessage,wMessage,enterInCredentials,listOfAccounts,accountInfo,userLabel,pwLabel, codeLabel, tHistory, bMessage;
+	JButton userG,home,logout,login,account,deposit,withdrawal,newAccount,viewAccount,deletAccount,depositButton,withdrawalButton;
 	JButton submitAccountInfo,displayEnteredInfo,deleteSelectedAccount,confirmDeletion, exitApp,newCodeButton;
 	JButton deleteTransac, saveAccountInfo, bCButton, calcButton;
 	JTextField username,dAmount,dAccount, dName,wAmount, wAccount, wName,name,email,phoneNum,description,wDate,dDate,newCodeBox;
@@ -42,6 +42,7 @@ public class Panel extends JPanel {
 	//JCheckBox cc;
 	JPasswordField password;
 	JPanel topPanel = new JPanel();//(imageLabel now replaces topPanel)
+	JPanel userGuide = new JPanel();
 	JPanel loginPanel = new JPanel();
 	JPanel homePanel = new JPanel();
 	JPanel accountPanel = new JPanel();
@@ -101,6 +102,8 @@ public class Panel extends JPanel {
 		createWithdrawPanel();
 		//create the deposit Panel
 		createDepositPanel();
+		//create user guide panel
+		createUserPanel();
 		//create the Account Panel
 		createAccountPanel();
 		//create the accountCreationPanel
@@ -122,6 +125,7 @@ public class Panel extends JPanel {
 	public void setAll() {
 	    //Here are visual settings for things like buttons, textfields...etc
         setButton(home); setButton(logout); setButton(login);
+				setButton(userG);
         setButton(account); setButton(deposit); setButton(withdrawal);
         setButton(newAccount);
         setButton(submitAccountInfo); setButton(displayEnteredInfo);
@@ -412,6 +416,7 @@ public class Panel extends JPanel {
 	}
 	//Methods to setup all Panel Objects
 	public void createHeaderFooter(){
+					removeAll();
 	        imageLabel.setIcon( backgroundPic );
 	        imageLabel.setLayout(new BorderLayout());
 	        topPanel.setOpaque(false); //
@@ -419,6 +424,8 @@ public class Panel extends JPanel {
 	        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 	        top = new JLabel("Account Manager", JLabel.CENTER);
 	        top.setFont(new Font("Tahoma", Font.BOLD, 42));
+					userG = new JButton("USER GUIDE");
+					userG.addActionListener(new userListener());
 	        home = new JButton("HOME");
 	        home.addActionListener(new homeListener());
 					bCButton = new JButton("Benefits Calculator");
@@ -429,6 +436,7 @@ public class Panel extends JPanel {
 	        exitApp.addActionListener(new exitListener());
 	        topPanel.add(home);
 					topPanel.add(bCButton);
+					topPanel.add(userG);
 	        topPanel.add(Box.createRigidArea(new Dimension (150,25)));
 	        topPanel.add(top);
 	        topPanel.add(Box.createRigidArea(new Dimension (175,25)));
@@ -481,6 +489,7 @@ public class Panel extends JPanel {
 	public void createHomeScreen(){
 	        homePanel.setBackground(Color.lightGray);
 	        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.Y_AXIS));
+
 
 	        account = new JButton("ACCOUNTS"){
 	            {
@@ -588,7 +597,60 @@ public class Panel extends JPanel {
 					withdrawalPanel.add(newCodeButton);
 	        withdrawalPanel.add(wMessage);
 	}
+	public void createUserPanel(){
+		userGuide.setBackground(Color.lightGray);
+		userGuide.setLayout(new BoxLayout(userGuide, BoxLayout.Y_AXIS));
+		title= new JLabel("<html>Welcome to the Account Manager User Guide!<br>Account Manager has been developed to help you with all of your account managing needs within the Comuter Science department here at UM!<br>When finished please click the home button.<br>");
+		body = new JLabel(("<html>The first thing to take into account for ease of use is the Home Button found on the header.<br>"
+		+"this will take you back to the home screen at any given time when navigating through Account Manager. It should be clicked whenever you<br>"
+		+"are done using your current screen or simpily need to go back to the home menu after a mis-click"
+		+"On the home screen once logged in you have the options of Accounts, Make Deposit or Make Withdrawal.<br>"
+		+"<br>*****ACCOUNTS*****<br><br>"
+		+"If you click Accounts you will be transfered to a new scren with new options.<br>"
+		+"The first option is a button that reads 'New Account'.<br>"
+		+"Once selected you will again be transferred to a new screen where you will be guided to fill<br>"
+		+"out the required fields in order to make a new account. Once you have made a new account <br>"
+		+"you will now have all of the options such as viewing, making and deleting transactions and more.<br>"
+		+"The other two options within the accounts menu invole the drop down accounts menu. Use the<br>"
+		+"drop down menu to select your desired account. Once selected you have to choices found below the dropdow,<br>"
+		+"view account and delete account. If view account is selected the new screen that you will be brought to with have<br>"
+		+"all of the information regarding your selected account and all of its associated transactions. At this stage you are<br>"
+		+"allowed to change account information as well as delete transactions from the account. To delete a transaction<br>"
+		+"simpily select the transaction in the table and click Delete Transaction and the account balances will adjust accordingly.<br>"
+		+"The Save Information button above the Delete Transaction button need only be clicked to save any account information you may have altered.<br>"
+		+"If you were to click Delete Account after selecting an account from the drop down, you will be prompted to confirm deletion,<br>"
+		+"and if confirmed the acount will become retired.<br>"
+		+"<br>*****NEW DEPOSIT & NEW WITHRAWAL*****<br><br>"
+		+"Back on the home screen the other two buttons yet to be discussed are the New Deposit and New Withdrawal buttons.<br>"
+		+"If you click on the New Deposit button you will be brought to a screen requiring information regarding your deposit.<br>"
+		+"Once you have it all correctly filled out (please make sure to select the check box is the deposit is a check) click Submit Deposit.<br>"
+		+"Once your deposit has been submitted please return back to the home screen as your deposit has now been added and accounted<br>"
+		+"for within your desired account and the master account, taking out the necessary fees along the way<br>"
+		+"the New Withdrawal button takes you to a very similar screen as found in New Deposit. The main difference being that you but<br>"
+		+"specify your fee code rather than check or credit. The drop down menu contains popular codes, however if your desired code is not within<br>"
+		+"the dropdown list, you may add your own code using the text field at the bootom and its corresponding button<br>"
+		+"when you have corretly filled out all of the information regarding your withdrawl, please click submit and your withdrawl will<br>"
+		+"be processed accordingly.<br>"
+		+"<br>*****BENEFITS CALCULATOR*****<br><br>"
+		+"An added feature within Account Manager is the benefits calculator. To access this feature simplily click on the Benefits Calulator<br>"
+		+"button found on the header. Once selected you will be able to enter any amount and see what it will be translated to if it were to be<br>"
+		+"submitted as a deposit, taking out the appropriate fees.<br>"
+		+"<br>*****OTHER HEADER FEATURES*****<br><br>"
+		+"Other features found on the header bar include the logout button, the exit button and yours truly, the user guide. But you have already<br>"
+		+"discovered me so lets move on. The logout button will log you out of account manager and  it is highly recommended to log out when<br>"
+		+"you finish your Account Manager Session for security and privacy reasons. And the exit button, the button with the X on it will close out<br>"
+		+"Account Manager.<br><br>"
+		+"I hope you have found the user guide resourceful and may Account Manager ease your workload.<br><br>"
+		+"Sincerely Yours,<br>"
+		+"EWP<br><br>"));
 
+		title.setAlignmentX(CENTER_ALIGNMENT);
+		userGuide.add(title);
+		title.setFont(new Font("Serif",Font.PLAIN, 20));
+		title.setAlignmentX(CENTER_ALIGNMENT);
+		JScrollPane scrollBody = new JScrollPane(body);
+		userGuide.add(scrollBody);
+	}
 	public void createDepositPanel() {
 	       depositPanel.setBackground(Color.lightGray);
 	        depositPanel.setLayout(new BoxLayout(depositPanel, BoxLayout.Y_AXIS));
@@ -1028,7 +1090,6 @@ public class Panel extends JPanel {
           pwEntry = null;
           setBackground(Color.lightGray);
           loginPanel.setBackground(Color.lightGray);
-
           remove(loginPanel);
           add(homePanel, BorderLayout.CENTER);
           revalidate();
@@ -1113,6 +1174,7 @@ public class Panel extends JPanel {
     //changes the window to prepare new withdraws
   public void withdrawSetup() {
       System.out.println("Withdrawal");
+			System.out.println("yepp");
       removeAll();
       add(bottom, BorderLayout.PAGE_END);
 	  add(logoLabel, BorderLayout.PAGE_END);
@@ -1259,6 +1321,19 @@ public class Panel extends JPanel {
       }
           updateAccountArray();
   }
+	public void userGuided(){
+		if(loggedIn){
+			removeAll();
+			add(bottom,BorderLayout.PAGE_END);
+			add(logoLabel,BorderLayout.PAGE_END);
+			add(imageLabel, BorderLayout.PAGE_START);
+			add(userGuide, BorderLayout.CENTER);
+			System.out.println("Stupid User Guide");
+			repaint();
+			revalidate();
+		}
+
+	}
 	public void doTheBenefiting(){
 				String numAmount = benefitText.getText();
 				if(numAmount.equalsIgnoreCase("")|| numAmount.equalsIgnoreCase("Type in the amount here")){
@@ -1422,7 +1497,11 @@ public class Panel extends JPanel {
 				    viewAccountAction();
 				}
 	}
-
+	private class userListener implements ActionListener{
+		public void actionPerformed (ActionEvent e){
+			userGuided();
+		}
+	}
 	private class homeListener implements ActionListener // Goes to the home page
 	{
 		public void actionPerformed (ActionEvent event)

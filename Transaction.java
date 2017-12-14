@@ -23,9 +23,9 @@ public class Transaction {
         this.type = type;
         this.check = check;
         this.credit = credit;
-        System.out.println("There better be nothing here -->"+accountToView);
+        //System.out.println("There better be nothing here -->"+accountToView);
         if (accountToView==""){
-          System.out.print("acountToView is empty so i better no do anything");
+          //System.out.print("acountToView is empty so i better no do anything");
         }
         else{
           if (type == true) {

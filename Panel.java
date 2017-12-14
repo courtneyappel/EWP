@@ -436,10 +436,10 @@ public class Panel extends JPanel {
 	        exitApp.addActionListener(new exitListener());
 	        topPanel.add(home);
 					topPanel.add(bCButton);
-					topPanel.add(userG);
-	        topPanel.add(Box.createRigidArea(new Dimension (70,25)));
+					topPanel.add(Box.createRigidArea(new Dimension (120,25)));
 	        topPanel.add(top);
-	        topPanel.add(Box.createRigidArea(new Dimension (125,25)));
+	        topPanel.add(Box.createRigidArea(new Dimension (50,25)));
+					topPanel.add(userG);
 	        topPanel.add(logout);
 	        topPanel.add(exitApp);
 	        imageLabel.add(topPanel);

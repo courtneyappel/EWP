@@ -348,7 +348,6 @@ public class Panel extends JPanel {
                     lineScan.close();
                 }
                 accountList = new JComboBox(accountArray.toArray());
-								accountList.setSelectedIndex(-1);
                 myScan.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -825,6 +824,7 @@ public class Panel extends JPanel {
                   viewPhone = new JTextField(name.getPhoneNum());
                   viewDesc = new JTextField(name.getDescription());
                   viewBal = new JTextField("$"+df.format(name.getBalance()));
+									System.out.println(name.getName() + name.getBalance());
 				  //System.out.println("Transaction History");
                   for(Transaction i: transactionArray) {
                       if(accountToView.equalsIgnoreCase("Master Account")) {
@@ -875,10 +875,8 @@ public class Panel extends JPanel {
 					accountViewPanel.add(tHistory);
 					tHistory.setAlignmentX(CENTER_ALIGNMENT);
 					tHistory.setFont(new Font("Serif",Font.PLAIN, 24));
-					ransactions.getTableHeader().setReorderingAllowed(false);
 					accountViewPanel.add(scrollPane);
 					logoLabel.setIcon(null);
-					viewBal.setText("$"+df.format(newAmount));
 					revalidate();
           repaint();
       }
@@ -1336,7 +1334,7 @@ public class Panel extends JPanel {
 				System.out.println("sCurrentln: "+sCurrentln);
 				String sTrim = sCurrentln.trim();
 				String tokens[] =sTrim.split(",");
-				if(tokens[0].equals(accountToView) || tokens[0].equals("Master Account")){
+				if(tokens[0].equals(accountToView)){
 					String currentAmount = tokens[4];
 					Double dCurrentAmount=Double.parseDouble(currentAmount);
 					Double dTrans=Double.parseDouble(delAmount);
@@ -1531,7 +1529,4 @@ public class Panel extends JPanel {
            addNewCode();
 		}
 	}
-
-
-
 }

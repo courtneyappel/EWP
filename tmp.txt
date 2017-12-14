@@ -1,0 +1,13 @@
+Court,Michael,35.834,Sun Dec 10 00:57:38 MST 2017,Deposit,Check, Code:N/A
+Josh,Michael,11.6472,Sun Dec 10 01:14:09 MST 2017,Deposit,Check, Code:N/A
+Court,Michael,19.32,Sun Dec 10 01:52:23 MST 2017,Deposit,Check, Code:N/A
+Wyatt,Michael,13.45,Sun Dec 10 01:52:23 MST 2017,Withdrawal,N/A, Code:62255 Promotional Aids
+Court,Trish,26.4,Sun Dec 10 01:57:50 MST 2017,Deposit,Credit, Code:N/A
+Josh,Trish,16.72,Wed Dec 13 10:54:28 MST 2017,Deposit,Credit, Code:N/A
+asdf,Master Account,88000.0,Wed Dec 13 12:59:37 MST 2017,Deposit,Credit, Code:N/A
+Josh,Michael,88000.0,Wed Dec 13 12:59:37 MST 2017,Deposit,Credit, Code:N/A
+asdf,Michael,880000.0,Wed Dec 13 12:59:37 MST 2017,Deposit,Credit, Code:N/A
+asdf,Master Account,0.88,Wed Dec 13 13:02:07 MST 2017,Deposit,Credit, Code:N/A
+asdf,Trish,44.0,Wed Dec 13 13:09:33 MST 2017,Deposit,Credit, Code:N/A
+asdf,Master Account,44.0,Wed Dec 13 13:09:33 MST 2017,Deposit,Credit, Code:N/A
+asdf,Master Account,88.0,Wed Dec 13 13:09:33 MST 2017,Deposit,Credit, Code:N/A

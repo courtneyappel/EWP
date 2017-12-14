@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Engorged Wicket Pandoras" company="EWP" webLink="http://" view-date="2017-08-28" view-index="0" gantt-divider-location="618" resource-divider-location="300" version="2.8.5" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Engorged Wicket Pandoras" company="EWP" webLink="http://" view-date="2017-11-29" view-index="0" gantt-divider-location="2034" resource-divider-location="300" version="2.8.5" locale="en_US">
     <description/>
-    <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Name" width="226" order="0"/>
-        <field id="tpd4" name="Begin date" width="112" order="1"/>
-        <field id="tpd5" name="End date" width="116" order="2"/>
-        <field id="tpc0" name="Group Member" width="143" order="3"/>
+    <view zooming-state="default:0" id="gantt-chart">
+        <field id="tpd3" name="Name" width="868" order="0"/>
+        <field id="tpd4" name="Begin date" width="179" order="1"/>
+        <field id="tpd5" name="End date" width="471" order="2"/>
+        <field id="tpc0" name="Group Member" width="497" order="3"/>
         <option id="color.recent"><![CDATA[#99ccff #ffcc33 #ffcc00 #ffcc66 #ffff33 #666666 #999999 #9999ff #ccccff #6666ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Name" width="209" order="0"/>
-        <field id="1" name="Default role" width="85" order="1"/>
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -219,7 +219,7 @@ Jeff - 1 hr]]></notes>
                 </task>
             </task>
         </task>
-        <task id="103" name="Release" meeting="false" start="2017-12-05" duration="10" complete="0" expand="true">
+        <task id="103" name="Release" meeting="false" start="2017-11-09" duration="36" complete="0" expand="true">
             <task id="104" name="Benefits Calculator" color="#8cb6ce" meeting="false" start="2017-12-05" duration="10" complete="0" expand="true">
                 <notes><![CDATA[3 hours]]></notes>
                 <customproperty taskproperty-id="tpc0" value="Josh"/>
@@ -227,6 +227,28 @@ Jeff - 1 hr]]></notes>
             <task id="105" name="System Document/backlog/gantt" color="#8cb6ce" meeting="false" start="2017-12-10" duration="3" complete="0" expand="true">
                 <notes><![CDATA[Jeff - 4 hours]]></notes>
                 <customproperty taskproperty-id="tpc0" value="Jeff"/>
+            </task>
+            <task id="107" name="User Guide" color="#8cb6ce" meeting="false" start="2017-12-13" duration="1" complete="0" expand="true">
+                <notes><![CDATA[3 Hours]]></notes>
+                <customproperty taskproperty-id="tpc0" value="Courtney"/>
+            </task>
+            <task id="109" name="Misc. Activities" color="#8cb6ce" meeting="false" start="2017-12-11" duration="3" complete="0" expand="true">
+                <notes><![CDATA[No more column dragging on table
+Can no longer edit table items
+Decimal format for all balances
+Name field non editable
+Removed transaction dropdown
+Cover Page
+2.5 hours]]></notes>
+                <customproperty taskproperty-id="tpc0" value="Courtney"/>
+            </task>
+            <task id="113" name="Completed Delete Transactions" color="#8cb6ce" meeting="false" start="2017-12-06" duration="4" complete="0" expand="true">
+                <notes><![CDATA[2.5 hrs]]></notes>
+                <customproperty taskproperty-id="tpc0" value="Courtney"/>
+            </task>
+            <task id="111" name="Master Balance Fix" color="#8cb6ce" meeting="false" start="2017-11-09" duration="5" complete="0" expand="true">
+                <notes><![CDATA[5 hours]]></notes>
+                <customproperty taskproperty-id="tpc0" value="Courtney"/>
             </task>
         </task>
     </tasks>

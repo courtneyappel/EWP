@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Engorged Wicket Pandoras" company="EWP" webLink="http://" view-date="2017-11-29" view-index="0" gantt-divider-location="1607" resource-divider-location="300" version="2.8.5" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Engorged Wicket Pandoras" company="EWP" webLink="http://" view-date="2017-11-01" view-index="0" gantt-divider-location="962" resource-divider-location="300" version="2.8.5" locale="en_US">
     <description/>
-    <view zooming-state="default:0" id="gantt-chart">
-        <field id="tpd3" name="Name" width="682" order="0"/>
-        <field id="tpd4" name="Begin date" width="143" order="1"/>
-        <field id="tpd5" name="End date" width="371" order="2"/>
-        <field id="tpc0" name="Group Member" width="392" order="3"/>
+    <view zooming-state="default:8" id="gantt-chart">
+        <field id="tpd3" name="Name" width="400" order="0"/>
+        <field id="tpd4" name="Begin date" width="89" order="1"/>
+        <field id="tpd5" name="End date" width="221" order="2"/>
+        <field id="tpc0" name="Group Member" width="233" order="3"/>
         <option id="color.recent"><![CDATA[#99ccff #ffcc33 #ffcc00 #ffcc66 #ffff33 #666666 #999999 #9999ff #ccccff #6666ff]]></option>
     </view>
     <view id="resource-table">
@@ -253,6 +253,10 @@ Cover Page
             <task id="111" name="Master Balance Fix" color="#8cb6ce" meeting="false" start="2017-11-09" duration="5" complete="0" expand="true">
                 <notes><![CDATA[5 hours]]></notes>
                 <customproperty taskproperty-id="tpc0" value="Courtney"/>
+            </task>
+            <task id="115" name="edited gant chart" color="#8cb6ce" meeting="false" start="2017-12-11" duration="3" complete="0" expand="true">
+                <notes><![CDATA[2 hours]]></notes>
+                <customproperty taskproperty-id="tpc0" value="Wyatt"/>
             </task>
         </task>
     </tasks>
